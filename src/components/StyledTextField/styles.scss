@@ -1,0 +1,82 @@
+@import "../../scssVariables";
+
+.styled-text-field {
+  &.error {
+    .field-label {
+      color: var(--error-color);
+    }
+  }
+  &.with-start-content {
+    .MuiFormControl-root {
+      .MuiInputBase-root {
+        input {
+          padding-left: var(--items-gap);
+        }
+      }
+    }
+  }
+  .field-label {
+    @include field-label();
+  }
+  .MuiFormControl-root {
+    width: 100%;
+    .MuiInputBase-root {
+      width: 100%;
+      padding: 0;
+      &:hover {
+        fieldset {
+          border-color: var(--border-hover);
+        }
+      }
+      &.Mui-focused {
+        fieldset {
+          border-color: var(--primary-color);
+        }
+      }
+      &.Mui-error {
+        fieldset {
+          border-color: var(--error-text);
+        }
+      }
+      input, textarea {
+        padding: var(--input-padding);
+        height: var(--input-height);
+        color: var(--main-text);
+        font-size: 14px;
+        font-family: var(--font-medium);
+        &::placeholder {
+          color: var(--placeholder-color);
+          opacity: 1;
+        }
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover,
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: var(--main-text);
+        }
+        &.Mui-disabled {
+          -webkit-text-fill-color: var(--second-text);
+        }
+      }
+      textarea{
+        height: 100%;
+      }
+      fieldset {
+        border: 1px solid var(--border-color);
+        border-radius: var(--input-radius);
+        transition: .3s all;
+      }
+      .MuiInputAdornment-root {
+        margin: 0;
+        padding-left: 8px;
+      }
+    }
+    .MuiFormHelperText-root {
+      font-size: 12px;
+      line-height: 12px;
+      margin: 4px 0 0 0;
+      color: var(--error-text);
+    }
+  }
+}

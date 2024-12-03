@@ -1,0 +1,18 @@
+@import "../../scssVariables";
+
+.styled-tooltip {
+  &.disable-portal {
+    z-index: 9 !important;
+  }
+  .MuiTooltip-tooltip {
+    background: var(--second-bg);
+    padding: 4px 8px;
+    border-radius: 4px;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, .08), 0 15px 35px -5px rgba(17, 24, 38, 0.15), 0 0 0 1px rgba(152, 161, 178, .10);
+    box-sizing: border-box;
+    color: var(--main-text);
+    font-family: var(--font-medium);
+    font-size: 12px;
+    line-height: 14px;
+  }
+}

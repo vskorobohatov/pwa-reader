@@ -1,0 +1,169 @@
+@font-face {
+  font-family: "bold";
+  src: url(./assets/fonts/GeneralSans/GeneralSans-Bold.otf);
+}
+
+@font-face {
+  font-family: "light";
+  src: url(./assets/fonts/GeneralSans/GeneralSans-Light.otf);
+}
+
+@font-face {
+  font-family: "medium";
+  src: url(./assets/fonts/GeneralSans/GeneralSans-Medium.otf);
+}
+
+@font-face {
+  font-family: "semi-bold";
+  src: url(./assets/fonts/GeneralSans/GeneralSans-Semibold.otf);
+}
+
+@font-face {
+  font-family: "regular";
+  src: url(./assets/fonts/GeneralSans/GeneralSans-Regular.otf);
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  --main-text: #FFFFFF;
+  --main-text-opo: #FFFFFF;
+  --second-text: #B1B1B1;
+  --placeholder-color: #888888;
+  --error-text: #FF4C4D;
+
+  --main-bg: #1B1B1B;
+  --main-bg-opacity: rgba(27, 27, 27, .2);
+  --second-bg: #131313;
+  --third-bg: #232323;
+  --fourth-bg: #202020;
+  --fifth-bg: #1a1a1a;
+  --primary-color: #4E74FF;
+  --primary-color-bg: #383956;
+  --primary-color-opacity: rgba(78, 116, 255, 0.05);
+  --primary-color-hover: #246fee;
+  --primary-inner-color: #FFFFFF;
+
+
+  --green-color: #2FAE79;
+  --green-bg: #28352F;
+  --orange-color: #F6B62B;
+  --orange-bg: #3C3527;
+  --red-color: #FE5B5F;
+  --red-bg: #2B1A11;
+  --purple-color: #4F5FC8;
+  --purple-bg: #2B2D37;
+  --grey-color: #BEC3ED;
+  --grey-bg: rgba(190, 195, 237, 0.2);
+  --error-color: #FF4D4D;
+  --error-color-hover: #b22626;
+  --error-bg: rgba(255, 77, 77, 0.05);
+  --blue-color: #00A3FF;
+  --blue-bg: rgba(0, 163, 255, 0.1);
+
+  --skeleton-gradient: linear-gradient(-45deg, var(--main-bg), var(--fourth-bg), var(--main-bg));
+  --skeleton-gradient-dark: linear-gradient(-45deg, var(--main-bg), var(--fifth-bg), var(--main-bg));
+
+  --border-color: #E8EBFF;
+  --border-hover: #747A8A;
+  --divider-color: #D5D6D7;
+
+  --page-padding: 16px;
+  --sidebar-padding: 24px 16px;
+  --sidebar-width: 216px;
+
+  --card-padding: 8px;
+  --card-radius: 8px;
+
+  --popover-padding: 8px;
+  --popover-radius: 4px;
+
+  --button-padding-side: 16px;
+  --button-radius: 4px;
+  --button-padding: 0 var(--button-padding-side);
+  --button-height: 34px;
+
+  --budge-height: 23px;
+
+  --input-padding-side: 8px;
+  --input-radius: 4px;
+  --input-padding: 0 var(--input-padding-side);
+  --input-height: 34px;
+
+  --wrapper-gap: 16px;
+  --content-gap: 8px;
+  --items-gap: 4px;
+
+  --table-head-height: 28px;
+  --table-row-height: 42px;
+  --table-row-gap: 16px;
+  --table-row-padding-side: 8px;
+
+  --font-regular: "regular";
+  --font-medium: "medium";
+  --font-semibold: "semi-bold";
+  --font-bold: "bold";
+}
+
+@media (max-width: 1060px) {
+  body {
+    --page-padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    --main-sidebar-padding: 8px 16px;
+    --page-padding: 0 16px 16px;
+  }
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: var(--font-regular);
+  color: var(--main-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--second-bg);
+}
+
+#root {
+  height: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+a,
+div,
+button,
+span,
+img {
+  -webkit-tap-highlight-color: transparent;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.MuiPopover-root .MuiPaper-root {
+  overflow: unset;
+  border: 1px solid var(--border-color);
+  border-radius: var(--card-radius);
+}

@@ -1,0 +1,50 @@
+@import "../../scssVariables.scss";
+
+.sign-in-page {
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .form {
+    width: calc(100% - 32px);
+    max-width: 400px;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: var(--wrapper-gap);
+
+    .title {
+      font-family: var(--font-medium);
+      font-size: 36px;
+      line-height: 46px;
+      color: var(--main-text);
+      text-align: center;
+
+      @media (max-width: $breakpoint-mobile) {
+        font-size: 28px;
+        line-height: 38px;
+      }
+    }
+
+    .styled-text-field{
+      width: 100%;
+    }
+
+    .sign-button {
+      @include primary-btn();
+      width: 100%;
+    }
+
+    .form-error-box {
+      width: 100%;
+      color: #FF2B2B;
+      font-size: 14px;
+      text-align: left;
+    }
+  }
+}
