@@ -54,7 +54,7 @@ function SignIn() {
     <div className='sign-in-page'>
       <div className="form">
 
-        <div className="title">Log in</div>
+        <div className="title">Sign In</div>
 
         <StyledTextField
           id="login-input"
