@@ -35,7 +35,7 @@ function SignIn() {
       document.getElementById(`${validationKeys[0]}-input`)?.focus();
     } else {
       User
-        .login({ login: email, password })
+        .login({ email, password })
         .then(res => {
           if (res?.token) {
             saveToken(res.token)
