@@ -21,6 +21,7 @@ const BookReader = () => {
     try {
       const res = await User.getBookInfo(id);
       console.log(res)
+      setBookData(res?.result || null);
     } catch (e) {
       console.log(e)
     }
@@ -29,7 +30,7 @@ const BookReader = () => {
   return (
     <div className="book-reader-wrapper">
       <ReactEpubViewer
-        url={""}
+        url={bookData}
         ref={viewerRef}
       />
     </div>

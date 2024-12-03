@@ -73,14 +73,24 @@
       color: var(--second-text);
       border: 1px dashed var(--border-color);
       display: flex;
-      align-items: center;
+      align-items: stretch;
       justify-content: center;
+      transition: 0.3s all;
+      border-radius: var(--button-radius);
       &:hover {
+        cursor: pointer;
         border: 1px dashed var(--border-hover);
       }
+      &>div{
+        width: 100%;
+      }
       .dropzone-label {
+        width: 100%;
+        height: 100%;
         font-size: 14px;
-        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
     .divider {

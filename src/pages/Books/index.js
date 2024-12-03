@@ -14,17 +14,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import "./styles.scss";
+import { formatBytes } from "helpers/format";
 
 const Books = () => {
   const navigate = useNavigate();
   const [popoverState, setPopoverState] = useState(null);
   const [addBookPopoverState, setAddBookPopoverState] = useState(null);
   const [fileToUpload, setFileToUpload] = useState(null);
+  const [linkToUpload, setLinkToUpload] = useState("");
   const [books, setBooks] = useState([
-    // {
-    //   id: 1,
-    //   name: "Test book"
-    // }
+    {
+      id: 1,
+      name: "Test book"
+    }
   ]);
 
   useEffect(() => {
@@ -56,6 +58,12 @@ const Books = () => {
     } catch (e) {
       console.log(e)
     }
+  };
+
+  const clearUploadForm = () => {
+    setFileToUpload(null);
+    setLinkToUpload("");
+
   }
 
   return (
@@ -78,7 +86,7 @@ const Books = () => {
         <PopoverItem isDelete icon={<DeleteOutlineIcon />} label="Delete" />
       </DefaultPopover>
 
-      <DefaultPopover className="dropzone-popover" state={addBookPopoverState} setState={setAddBookPopoverState}>
+      <DefaultPopover className="dropzone-popover" state={addBookPopoverState} setState={setAddBookPopoverState} onClose={clearUploadForm}>
         {!!fileToUpload ? (
           <div className="file-info-wrapper">
             <div className="info-item">
@@ -87,7 +95,7 @@ const Books = () => {
             </div>
             <div className="info-item">
               <div className="item-label">Size</div>
-              <div className="item-value">{fileToUpload.size}</div>
+              <div className="item-value">{formatBytes(fileToUpload.size)}</div>
             </div>
           </div>
         ) : (
@@ -107,7 +115,12 @@ const Books = () => {
               <div>or</div>
               <span></span>
             </div>
-            <StyledTextField label="Link to the file" placeholder="Enter the URL (e.g., https://example.com/file.epub)" />
+            <StyledTextField
+              label="Link to the file"
+              placeholder="Enter the URL (e.g., https://example.com/file.epub)"
+              value={linkToUpload}
+              onChange={e => setLinkToUpload(e.target.value)}
+            />
           </>
         )}
         <Button className="upload-btn" onClick={handleUploadFile}>Upload</Button>
