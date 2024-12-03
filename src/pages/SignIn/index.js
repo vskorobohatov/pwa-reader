@@ -3,6 +3,7 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { User } from 'services/User';
+import { HOME } from 'pathnameVariables';
 import { saveToken } from 'helpers/tokenHelper';
 
 import StyledTextField from 'components/StyledTextField';
@@ -37,9 +38,9 @@ function SignIn() {
       User
         .login({ email, password })
         .then(res => {
-          if (res?.token) {
-            saveToken(res.token)
-            navigate("/");
+          if (res?.jwt) {
+            saveToken(res.jwt)
+            navigate(HOME);
           }
         })
         .catch(e => {
