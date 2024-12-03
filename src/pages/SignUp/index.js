@@ -11,7 +11,7 @@ import './styles.scss';
 
 function SignUp() {
   const navigate = useNavigate();
-  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [errors, setErrors] = useState({
@@ -21,12 +21,12 @@ function SignUp() {
   });
 
   const handleSignUp = () => {
-    const isLoginValid = !!login && login.trim();
+    const isEmailValid = !!email && email.trim();
     const isPasswordValid = !!password && password.trim();
     const isNameValid = !!password && password.trim();
     let validationErrors = {};
-    if (!isLoginValid) {
-      validationErrors = { ...validationErrors, login: "Please enter login!" }
+    if (!isEmailValid) {
+      validationErrors = { ...validationErrors, login: "Please enter email!" }
     };
     if (!isNameValid) {
       validationErrors = { ...validationErrors, login: "Please enter name!" }
@@ -40,7 +40,7 @@ function SignUp() {
       document.getElementById(`${validationKeys[0]}-input`)?.focus();
     } else {
       User
-        .signup({ login, password })
+        .signup({ email, password })
         .then(res => {
           if (res?.token) {
             saveToken(res.token)
@@ -74,16 +74,16 @@ function SignUp() {
         />
 
         <StyledTextField
-          id="login-input"
-          label="Login"
-          placeholder="Enter login"
-          value={login}
+          id="email-input"
+          label="Email"
+          placeholder="Enter email"
+          value={email}
           onChange={e => {
-            setLogin(e?.target?.value)
-            setErrors({ ...errors, login: "", request: "" });
+            setEmail(e?.target?.value)
+            setErrors({ ...errors, email: "", request: "" });
           }}
           onKeyDown={e => e?.code === "Enter" ? handleSignUp() : null}
-          error={errors.login}
+          error={errors.email}
         />
 
         <StyledTextField
