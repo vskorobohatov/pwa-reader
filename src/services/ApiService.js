@@ -20,7 +20,7 @@ export class ApiService {
     };
 
     return HttpService.requestAsync({
-      url: customUrl || (config.hostname && config.protocol ? `${config.protocol}://${config.hostname}/${url}` : `${url}`),
+      url: customUrl || (config.hostname && config.protocol ? `${config.protocol}://${config.hostname}/api${url}` : `/api${url}`),
       method,
       data,
       responseType,
