@@ -4,7 +4,7 @@ import "./styles.scss";
 const NotFound = () => {
   return (
     <div className="not-found-wrapper">
-      404
+      404 - Page not found
     </div>
   )
 };
