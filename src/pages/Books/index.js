@@ -5,6 +5,7 @@ import Dropzone from "react-dropzone";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
+import { formatBytes } from "helpers/format";
 
 import StyledTextField from "components/StyledTextField";
 import DefaultPopover, { PopoverItem } from "components/DefaultPopover";
@@ -14,7 +15,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import "./styles.scss";
-import { formatBytes } from "helpers/format";
 
 const Books = () => {
   const navigate = useNavigate();
@@ -87,6 +87,7 @@ const Books = () => {
       </DefaultPopover>
 
       <DefaultPopover className="dropzone-popover" state={addBookPopoverState} setState={setAddBookPopoverState} onClose={clearUploadForm}>
+        <div className="title">Upload file</div>
         {!!fileToUpload ? (
           <div className="file-info-wrapper">
             <div className="info-item">
@@ -105,7 +106,7 @@ const Books = () => {
                 <div className="dropzone-wrapper">
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <div className="dropzone-label">Drag 'n' drop some files here, or click to select files</div>
+                    <div className="dropzone-label">Drag 'n' drop some files here, <br />or click to select files</div>
                   </div>
                 </div>
               )}
@@ -117,13 +118,13 @@ const Books = () => {
             </div>
             <StyledTextField
               label="Link to the file"
-              placeholder="Enter the URL (e.g., https://example.com/file.epub)"
+              placeholder="https://example.com/file.epub"
               value={linkToUpload}
               onChange={e => setLinkToUpload(e.target.value)}
             />
           </>
         )}
-        <Button className="upload-btn" onClick={handleUploadFile}>Upload</Button>
+        <Button className="upload-btn" onClick={handleUploadFile}>Confirm</Button>
       </DefaultPopover>
     </div>
   )

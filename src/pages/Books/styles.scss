@@ -45,11 +45,16 @@
 
 .dropzone-popover {
   .MuiPaper-root {
-    width: 100%;
+    width: calc(100% - 32px);
+    max-width: 500px;
     display: flex;
     align-items: stretch;
     flex-direction: column;
     gap: var(--wrapper-gap);
+    .title{
+      font-size: 18px;
+      font-family: var(--font-semibold);
+    }
     .file-info-wrapper {
       display: flex;
       align-items: stretch;
@@ -91,6 +96,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        text-align: center;
       }
     }
     .divider {
@@ -106,7 +112,7 @@
       span {
         flex: 1;
         height: 1px;
-        background-color: var(--divider-color);
+        background-color: var(--second-text);
       }
     }
     .upload-btn {
