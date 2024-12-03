@@ -1,0 +1,29 @@
+@import "scssVariables.scss";
+
+.books-wrapper {
+  @include scroll-styles();
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+
+  .book-item {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px 0 16px;
+    border-bottom: 1px solid var(--border-color);
+    transition: 0.3s all;
+    &:hover {
+      cursor: pointer;
+      background-color: var(--third-bg);
+    }
+    .menu-btn {
+      min-width: 0;
+      padding: 0;
+      color: var(--main-text);
+      width: 32px;
+      height: 32px;
+    }
+  }
+}

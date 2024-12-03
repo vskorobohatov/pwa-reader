@@ -1,0 +1,48 @@
+@import "scssVariables.scss";
+
+.header-wrapper {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 4px;
+  background: var(--main-bg);
+
+  .menu-btn {
+    min-width: 0;
+    padding: 0;
+    height: 32px;
+    width: 32px;
+    color: var(--main-text);
+  }
+  .logo {
+    color: var(--second-text);
+    font-size: 14px;
+  }
+}
+
+.drawer-wrapper {
+  .MuiPaper-root {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    width: 200px;
+    padding: 8px;
+    background-color: var(--main-bg);
+    gap: 4px;
+    button {
+      text-align: left;
+      text-transform: none;
+      justify-content: flex-start;
+      color: var(--main-text);
+      gap: 4px;
+      height: 40px;
+      &:hover {
+        color: var(--primary-color);
+      }
+      &.sign-out-btn {
+        margin-top: auto;
+      }
+    }
+  }
+}
