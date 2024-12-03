@@ -13,6 +13,7 @@ function SignUp() {
   const navigate = useNavigate();
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   const [errors, setErrors] = useState({
     login: "",
     password: "",
@@ -22,9 +23,13 @@ function SignUp() {
   const handleSignUp = () => {
     const isLoginValid = !!login && login.trim();
     const isPasswordValid = !!password && password.trim();
+    const isNameValid = !!password && password.trim();
     let validationErrors = {};
     if (!isLoginValid) {
       validationErrors = { ...validationErrors, login: "Please enter login!" }
+    };
+    if (!isNameValid) {
+      validationErrors = { ...validationErrors, login: "Please enter name!" }
     };
     if (!isPasswordValid) {
       validationErrors = { ...validationErrors, password: "Please enter password!" }
@@ -47,7 +52,6 @@ function SignUp() {
           setErrors({ ...errors, request: e?.response?.data?.message || "Something went wrong! Try again later." })
         });
     }
-
   }
 
   return (
@@ -55,6 +59,19 @@ function SignUp() {
       <div className="form">
 
         <div className="title">Sign Up</div>
+
+        <StyledTextField
+          id="name-input"
+          label="Name"
+          placeholder="Enter name"
+          value={name}
+          onChange={e => {
+            setName(e?.target?.value)
+            setErrors({ ...errors, login: "", request: "" });
+          }}
+          onKeyDown={e => e?.code === "Enter" ? handleSignUp() : null}
+          error={errors.name}
+        />
 
         <StyledTextField
           id="login-input"
