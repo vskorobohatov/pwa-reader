@@ -1,4 +1,4 @@
-export const HOME = "/";
-export const SIGN_IN = "/sign-in";
-export const SIGN_UP = "/sign-up";
-export const BOOKS = "/books";
+export const HOME = `/apps/reader`;
+export const SIGN_IN = `${HOME}/sign-in`;
+export const SIGN_UP = `${HOME}/sign-up`;
+export const BOOKS = `${HOME}/books`;
