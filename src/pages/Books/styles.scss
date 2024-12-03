@@ -5,6 +5,8 @@
   display: flex;
   align-items: stretch;
   flex-direction: column;
+  position: relative;
+  height: 100%;
 
   .book-item {
     height: 60px;
@@ -12,7 +14,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 4px 0 16px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--divider-color);
     transition: 0.3s all;
     &:hover {
       cursor: pointer;
@@ -26,4 +28,81 @@
       height: 32px;
     }
   }
+
+  .add-book-btn {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    padding: 0;
+    min-width: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--main-bg);
+
+  }
+}
+
+.dropzone-popover {
+  .MuiPaper-root {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--wrapper-gap);
+    .file-info-wrapper {
+      display: flex;
+      align-items: stretch;
+      flex-direction: column;
+      gap: var(--items-gap);
+      .info-item {
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+        .item-label {
+          @include field-label();
+        }
+        .item-value {
+          @include text-overflow();
+        }
+      }
+    }
+    .dropzone-wrapper {
+      height: 120px;
+      padding: 8px;
+      color: var(--second-text);
+      border: 1px dashed var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        border: 1px dashed var(--border-hover);
+      }
+      .dropzone-label {
+        font-size: 14px;
+        text-align: center;
+      }
+    }
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--second-text);
+      font-size: 14px;
+      div {
+        width: 40px;
+        text-align: center;
+      }
+      span {
+        flex: 1;
+        height: 1px;
+        background-color: var(--divider-color);
+      }
+    }
+    .upload-btn {
+      @include primary-btn();
+      justify-content: center;
+    }
+  }
+
 }

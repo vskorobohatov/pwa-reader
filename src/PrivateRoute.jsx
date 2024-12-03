@@ -13,6 +13,7 @@ const PrivateRoute = ({ element }) => {
   }, [getToken(), navigate]);
 
   return getToken() ? element : <></>;
+  // return element
 };
 
 export default PrivateRoute;

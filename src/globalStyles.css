@@ -68,16 +68,9 @@ body {
   --blue-color: #00A3FF;
   --blue-bg: rgba(0, 163, 255, 0.1);
 
-  --skeleton-gradient: linear-gradient(-45deg, var(--main-bg), var(--fourth-bg), var(--main-bg));
-  --skeleton-gradient-dark: linear-gradient(-45deg, var(--main-bg), var(--fifth-bg), var(--main-bg));
-
   --border-color: #E8EBFF;
   --border-hover: #747A8A;
   --divider-color: #D5D6D7;
-
-  --page-padding: 16px;
-  --sidebar-padding: 24px 16px;
-  --sidebar-width: 216px;
 
   --card-padding: 8px;
   --card-radius: 8px;
@@ -101,28 +94,10 @@ body {
   --content-gap: 8px;
   --items-gap: 4px;
 
-  --table-head-height: 28px;
-  --table-row-height: 42px;
-  --table-row-gap: 16px;
-  --table-row-padding-side: 8px;
-
   --font-regular: "regular";
   --font-medium: "medium";
   --font-semibold: "semi-bold";
   --font-bold: "bold";
-}
-
-@media (max-width: 1060px) {
-  body {
-    --page-padding: 16px;
-  }
-}
-
-@media (max-width: 768px) {
-  body {
-    --main-sidebar-padding: 8px 16px;
-    --page-padding: 0 16px 16px;
-  }
 }
 
 * {

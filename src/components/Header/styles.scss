@@ -18,6 +18,7 @@
   .logo {
     color: var(--second-text);
     font-size: 14px;
+    padding: 0 4px;
   }
 }
 
@@ -29,7 +30,7 @@
     width: 200px;
     padding: 8px;
     background-color: var(--main-bg);
-    gap: 4px;
+    gap: var(--items-gap);
     button {
       text-align: left;
       text-transform: none;

@@ -2,22 +2,6 @@ $breakpoint-small-desktop: 1190px;
 $breakpoint-tablet: 1060px;
 $breakpoint-mobile: 767px;
 
-@mixin default-avatar() {
-  width: 24px;
-  height: 24px;
-  border-radius: var(--button-radius);
-  background: var(--primary-color);
-  color: var(--main-text-opo);
-  font-family: var(--font-semibold);
-  font-size: 12px;
-  line-height: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  text-transform: uppercase;
-}
-
 @mixin field-label() {
   font-size: 12px;
   line-height: 14px;
@@ -97,53 +81,6 @@ $breakpoint-mobile: 767px;
 
   .MuiTouchRipple-root {
     display: none;
-  }
-}
-
-@mixin outline-btn() {
-  height: var(--button-height);
-  display: flex;
-  padding: var(--button-padding);
-  min-width: unset;
-  font-size: 14px;
-  font-family: var(--font-medium);
-  color: var(--main-text);
-  border: 1px solid var(--border-color);
-  background: transparent;
-  border-radius: var(--button-radius);
-  letter-spacing: unset;
-  text-transform: unset;
-  transition: .3s all;
-  box-sizing: border-box;
-  cursor: pointer;
-  line-height: unset;
-  letter-spacing: unset;
-  gap: var(--items-gap);
-  &:hover {
-    background: var(--main-bg);
-    border-color: var(--primary-color-hover);
-  }
-
-  svg {
-    display: block;
-    width: 18px;
-    height: 18px;
-  }
-
-  .MuiTouchRipple-root {
-    display: none;
-  }
-
-  &.Mui-disabled {
-    opacity: 0.7;
-    background: transparent;
-    color: var(--main-text);
-  }
-
-  &.active {
-    border: 1px solid var(--primary-color);
-    background: var(--primary-color-bg);
-    color: var(--primary-color);
   }
 }
 
