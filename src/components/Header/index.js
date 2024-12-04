@@ -12,24 +12,29 @@ import './styles.scss';
 
 function Header() {
   const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleLogout = () => {
     removeToken();
     navigate(SIGN_IN);
   }
 
+  const redirect = path => {
+    navigate(path);
+    setDrawerOpen(false);
+  }
+
   return (
     <div className='header-wrapper'>
-      <Button className='menu-btn' onClick={() => setOpen(true)}>
+      <Button className='menu-btn' onClick={() => setDrawerOpen(true)}>
         <MenuIcon color='#FFFFFF' />
       </Button>
 
       <div className='logo'>PWA-Reader</div>
 
 
-      <Drawer className='drawer-wrapper' open={open} onClose={() => setOpen(false)}>
-        <Button onClick={() => navigate(HOME)}>
+      <Drawer className='drawer-wrapper' open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <Button onClick={() => redirect(HOME)}>
           <HomeIcon />
           Home
         </Button>

@@ -106,7 +106,7 @@ const Books = () => {
                 <div className="dropzone-wrapper">
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <div className="dropzone-label">Drag 'n' drop some files here, <br />or click to select files</div>
+                    <div className="dropzone-label">Drag 'n' drop file here, <br />or click to select file</div>
                   </div>
                 </div>
               )}
