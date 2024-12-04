@@ -31,12 +31,12 @@ const Books = () => {
   const [books, setBooks] = useState([
     {
       id: 1,
-      name: "Test book"
+      name: "Test book for development purposes. Ignore it."
     }
   ]);
 
   useEffect(() => {
-    getBooksList();
+    // getBooksList();
   }, []);
 
   const getBooksList = async () => {
