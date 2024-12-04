@@ -72,6 +72,8 @@ const BookReader = () => {
     themes.override('padding-right', savedStyles.paddingRight);
   }
   console.log(ReactReaderStyle)
+  console.log(savedStyles)
+
   const darkReaderTheme = {
     ...ReactReaderStyle,
     reader: {
@@ -101,7 +103,7 @@ const BookReader = () => {
     },
     arrow: {
       ...ReactReaderStyle.arrow,
-      color: savedStyles.arrowColor,
+      color: savedStyles.showArrow !== "false" ? savedStyles.arrowColor : "transparent",
     },
     arrowHover: {
       ...ReactReaderStyle.arrowHover,
