@@ -36,7 +36,7 @@ const Books = () => {
   ]);
 
   useEffect(() => {
-    // getBooksList();
+    getBooksList();
   }, []);
 
   const getBooksList = async () => {
