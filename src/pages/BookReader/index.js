@@ -1,14 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ReactReader } from 'react-reader'
+import { debounce } from "lodash";
 
 import { User } from "services/User";
 
 import "./styles.scss";
-import { debounce } from "lodash";
 
 const BookReader = () => {
   const { bookId } = useParams();
+  const rendition = useRef(undefined)
   const [bookData, setBookData] = useState(
     { url: "", position: 0 }
     // {
@@ -46,17 +47,26 @@ const BookReader = () => {
     }
   }
 
-  const debouncedUpdateLocation = useCallback(debounce(updateLocation, { wait: 60000, maxWait: 60000 }), []);
+  const debouncedUpdateLocation = useCallback(debounce(updateLocation, 60000, { maxWait: 60000 }), []);
+
+  const getSavedStyles = () => JSON.parse(localStorage.getItem("bookStyles"));
 
   return (
     <div className="book-reader-wrapper">
       <ReactReader
-        location={+bookData.position}
+        location={bookData.position}
         url={bookData.url}
         locationChanged={epubcfi => {
-          if (epubcfi !== +bookData.position) {
+          if (epubcfi !== bookData.position) {
             setBookData(prevState => ({ ...prevState, position: epubcfi }));
             debouncedUpdateLocation(epubcfi);
+          }
+        }}
+        getRendition={_rendition => {
+          rendition.current = _rendition;
+          const savedStyles = getSavedStyles();
+          if (savedStyles) {
+            // rendition.current.themes.fontSize(largeText ? '140%' : '100%')
           }
         }}
       />
