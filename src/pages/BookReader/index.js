@@ -40,7 +40,7 @@ const BookReader = () => {
       await User.updateBookInfo({
         bookId,
         position: location,
-        updatedAt: new Date().toString()
+        updatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
       });
     } catch (e) {
       console.log(e)
