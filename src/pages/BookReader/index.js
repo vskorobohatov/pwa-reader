@@ -60,16 +60,6 @@ const BookReader = () => {
   };
 
   const savedStyles = getSavedStyles();
-  console.log(ReactReaderStyle)
-  // if (savedStyles) {
-  //   rendition.current.themes.override('font-size', savedStyles.fontSize)
-  //   rendition.current.themes.override('color', savedStyles.color)
-  //   rendition.current.themes.override('background', savedStyles.background);
-  //   rendition.current.themes.override('padding-top', `${savedStyles.paddingTop}px`);
-  //   rendition.current.themes.override('padding-bottom', `${savedStyles.paddingBottom}px`);
-  //   rendition.current.themes.override('padding-left', `${savedStyles.paddingLeft}px`);
-  //   rendition.current.themes.override('padding-right', `${savedStyles.paddingRight}px`);
-  // }
 
   const darkReaderTheme = {
     ...ReactReaderStyle,
