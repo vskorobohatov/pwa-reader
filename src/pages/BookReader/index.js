@@ -139,6 +139,7 @@ const BookReader = () => {
   return (
     <div className="book-reader-wrapper">
       <ReactReader
+        swipeable
         location={bookData.position}
         url={bookData.url}
         locationChanged={epubcfi => {
