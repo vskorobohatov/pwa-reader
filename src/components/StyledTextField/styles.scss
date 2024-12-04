@@ -35,7 +35,7 @@
       }
       &.Mui-error {
         fieldset {
-          border-color: var(--error-text);
+          border-color: var(--error-color);
         }
       }
       input, textarea {
@@ -76,7 +76,7 @@
       font-size: 12px;
       line-height: 12px;
       margin: 4px 0 0 0;
-      color: var(--error-text);
+      color: var(--error-color);
     }
   }
 }

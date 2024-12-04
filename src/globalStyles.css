@@ -37,58 +37,37 @@ body {
   --main-text-opo: #FFFFFF;
   --second-text: #B1B1B1;
   --placeholder-color: #888888;
-  --error-text: #FF4C4D;
 
   --main-bg: #1B1B1B;
-  --main-bg-opacity: rgba(27, 27, 27, .2);
-  --second-bg: #131313;
-  --third-bg: #232323;
-  --fourth-bg: #202020;
-  --fifth-bg: #1a1a1a;
-  --primary-color: #4E74FF;
+  --second-bg: #121212;
+  --third-bg: #222222;
+  --primary-color: #5E73FF;
   --primary-color-bg: #383956;
-  --primary-color-opacity: rgba(78, 116, 255, 0.05);
   --primary-color-hover: #246fee;
   --primary-inner-color: #FFFFFF;
 
-
-  --green-color: #2FAE79;
-  --green-bg: #28352F;
-  --orange-color: #F6B62B;
-  --orange-bg: #3C3527;
-  --red-color: #FE5B5F;
-  --red-bg: #2B1A11;
-  --purple-color: #4F5FC8;
-  --purple-bg: #2B2D37;
-  --grey-color: #BEC3ED;
-  --grey-bg: rgba(190, 195, 237, 0.2);
+  --green-color: #2FAE80;
+  --green-bg: #28353F;
   --error-color: #FF4D4D;
   --error-color-hover: #b22626;
   --error-bg: rgba(255, 77, 77, 0.05);
-  --blue-color: #00A3FF;
-  --blue-bg: rgba(0, 163, 255, 0.1);
 
-  --border-color: #E8EBFF;
-  --border-hover: #747A8A;
-  --divider-color: #D5D6D7;
+  --border-color: #E7EBFF;
+  --border-hover: #737A7A;
+  --divider-color: #D6D6D6;
 
   --card-padding: 8px;
   --card-radius: 8px;
 
-  --popover-padding: 8px;
-  --popover-radius: 4px;
-
-  --button-padding-side: 16px;
   --button-radius: 4px;
-  --button-padding: 0 var(--button-padding-side);
   --button-height: 34px;
+  --button-padding-side: 16px;
+  --button-padding: 0 var(--button-padding-side);
 
-  --budge-height: 23px;
-
-  --input-padding-side: 8px;
   --input-radius: 4px;
-  --input-padding: 0 var(--input-padding-side);
   --input-height: 34px;
+  --input-padding-side: 8px;
+  --input-padding: 0 var(--input-padding-side);
 
   --wrapper-gap: 16px;
   --content-gap: 8px;
@@ -104,7 +83,8 @@ body {
   box-sizing: border-box;
 }
 
-html{
+html,
+#root {
   height: 100%;
 }
 
@@ -116,10 +96,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--second-bg);
-}
-
-#root {
-  height: 100%;
 }
 
 input::-webkit-outer-spin-button,
@@ -154,6 +130,7 @@ code {
 .Toastify__toast {
   background-color: var(--main-bg);
   color: var(--main-text);
+
   a {
     color: var(--primary-color);
   }

@@ -1,0 +1,71 @@
+@import "scssVariables.scss";
+
+.settings-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: var(--wrapper-gap);
+  padding: 8px;
+
+  .section {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--content-gap);
+
+    .section-title {
+      font-size: 16px;
+      font-family: var(--font-semibold);
+    }
+
+    .input-box {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--content-gap);
+      font-size: 14px;
+      position: relative;
+
+      .label {
+        font-size: 14px;
+      }
+
+      .styled-text-field {
+        width: 75px;
+      }
+
+      .color-input {
+        width: 0px;
+        height: 0px;
+        position: absolute;
+        z-index: -1;
+        opacity: 0;
+        top: 50%;
+        right: 0;
+      }
+      .color-value {
+        width: var(--input-height);
+        height: var(--input-height);
+        border-radius: var(--input-radius);
+        border: 1px solid var(--border-color);
+      }
+    }
+  }
+
+  .controls-wrapper {
+    margin-top: auto;
+    display: flex;
+    gap: var(--content-gap);
+
+    button {
+      flex: 1;
+      &.reset {
+        @include outline-btn();
+      }
+      &.save {
+        @include primary-btn();
+      }
+    }
+  }
+}
