@@ -6,11 +6,12 @@ import {
   Navigate
 } from "react-router-dom";
 
-import { BOOKS, HOME, SETTINGS, SIGN_IN, SIGN_UP } from 'pathnameVariables';
+import { ABOUT, BOOKS, HOME, SETTINGS, SIGN_IN, SIGN_UP } from 'pathnameVariables';
 import PrivateRoute from 'PrivateRoute';
 
 import Home from 'pages/Home';
 import Books from 'pages/Books';
+import About from 'pages/About';
 import SignIn from 'pages/SignIn';
 import SignUp from 'pages/SignUp';
 import Settings from 'pages/Settings';
@@ -31,6 +32,7 @@ function App() {
           <Route exact path={BOOKS} element={<Books />} />
           <Route exact path={`${BOOKS}/:bookId`} element={<BookReader />} />
           <Route exact path={SETTINGS} element={<Settings />} />
+          <Route exact path={ABOUT} element={<About />} />
           <Route path={HOME} element={<Navigate to={BOOKS} replace />} />
         </Route>
 

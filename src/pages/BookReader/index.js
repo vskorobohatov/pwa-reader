@@ -8,20 +8,21 @@ import { User } from "services/User";
 import { defaultStyles } from "pages/Settings";
 
 import "./styles.scss";
+import zIndex from "@mui/material/styles/zIndex";
 
 const BookReader = () => {
   const { bookId } = useParams();
   const rendition = useRef(undefined)
   const [bookData, setBookData] = useState(
-    { url: "", position: 0 }
-    // {
-    //   "name": "2hgfh.epub",
-    //   "url": "https://scalan.com/apps/reader/books/1/2hgfh.epub",
-    //   "uploadedAt": "2024-12-04 14:09:55",
-    //   "size": 683370,
-    //   "position": "0",
-    //   "updatedAt": null
-    // }
+    // { url: "", position: 0 }
+    {
+      "name": "2hgfh.epub",
+      "url": "https:\/\/scalan.com\/apps\/reader\/books\/1\/qazxsw111.epub",
+      "uploadedAt": "2024-12-04 14:09:55",
+      "size": 683370,
+      "position": "0",
+      "updatedAt": null
+    }
   );
 
   useEffect(() => {
@@ -71,7 +72,7 @@ const BookReader = () => {
     themes.override('padding-left', savedStyles.paddingLeft);
     themes.override('padding-right', savedStyles.paddingRight);
   }
-
+  console.log(ReactReaderStyle)
   const darkReaderTheme = {
     ...ReactReaderStyle,
     reader: {
@@ -85,9 +86,23 @@ const BookReader = () => {
       ...ReactReaderStyle.loadingView,
       color: savedStyles.color,
     },
+    next: {
+      ...ReactReaderStyle.next,
+      height: "100%",
+      bottom: 0,
+      top: "unset",
+      zIndex: 1
+    },
+    prev: {
+      ...ReactReaderStyle.prev,
+      height: "100%",
+      bottom: 0,
+      top: "unset",
+      zIndex: 1
+    },
     arrow: {
       ...ReactReaderStyle.arrow,
-      color: savedStyles.color,
+      color: savedStyles.arrowColor,
     },
     arrowHover: {
       ...ReactReaderStyle.arrowHover,
@@ -117,6 +132,7 @@ const BookReader = () => {
     tocButton: {
       ...ReactReaderStyle.tocButton,
       color: savedStyles.color,
+      zIndex: 2
     },
   }
 

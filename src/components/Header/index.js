@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Drawer } from '@mui/material';
 
-import { HOME, SETTINGS, SIGN_IN } from 'pathnameVariables';
+import { ABOUT, HOME, SETTINGS, SIGN_IN } from 'pathnameVariables';
 import { removeToken } from 'helpers/tokenHelper';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeIcon from '@mui/icons-material/Home';
+import HelpIcon from '@mui/icons-material/Help';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
 import './styles.scss';
@@ -31,10 +32,8 @@ function Header() {
         <MenuIcon color='#FFFFFF' />
       </Button>
 
-      <div className='logo'>PWA-Reader</div>
-
-
       <Drawer className='drawer-wrapper' open={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <div className='logo'>PWA-Reader</div>
         <Button onClick={() => redirect(HOME)}>
           <HomeIcon />
           Home
@@ -42,6 +41,10 @@ function Header() {
         <Button onClick={() => redirect(SETTINGS)}>
           <SettingsIcon />
           Settings
+        </Button>
+        <Button onClick={() => redirect(ABOUT)}>
+          <HelpIcon />
+          About
         </Button>
         <Button className='sign-out-btn' onClick={handleLogout}>
           <LogoutIcon />

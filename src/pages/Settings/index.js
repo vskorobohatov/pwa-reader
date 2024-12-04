@@ -13,6 +13,7 @@ export const defaultStyles = {
   paddingBottom: `20px`,
   paddingLeft: `20px`,
   paddingRight: `20px`,
+  arrowColor: "#000000"
 };
 
 const Settings = () => {
@@ -68,6 +69,15 @@ const Settings = () => {
         <div className="input-box">
           <div className="label">Padding Right</div>
           <StyledTextField value={styles.paddingRight} onChange={e => setStyles({ ...styles, paddingRight: e.target.value })} />
+        </div>
+      </div>
+
+      <div className="section">
+        <div className="section-title">Misc</div>
+        <div className="input-box">
+          <div className="label">Arrow color</div>
+          <label className="color-value" htmlFor="arrowColor" style={{ background: styles.arrowColor }} />
+          <input className="color-input" id="arrowColor" type="color" value={styles.arrowColor} onChange={e => setStyles({ ...styles, arrowColor: e.target.value })} />
         </div>
       </div>
       <div className="controls-wrapper">

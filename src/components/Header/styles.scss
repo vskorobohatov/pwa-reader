@@ -15,11 +15,6 @@
     width: 32px;
     color: var(--main-text);
   }
-  .logo {
-    color: var(--second-text);
-    font-size: 14px;
-    padding: 0 4px;
-  }
 }
 
 .drawer-wrapper {
@@ -31,6 +26,15 @@
     padding: 8px;
     background-color: var(--main-bg);
     gap: var(--items-gap);
+
+    .logo {
+      color: var(--primary-color);
+      font-size: 18px;
+      font-family: var(--font-medium);
+      height: 32px;
+      display: flex;
+      align-items: center;
+    }
     button {
       text-align: left;
       text-transform: none;
