@@ -83,8 +83,10 @@ const Books = () => {
   };
 
   const clearUploadForm = () => {
-    setFileToUpload(null);
-    setLinkToUpload("");
+    setTimeout(() => {
+      setFileToUpload(null);
+      setLinkToUpload("");
+    }, 150);
   };
 
   const closeDeleteModals = () => {
@@ -146,7 +148,7 @@ const Books = () => {
       <DefaultPopover className="dropzone-popover" state={addBookPopoverState} setState={setAddBookPopoverState} onClose={clearUploadForm}>
         <div className="title">
           Upload file
-          <Button onClick={clearUploadForm} className="close-modal-btn">
+          <Button onClick={() => setAddBookPopoverState(false)} className="close-modal-btn">
             <CloseIcon />
           </Button>
         </div>
