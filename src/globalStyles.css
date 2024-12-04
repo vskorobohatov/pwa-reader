@@ -150,3 +150,15 @@ code {
   border: 1px solid var(--border-color);
   border-radius: var(--card-radius);
 }
+
+.Toastify__toast {
+  background-color: var(--main-bg);
+  color: var(--main-text);
+  a {
+    color: var(--primary-color);
+  }
+}
+
+.Toastify__toast .Toastify__close-button {
+  color: var(--main-text);
+}

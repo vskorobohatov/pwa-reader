@@ -51,7 +51,7 @@
     align-items: stretch;
     flex-direction: column;
     gap: var(--wrapper-gap);
-    .title{
+    .title {
       font-size: 18px;
       font-family: var(--font-semibold);
     }
@@ -86,7 +86,7 @@
         cursor: pointer;
         border: 1px dashed var(--border-hover);
       }
-      &>div{
+      &>div {
         width: 100%;
       }
       .dropzone-label {
@@ -120,5 +120,31 @@
       justify-content: center;
     }
   }
+}
 
+.confirm-delete-modal {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: var(--content-gap);
+  .controls-wrapper {
+    display: flex;
+    align-items: stretch;
+    gap: var(--content-gap);
+    button {
+      &.cancel {
+        @include outline-btn();
+        &:hover {
+          border: 1px solid var(--border-hover);
+        }
+      }
+      &.delete {
+        @include primary-btn();
+        background: var(--error-color);
+        &:hover {
+          background: var(--error-color-hover);
+        }
+      }
+    }
+  }
 }

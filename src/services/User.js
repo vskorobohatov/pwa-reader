@@ -37,14 +37,15 @@ export class User {
   }
   static async updateBookInfo(bookId) {
     return ApiService._requestAsync({
-      url: `/getBookInfo.php?bookId=${bookId}`,
-      method: "GET"
+      url: `/updateBookInfo.php`,
+      method: "POST",
+      data: { bookId }
     });
   }
   static async deleteBook(bookId) {
     return ApiService._requestAsync({
-      url: `/getBookInfo.php?bookId=${bookId}`,
-      method: "GET",
+      url: `/deleteBook.php`,
+      method: "POST",
       data: { bookId }
     });
   }

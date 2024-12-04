@@ -84,6 +84,52 @@ $breakpoint-mobile: 767px;
   }
 }
 
+@mixin outline-btn() {
+  height: var(--button-height);
+  display: flex;
+  padding: var(--button-padding);
+  min-width: unset;
+  font-size: 14px;
+  font-family: var(--font-medium);
+  color: var(--main-text);
+  border: 1px solid var(--border-color);
+  background: transparent;
+  border-radius: var(--button-radius);
+  letter-spacing: unset;
+  text-transform: unset;
+  transition: .3s all;
+  box-sizing: border-box;
+  cursor: pointer;
+  line-height: unset;
+  letter-spacing: unset;
+  gap: var(--items-gap);
+  &:hover {
+    background: var(--main-bg);
+    border-color: var(--primary-color-hover);
+  }
+
+  svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
+
+  .MuiTouchRipple-root {
+    display: none;
+  }
+
+  &.Mui-disabled {
+    opacity: 0.7;
+    background: transparent;
+    color: var(--main-text);
+  }
+
+  &.active {
+    border: 1px solid var(--primary-color);
+    background: var(--primary-color-bg);
+    color: var(--primary-color);
+  }
+}
 
 @keyframes transform-animation {
   0% {

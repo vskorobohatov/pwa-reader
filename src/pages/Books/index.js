@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import Dropzone from "react-dropzone";
+import { toast } from "react-toastify";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
@@ -12,6 +13,8 @@ import DefaultPopover, { PopoverItem } from "components/DefaultPopover";
 
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
+import ModalWrapper from "components/ModalWrapper";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import "./styles.scss";
@@ -20,8 +23,11 @@ const Books = () => {
   const navigate = useNavigate();
   const [popoverState, setPopoverState] = useState(null);
   const [addBookPopoverState, setAddBookPopoverState] = useState(null);
+  const [activeBook, setActiveBook] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [fileToUpload, setFileToUpload] = useState(null);
   const [linkToUpload, setLinkToUpload] = useState("");
+  const [uploadError, setUploadError] = useState(null);
   const [books, setBooks] = useState([
     {
       id: 1,
@@ -42,10 +48,11 @@ const Books = () => {
     }
   };
 
-  const handleBookMenuClick = e => {
+  const handleBookMenuClick = (e, book) => {
     e.preventDefault();
     e.stopPropagation();
-    setPopoverState(e.currentTarget)
+    setPopoverState(e.currentTarget);
+    setActiveBook(book);
   };
 
   const handleUploadFile = async () => {
@@ -54,24 +61,43 @@ const Books = () => {
       data.append('file', fileToUpload);
       await User.addBook(data);
       setAddBookPopoverState(null);
+      toast.success("File was uploaded successfully!");
       getBooksList();
     } catch (e) {
-      console.log(e)
+      console.log(e);
+      setUploadError(e?.response?.data?.message || "Something went wrong...");
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      await User.deleteBook(activeBook.id);
+      toast.success("File was uploaded successfully!");
+      getBooksList();
+    } catch (e) {
+      console.log(e);
+      toast.error(e?.response?.data?.message || "Something went wrong...");
+    } finally {
+      closeDeleteModals();
     }
   };
 
   const clearUploadForm = () => {
     setFileToUpload(null);
     setLinkToUpload("");
+  };
 
-  }
+  const closeDeleteModals = () => {
+    setActiveBook(null);
+    setShowDeleteModal(false);
+  };
 
   return (
     <div className="books-wrapper">
       {books.map(book => (
         <div className="book-item" key={book.id} onClick={() => navigate(`${BOOKS}/${book.id}`)}>
           <div className="name">{book.name}</div>
-          <Button className="menu-btn" onClick={handleBookMenuClick}>
+          <Button className="menu-btn" onClick={e => handleBookMenuClick(e, book)}>
             <MoreVertIcon />
           </Button>
         </div>
@@ -83,11 +109,47 @@ const Books = () => {
 
       <DefaultPopover state={popoverState} setState={setPopoverState}>
         <PopoverItem icon={<EditIcon />} label="Edit" />
-        <PopoverItem isDelete icon={<DeleteOutlineIcon />} label="Delete" />
+        <PopoverItem
+          isDelete
+          icon={<DeleteOutlineIcon />}
+          label="Delete"
+          onClick={() => {
+            setShowDeleteModal(true);
+            setPopoverState(null);
+          }}
+        />
       </DefaultPopover>
 
+      <ModalWrapper
+        title="Are you sure?"
+        subtitle="This action will remove file and all corresponding data."
+        open={showDeleteModal && activeBook}
+        onClose={closeDeleteModals}
+        contentClassName="confirm-delete-modal"
+      >
+        <div className="controls-wrapper">
+          <Button
+            className="cancel"
+            onClick={closeDeleteModals}
+          >
+            Cancel
+          </Button>
+          <Button
+            className="delete"
+            onClick={handleDelete}
+          >
+            Delete
+          </Button>
+        </div>
+      </ModalWrapper>
+
       <DefaultPopover className="dropzone-popover" state={addBookPopoverState} setState={setAddBookPopoverState} onClose={clearUploadForm}>
-        <div className="title">Upload file</div>
+        <div className="title">
+          Upload file
+          <Button onClick={clearUploadForm} className="close-modal-btn">
+            <CloseIcon />
+          </Button>
+        </div>
         {!!fileToUpload ? (
           <div className="file-info-wrapper">
             <div className="info-item">
@@ -101,7 +163,12 @@ const Books = () => {
           </div>
         ) : (
           <>
-            <Dropzone onDrop={acceptedFiles => setFileToUpload(acceptedFiles[0])}>
+            <Dropzone
+              onDrop={acceptedFiles => {
+                setFileToUpload(acceptedFiles[0]);
+                setUploadError("");
+              }}
+            >
               {({ getRootProps, getInputProps }) => (
                 <div className="dropzone-wrapper">
                   <div {...getRootProps()}>
@@ -120,11 +187,15 @@ const Books = () => {
               label="Link to the file"
               placeholder="https://example.com/file.epub"
               value={linkToUpload}
-              onChange={e => setLinkToUpload(e.target.value)}
+              onChange={e => {
+                setLinkToUpload(e.target.value);
+                setUploadError("");
+              }}
             />
           </>
         )}
         <Button className="upload-btn" onClick={handleUploadFile}>Confirm</Button>
+        {uploadError && <div className="error-text">{uploadError}</div>}
       </DefaultPopover>
     </div>
   )
