@@ -19,14 +19,16 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import "./styles.scss";
 
+const defaultLinkValue = { name: "", url: "" };
+
 const Books = () => {
   const navigate = useNavigate();
   const [popoverState, setPopoverState] = useState(null);
   const [addBookPopoverState, setAddBookPopoverState] = useState(null);
   const [activeBook, setActiveBook] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [fileToUpload, setFileToUpload] = useState(null);
-  const [linkToUpload, setLinkToUpload] = useState("");
+  const [filesToUpload, setFilesToUpload] = useState([]);
+  const [linkToUpload, setLinkToUpload] = useState(defaultLinkValue);
   const [uploadError, setUploadError] = useState(null);
   const [books, setBooks] = useState([
     // {
@@ -57,9 +59,17 @@ const Books = () => {
 
   const handleUploadFile = async () => {
     try {
-      const data = new FormData();
-      data.append('file', fileToUpload);
-      await User.addBook(data);
+      
+      await Promise.all([
+        ...filesToUpload.map(file => {
+          const fileFormData = new FormData();
+          fileFormData.append('file', file);
+          return User.uploadFile(fileFormData);
+        })
+      ]);
+
+      await User.uploadLink(linkToUpload);
+
       setAddBookPopoverState(null);
       toast.success("File was uploaded successfully!");
       getBooksList();
@@ -84,8 +94,8 @@ const Books = () => {
 
   const clearUploadForm = () => {
     setTimeout(() => {
-      setFileToUpload(null);
-      setLinkToUpload("");
+      setFilesToUpload([]);
+      setLinkToUpload(defaultLinkValue);
     }, 150);
   };
 
@@ -147,27 +157,37 @@ const Books = () => {
 
       <DefaultPopover className="dropzone-popover" state={addBookPopoverState} setState={setAddBookPopoverState} onClose={clearUploadForm}>
         <div className="title">
-          Upload file
-          <Button onClick={() => setAddBookPopoverState(false)} className="close-modal-btn">
+          Upload file(s)
+          <Button
+            className="close-modal-btn"
+            onClick={() => {
+              setAddBookPopoverState(false)
+              clearUploadForm();
+            }}
+          >
             <CloseIcon />
           </Button>
         </div>
-        {!!fileToUpload ? (
-          <div className="file-info-wrapper">
-            <div className="info-item">
-              <div className="item-label">Name</div>
-              <div className="item-value">{fileToUpload.name}</div>
-            </div>
-            <div className="info-item">
-              <div className="item-label">Size</div>
-              <div className="item-value">{formatBytes(fileToUpload.size)}</div>
-            </div>
+        {!!filesToUpload.length ? (
+          <div className="files-list">
+            {filesToUpload.map(file => (
+              <div className="file-info-wrapper">
+                <div className="info-item name">
+                  <div className="item-label">Name</div>
+                  <div className="item-value">{file.name}</div>
+                </div>
+                <div className="info-item size">
+                  <div className="item-label">Size</div>
+                  <div className="item-value">{formatBytes(file.size)}</div>
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
           <>
             <Dropzone
               onDrop={acceptedFiles => {
-                setFileToUpload(acceptedFiles[0]);
+                setFilesToUpload(acceptedFiles);
                 setUploadError("");
               }}
             >
@@ -175,7 +195,7 @@ const Books = () => {
                 <div className="dropzone-wrapper">
                   <div {...getRootProps()}>
                     <input {...getInputProps()} />
-                    <div className="dropzone-label">Drag 'n' drop file here, <br />or click to select file</div>
+                    <div className="dropzone-label">Drag 'n' drop some files here, <br />or click to select files</div>
                   </div>
                 </div>
               )}
@@ -185,15 +205,26 @@ const Books = () => {
               <div>or</div>
               <span></span>
             </div>
-            <StyledTextField
-              label="Link to the file"
-              placeholder="https://example.com/file.epub"
-              value={linkToUpload}
-              onChange={e => {
-                setLinkToUpload(e.target.value);
-                setUploadError("");
-              }}
-            />
+            <div className="link-upload-wrapper">
+              <StyledTextField
+                label="File name"
+                placeholder="Mybook.epub"
+                value={linkToUpload.name}
+                onChange={e => {
+                  setLinkToUpload(prevState => ({ ...prevState, name: e.target.value }));
+                  setUploadError("");
+                }}
+              />
+              <StyledTextField
+                label="Link to the file"
+                placeholder="https://example.com/file.epub"
+                value={linkToUpload.url}
+                onChange={e => {
+                  setLinkToUpload(prevState => ({ ...prevState, url: e.target.value }));
+                  setUploadError("");
+                }}
+              />
+            </div>
           </>
         )}
         <Button className="upload-btn" onClick={handleUploadFile}>Confirm</Button>

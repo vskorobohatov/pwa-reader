@@ -15,7 +15,14 @@ export class User {
       data
     });
   }
-  static async addBook(data) {
+  static async uploadFile(data) {
+    return ApiService._requestAsync({
+      url: "/addBook.php",
+      method: "POST",
+      data
+    });
+  }
+  static async uploadLink(data) {
     return ApiService._requestAsync({
       url: "/addBook.php",
       method: "POST",
