@@ -29,10 +29,10 @@ const Books = () => {
   const [linkToUpload, setLinkToUpload] = useState("");
   const [uploadError, setUploadError] = useState(null);
   const [books, setBooks] = useState([
-    {
-      id: 1,
-      name: "Test book for development purposes. Ignore it."
-    }
+    // {
+    //   id: 1,
+    //   name: "Test book for development purposes. Ignore it."
+    // }
   ]);
 
   useEffect(() => {
