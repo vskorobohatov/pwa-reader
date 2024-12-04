@@ -90,14 +90,14 @@ const BookReader = () => {
       height: "100%",
       bottom: 0,
       top: "unset",
-      zIndex: 1
+      zIndex: 19
     },
     prev: {
       ...ReactReaderStyle.prev,
       height: "100%",
       bottom: 0,
       top: "unset",
-      zIndex: 1
+      zIndex: 19
     },
     arrow: {
       ...ReactReaderStyle.arrow,
@@ -131,7 +131,7 @@ const BookReader = () => {
     tocButton: {
       ...ReactReaderStyle.tocButton,
       color: savedStyles.color,
-      zIndex: 2
+      zIndex: 20
     },
   }
 
