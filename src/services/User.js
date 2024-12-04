@@ -43,11 +43,11 @@ export class User {
       method: "GET"
     });
   }
-  static async updateBookInfo(bookId) {
+  static async updateBookInfo(data) {
     return ApiService._requestAsync({
       url: `/updateBookInfo.php`,
       method: "POST",
-      data: { bookId }
+      data
     });
   }
   static async deleteBook(bookId) {

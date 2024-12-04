@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  EpubViewer
-} from 'react-epub-viewer'
+import { ReactReader } from 'react-reader'
 
 import { User } from "services/User";
 
@@ -10,8 +8,17 @@ import "./styles.scss";
 
 const BookReader = () => {
   const { bookId } = useParams();
-  const [bookData, setBookData] = useState({ url: "", location: 0 });
-  const viewerRef = useRef(null);
+  const [bookData, setBookData] = useState(
+    { url: "", position: 0 }
+    // {
+    //   "name": "2hgfh.epub",
+    //   "url": "https://scalan.com/apps/reader/books/1/2hgfh.epub",
+    //   "uploadedAt": "2024-12-04 14:09:55",
+    //   "size": 683370,
+    //   "position": "0",
+    //   "updatedAt": null
+    // }
+  );
 
   useEffect(() => {
     getBookData(bookId);
@@ -20,19 +27,35 @@ const BookReader = () => {
   const getBookData = async (id) => {
     try {
       const res = await User.getBookInfo(id);
-      console.log(res)
       setBookData(res?.result || null);
     } catch (e) {
       console.log(e)
     }
   };
 
+  const updateLocation = async (location) => {
+    try {
+      await User.updateBookInfo({
+        bookId,
+        position: location,
+        updatedAt: new Date().toString()
+      });
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
     <div className="book-reader-wrapper">
-      <EpubViewer
-        location={bookData.location}
+      <ReactReader
+        location={+bookData.position}
         url={bookData.url}
-        ref={viewerRef}
+        locationChanged={epubcfi => {
+          if (epubcfi !== +bookData.position) {
+            setBookData(prevState => ({ ...prevState, position: epubcfi }));
+            updateLocation(epubcfi);
+          }
+        }}
       />
     </div>
   )
