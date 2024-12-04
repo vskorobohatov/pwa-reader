@@ -74,6 +74,13 @@ const BookReader = () => {
 
   const darkReaderTheme = {
     ...ReactReaderStyle,
+    reader: {
+      ...ReactReaderStyle.reader,
+      top: savedStyles.paddingTop,
+      bottom: savedStyles.paddingBottom,
+      left: savedStyles.paddingLeft,
+      right: savedStyles.paddingRight,
+    },
     loadingView: {
       ...ReactReaderStyle.loadingView,
       color: savedStyles.color,

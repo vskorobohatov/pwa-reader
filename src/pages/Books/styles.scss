@@ -7,6 +7,7 @@
   flex-direction: column;
   position: relative;
   height: 100%;
+  overflow: auto;
 
   .book-item {
     height: 60px;
@@ -32,7 +33,7 @@
   .add-book-btn {
     position: absolute;
     right: 16px;
-    bottom: 16px;
+    bottom: 24px;
     padding: 0;
     min-width: 0;
     width: 40px;
@@ -47,10 +48,14 @@
   .MuiPaper-root {
     width: calc(100% - 32px);
     max-width: 500px;
-    display: flex;
-    align-items: stretch;
-    flex-direction: column;
-    gap: var(--wrapper-gap);
+    overflow: auto !important;
+
+    .dropzone-popover-content {
+      display: flex;
+      align-items: stretch;
+      flex-direction: column;
+      gap: var(--wrapper-gap);
+    }
     .title {
       font-size: 18px;
       line-height: 22px;
@@ -76,7 +81,7 @@
         gap: var(--content-gap);
         padding: 8px 0;
         border-bottom: 1px solid var(--divider-color);
-        &:last-child{
+        &:last-child {
           border-bottom: none;
           padding-bottom: 0;
         }
@@ -146,7 +151,7 @@
         background-color: var(--second-text);
       }
     }
-    .link-upload-wrapper{
+    .link-upload-wrapper {
       display: flex;
       flex-direction: column;
       align-items: stretch;

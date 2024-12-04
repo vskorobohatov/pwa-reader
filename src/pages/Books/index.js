@@ -59,7 +59,7 @@ const Books = () => {
 
   const handleUploadFile = async () => {
     try {
-      
+
       await Promise.all([
         ...filesToUpload.map(file => {
           const fileFormData = new FormData();
@@ -156,79 +156,81 @@ const Books = () => {
       </ModalWrapper>
 
       <DefaultPopover className="dropzone-popover" state={addBookPopoverState} setState={setAddBookPopoverState} onClose={clearUploadForm}>
-        <div className="title">
-          Upload file(s)
-          <Button
-            className="close-modal-btn"
-            onClick={() => {
-              setAddBookPopoverState(false)
-              clearUploadForm();
-            }}
-          >
-            <CloseIcon />
-          </Button>
-        </div>
-        {!!filesToUpload.length ? (
-          <div className="files-list">
-            {filesToUpload.map(file => (
-              <div className="file-info-wrapper">
-                <div className="info-item name">
-                  <div className="item-label">Name</div>
-                  <div className="item-value">{file.name}</div>
-                </div>
-                <div className="info-item size">
-                  <div className="item-label">Size</div>
-                  <div className="item-value">{formatBytes(file.size)}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <>
-            <Dropzone
-              onDrop={acceptedFiles => {
-                setFilesToUpload(acceptedFiles);
-                setUploadError("");
+        <div className="dropzone-popover-content">
+          <div className="title">
+            Upload file(s)
+            <Button
+              className="close-modal-btn"
+              onClick={() => {
+                setAddBookPopoverState(false)
+                clearUploadForm();
               }}
             >
-              {({ getRootProps, getInputProps }) => (
-                <div className="dropzone-wrapper">
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <div className="dropzone-label">Drag 'n' drop some files here, <br />or click to select files</div>
+              <CloseIcon />
+            </Button>
+          </div>
+          {!!filesToUpload.length ? (
+            <div className="files-list">
+              {filesToUpload.map(file => (
+                <div className="file-info-wrapper">
+                  <div className="info-item name">
+                    <div className="item-label">Name</div>
+                    <div className="item-value">{file.name}</div>
+                  </div>
+                  <div className="info-item size">
+                    <div className="item-label">Size</div>
+                    <div className="item-value">{formatBytes(file.size)}</div>
                   </div>
                 </div>
-              )}
-            </Dropzone>
-            <div className="divider">
-              <span></span>
-              <div>or</div>
-              <span></span>
+              ))}
             </div>
-            <div className="link-upload-wrapper">
-              <StyledTextField
-                label="File name"
-                placeholder="Mybook.epub"
-                value={linkToUpload.name}
-                onChange={e => {
-                  setLinkToUpload(prevState => ({ ...prevState, name: e.target.value }));
+          ) : (
+            <>
+              <Dropzone
+                onDrop={acceptedFiles => {
+                  setFilesToUpload(acceptedFiles);
                   setUploadError("");
                 }}
-              />
-              <StyledTextField
-                label="Link to the file"
-                placeholder="https://example.com/file.epub"
-                value={linkToUpload.url}
-                onChange={e => {
-                  setLinkToUpload(prevState => ({ ...prevState, url: e.target.value }));
-                  setUploadError("");
-                }}
-              />
-            </div>
-          </>
-        )}
-        <Button className="upload-btn" onClick={handleUploadFile}>Confirm</Button>
-        {uploadError && <div className="error-text">{uploadError}</div>}
+              >
+                {({ getRootProps, getInputProps }) => (
+                  <div className="dropzone-wrapper">
+                    <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      <div className="dropzone-label">Drag 'n' drop some files here, <br />or click to select files</div>
+                    </div>
+                  </div>
+                )}
+              </Dropzone>
+              <div className="divider">
+                <span></span>
+                <div>or</div>
+                <span></span>
+              </div>
+              <div className="link-upload-wrapper">
+                <StyledTextField
+                  label="File name"
+                  placeholder="Mybook.epub"
+                  value={linkToUpload.name}
+                  onChange={e => {
+                    setLinkToUpload(prevState => ({ ...prevState, name: e.target.value }));
+                    setUploadError("");
+                  }}
+                />
+                <StyledTextField
+                  label="Link to the file"
+                  placeholder="https://example.com/file.epub"
+                  value={linkToUpload.url}
+                  onChange={e => {
+                    setLinkToUpload(prevState => ({ ...prevState, url: e.target.value }));
+                    setUploadError("");
+                  }}
+                />
+              </div>
+            </>
+          )}
+          <Button className="upload-btn" onClick={handleUploadFile}>Confirm</Button>
+          {uploadError && <div className="error-text">{uploadError}</div>}
+        </div>
       </DefaultPopover>
     </div>
   )

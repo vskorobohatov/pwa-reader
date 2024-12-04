@@ -6,7 +6,7 @@
   align-items: stretch;
   flex-direction: column;
   gap: var(--wrapper-gap);
-  padding: 8px;
+  padding: 8px 8px 24px;
 
   .section {
     display: flex;
@@ -54,7 +54,6 @@
   }
 
   .controls-wrapper {
-    margin-top: auto;
     display: flex;
     gap: var(--content-gap);
 
