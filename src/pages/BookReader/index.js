@@ -61,6 +61,17 @@ const BookReader = () => {
 
   const savedStyles = getSavedStyles();
 
+  const updateTheme = (rendition) => {
+    const themes = rendition.themes
+    themes.override('font-size', savedStyles.fontSize);
+    themes.override('color', savedStyles.color);
+    themes.override('background', savedStyles.background);
+    themes.override('padding-top', savedStyles.paddingTop);
+    themes.override('padding-bottom', savedStyles.paddingBottom);
+    themes.override('padding-left', savedStyles.paddingLeft);
+    themes.override('padding-right', savedStyles.paddingRight);
+  }
+
   const darkReaderTheme = {
     ...ReactReaderStyle,
     loadingView: {
@@ -114,7 +125,10 @@ const BookReader = () => {
           }
         }}
         readerStyles={darkReaderTheme}
-        getRendition={_rendition => rendition.current = _rendition}
+        getRendition={_rendition => {
+          updateTheme(_rendition, theme);
+          rendition.current = _rendition
+        }}
       />
     </div>
   )
