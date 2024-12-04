@@ -19,6 +19,7 @@ export class User {
     return ApiService._requestAsync({
       url: "/addBook.php",
       method: "POST",
+      headers: { "Content-Type": "application/epub+zip" },
       data
     });
   }
