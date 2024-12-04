@@ -8,7 +8,6 @@ import { User } from "services/User";
 import { defaultStyles } from "pages/Settings";
 
 import "./styles.scss";
-import zIndex from "@mui/material/styles/zIndex";
 
 const BookReader = () => {
   const { bookId } = useParams();
