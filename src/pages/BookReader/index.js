@@ -5,6 +5,7 @@ import { ReactReader } from 'react-reader'
 import { User } from "services/User";
 
 import "./styles.scss";
+import { debounce } from "lodash";
 
 const BookReader = () => {
   const { bookId } = useParams();
@@ -45,6 +46,8 @@ const BookReader = () => {
     }
   }
 
+  const debouncedUpdateLocation = useCallback(debounce(updateLocation, { wait: 60000, maxWait: 60000 }), []);
+
   return (
     <div className="book-reader-wrapper">
       <ReactReader
@@ -53,7 +56,7 @@ const BookReader = () => {
         locationChanged={epubcfi => {
           if (epubcfi !== +bookData.position) {
             setBookData(prevState => ({ ...prevState, position: epubcfi }));
-            updateLocation(epubcfi);
+            debouncedUpdateLocation(epubcfi);
           }
         }}
       />
