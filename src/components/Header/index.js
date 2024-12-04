@@ -41,7 +41,7 @@ function Header() {
         </Button>
         <Button onClick={() => redirect(SETTINGS)}>
           <SettingsIcon />
-          Home
+          Settings
         </Button>
         <Button className='sign-out-btn' onClick={handleLogout}>
           <LogoutIcon />

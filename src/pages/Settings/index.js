@@ -5,7 +5,7 @@ import StyledTextField from "components/StyledTextField";
 
 import "./styles.scss";
 
-const defaultStyles = {
+export const defaultStyles = {
   fontSize: `100%`,
   background: "#FFFFFF",
   color: "#000000",

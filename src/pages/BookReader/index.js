@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { ReactReader } from 'react-reader'
+import { ReactReader, ReactReaderStyle } from 'react-reader'
 import { debounce } from "lodash";
 import moment from "moment";
 
 import { User } from "services/User";
+import { defaultStyles } from "pages/Settings";
 
 import "./styles.scss";
 
@@ -50,7 +51,66 @@ const BookReader = () => {
 
   const debouncedUpdateLocation = useCallback(debounce(updateLocation, 60000, { maxWait: 60000 }), []);
 
-  const getSavedStyles = () => JSON.parse(localStorage.getItem("bookStyles"));
+  const getSavedStyles = () => {
+    const bookStyles = localStorage.getItem("bookStyles");
+    if (bookStyles) {
+      return JSON.parse(bookStyles);
+    }
+    return defaultStyles;
+  };
+
+  const savedStyles = getSavedStyles();
+  console.log(ReactReaderStyle)
+  // if (savedStyles) {
+  //   rendition.current.themes.override('font-size', savedStyles.fontSize)
+  //   rendition.current.themes.override('color', savedStyles.color)
+  //   rendition.current.themes.override('background', savedStyles.background);
+  //   rendition.current.themes.override('padding-top', `${savedStyles.paddingTop}px`);
+  //   rendition.current.themes.override('padding-bottom', `${savedStyles.paddingBottom}px`);
+  //   rendition.current.themes.override('padding-left', `${savedStyles.paddingLeft}px`);
+  //   rendition.current.themes.override('padding-right', `${savedStyles.paddingRight}px`);
+  // }
+
+  const darkReaderTheme = {
+    ...ReactReaderStyle,
+    loadingView: {
+      ...ReactReaderStyle.loadingView,
+      color: savedStyles.color,
+    },
+    arrow: {
+      ...ReactReaderStyle.arrow,
+      color: savedStyles.color,
+    },
+    arrowHover: {
+      ...ReactReaderStyle.arrowHover,
+      color: savedStyles.color,
+    },
+    readerArea: {
+      ...ReactReaderStyle.readerArea,
+      backgroundColor: savedStyles.background,
+      transition: undefined,
+    },
+    titleArea: {
+      ...ReactReaderStyle.titleArea,
+      color: savedStyles.color,
+    },
+    tocArea: {
+      ...ReactReaderStyle.tocArea,
+      background: savedStyles.background,
+    },
+    tocButtonExpanded: {
+      ...ReactReaderStyle.tocButtonExpanded,
+      background: savedStyles.background,
+    },
+    tocButtonBar: {
+      ...ReactReaderStyle.tocButtonBar,
+      background: savedStyles.color,
+    },
+    tocButton: {
+      ...ReactReaderStyle.tocButton,
+      color: savedStyles.color,
+    },
+  }
 
   return (
     <div className="book-reader-wrapper">
@@ -63,19 +123,8 @@ const BookReader = () => {
             debouncedUpdateLocation(epubcfi);
           }
         }}
-        getRendition={_rendition => {
-          rendition.current = _rendition;
-          const savedStyles = getSavedStyles();
-          if (savedStyles) {
-            rendition.current.themes.override('font-size', savedStyles.fontSize)
-            rendition.current.themes.override('color', savedStyles.color)
-            rendition.current.themes.override('background', savedStyles.background);
-            rendition.current.themes.override('padding-top', `${savedStyles.paddingTop}px`);
-            rendition.current.themes.override('padding-bottom', `${savedStyles.paddingBottom}px`);
-            rendition.current.themes.override('padding-left', `${savedStyles.paddingLeft}px`);
-            rendition.current.themes.override('padding-right', `${savedStyles.paddingRight}px`);
-          }
-        }}
+        readerStyles={darkReaderTheme}
+        getRendition={_rendition => rendition.current = _rendition}
       />
     </div>
   )
