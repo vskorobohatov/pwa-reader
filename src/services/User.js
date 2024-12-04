@@ -17,7 +17,7 @@ export class User {
   }
   static async uploadFile(data) {
     return ApiService._requestAsync({
-      url: "/addBook.php",
+      url: "/uploadBook.php",
       method: "POST",
       headers: { "Content-Type": "application/epub+zip" },
       data
