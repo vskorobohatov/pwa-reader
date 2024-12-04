@@ -126,7 +126,7 @@ const BookReader = () => {
         }}
         readerStyles={darkReaderTheme}
         getRendition={_rendition => {
-          updateTheme(_rendition, theme);
+          updateTheme(_rendition);
           rendition.current = _rendition
         }}
       />
