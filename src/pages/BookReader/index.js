@@ -22,9 +22,9 @@ const BookReader = () => {
   useEffect(() => {
     getBookData(bookId);
 
-    window.addEventListener("beforeunload", () => updateLocation());
+    window.addEventListener("beforeunload", () => updatePosition());
     return () => {
-      window.removeEventListener("beforeunload", () => updateLocation());
+      window.removeEventListener("beforeunload", () => updatePosition());
     };
   }, [bookId]);
 
@@ -37,11 +37,11 @@ const BookReader = () => {
     }
   };
 
-  const updateLocation = location => {
+  const updatePosition = position => {
     try {
       User.updateBookInfo({
         bookId,
-        position: location || bookData.location,
+        position: position || bookData.position,
         updatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
       });
     } catch (e) {
@@ -49,10 +49,10 @@ const BookReader = () => {
     }
   }
 
-  const debouncedUpdateLocation = useCallback(debounce(updateLocation, 15000, { maxWait: 30000 }), []);
+  const debouncedUpdateLocation = useCallback(debounce(updatePosition, 15000, { maxWait: 30000 }), []);
 
   const handleClose = () => {
-    updateLocation();
+    updatePosition();
     navigate(BOOKS);
   }
 
