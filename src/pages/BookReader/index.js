@@ -156,7 +156,7 @@ const BookReader = () => {
       </Button>
       <ReactReader
         swipeable
-        location={bookData.position}
+        location={bookData.position || ""}
         url={bookData.url}
         locationChanged={epubcfi => {
           if (epubcfi !== bookData.position) {
