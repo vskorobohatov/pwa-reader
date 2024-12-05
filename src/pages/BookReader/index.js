@@ -1,25 +1,30 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
-import { ReactReader, ReactReaderStyle } from 'react-reader'
+import { useNavigate, useParams } from "react-router-dom";
 import { debounce } from "lodash";
+import { Button } from "@mui/material";
+import { ReactReader, ReactReaderStyle } from 'react-reader'
 import moment from "moment";
 
 import { User } from "services/User";
+import { BOOKS } from "pathnameVariables";
 import { defaultStyles } from "pages/Settings";
 
+import CloseIcon from '@mui/icons-material/Close';
 import "./styles.scss";
 
 const BookReader = () => {
   const { bookId } = useParams();
+  const navigate = useNavigate();
   const rendition = useRef(undefined)
   const [bookData, setBookData] = useState({});
+  const [showUi, setShowUi] = useState(true);
 
   useEffect(() => {
     getBookData(bookId);
 
-    window.addEventListener("beforeunload", updateLocation);
+    window.addEventListener("beforeunload", () => updateLocation());
     return () => {
-      window.removeEventListener("beforeunload", updateLocation);
+      window.removeEventListener("beforeunload", () => updateLocation());
     };
   }, [bookId]);
 
@@ -36,7 +41,7 @@ const BookReader = () => {
     try {
       User.updateBookInfo({
         bookId,
-        position: location,
+        position: location || bookData.location,
         updatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
       });
     } catch (e) {
@@ -44,7 +49,12 @@ const BookReader = () => {
     }
   }
 
-  const debouncedUpdateLocation = useCallback(debounce(updateLocation, 30000, { maxWait: 60000 }), []);
+  const debouncedUpdateLocation = useCallback(debounce(updateLocation, 15000, { maxWait: 30000 }), []);
+
+  const handleClose = () => {
+    updateLocation();
+    navigate(BOOKS);
+  }
 
   const getSavedStyles = () => {
     const bookStyles = localStorage.getItem("bookStyles");
@@ -67,6 +77,14 @@ const BookReader = () => {
     themes.override('padding-right', savedStyles.paddingRight);
   }
 
+  const arrowBtnStyles = {
+    height: "calc(100% - 48px)",
+    width: "75px",
+    bottom: 0,
+    top: "unset",
+    zIndex: 3
+  }
+
   const darkReaderTheme = {
     ...ReactReaderStyle,
     reader: {
@@ -83,17 +101,13 @@ const BookReader = () => {
     },
     next: {
       ...ReactReaderStyle.next,
-      height: "80%",
-      bottom: 0,
-      top: "unset",
-      zIndex: 3
+      ...arrowBtnStyles,
+      textAlign: "end"
     },
     prev: {
       ...ReactReaderStyle.prev,
-      height: "80%",
-      bottom: 0,
-      top: "unset",
-      zIndex: 3
+      ...arrowBtnStyles,
+      textAlign: "start"
     },
     arrow: {
       ...ReactReaderStyle.arrow,
@@ -128,13 +142,18 @@ const BookReader = () => {
       ...ReactReaderStyle.tocButton,
       color: savedStyles.color,
       zIndex: 4,
-      top: 56,
-      left: 8
+      left: 8,
+      transition: "0.3s all",
+      opacity: showUi ? 1 : 0
     },
-  }
+  };
 
   return (
     <div className="book-reader-wrapper">
+      <div className="toggle-ui-button" onClick={() => setShowUi(!showUi)} />
+      <Button className={`close-btn ${!showUi ? "hidden" : ""}`} onClick={handleClose}>
+        <CloseIcon />
+      </Button>
       <ReactReader
         swipeable
         location={bookData.position}

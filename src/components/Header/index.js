@@ -27,8 +27,12 @@ function Header() {
     setDrawerOpen(false);
   }
 
+  if (!!bookId) {
+    return null;
+  }
+
   return (
-    <div className={`header-wrapper ${!!bookId ? "compact" : ""}`}>
+    <div className="header-wrapper">
       <Button className='menu-btn' onClick={() => setDrawerOpen(true)}>
         <MenuIcon color='#FFFFFF' />
       </Button>
