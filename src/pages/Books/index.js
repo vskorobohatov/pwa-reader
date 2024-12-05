@@ -52,7 +52,7 @@ const Books = () => {
   const handleDelete = async () => {
     try {
       await User.deleteBook(activeBook.id);
-      toast.success("File was uploaded successfully!");
+      toast.success("File was deleted successfully!");
       getBooksList();
     } catch (e) {
       console.log(e);
