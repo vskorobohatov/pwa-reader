@@ -22,11 +22,6 @@ const BookReader = () => {
 
   useEffect(() => {
     getBookData(bookId);
-
-    window.addEventListener("beforeunload", () => updatePosition());
-    return () => {
-      window.removeEventListener("beforeunload", () => updatePosition());
-    };
   }, [bookId]);
 
   const getBookData = async (id) => {
@@ -47,7 +42,7 @@ const BookReader = () => {
           position: pos,
           updatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
         });
-        setLastSavedPage(pos)
+        setLastSavedPage(pos);
       }
     } catch (e) {
       console.log(e)
