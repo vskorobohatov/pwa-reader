@@ -12,20 +12,15 @@ import "./styles.scss";
 const BookReader = () => {
   const { bookId } = useParams();
   const rendition = useRef(undefined)
-  const [bookData, setBookData] = useState(
-    // { url: "", position: 0 }
-    {
-      "name": "2hgfh.epub",
-      "url": "https:\/\/scalan.com\/apps\/reader\/books\/1\/qazxsw111.epub",
-      "uploadedAt": "2024-12-04 14:09:55",
-      "size": 683370,
-      "position": "0",
-      "updatedAt": null
-    }
-  );
+  const [bookData, setBookData] = useState({});
 
   useEffect(() => {
     getBookData(bookId);
+
+    window.addEventListener("beforeunload", updateLocation);
+    return () => {
+      window.removeEventListener("beforeunload", updateLocation);
+    };
   }, [bookId]);
 
   const getBookData = async (id) => {
@@ -37,9 +32,9 @@ const BookReader = () => {
     }
   };
 
-  const updateLocation = async (location) => {
+  const updateLocation = location => {
     try {
-      await User.updateBookInfo({
+      User.updateBookInfo({
         bookId,
         position: location,
         updatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
@@ -49,7 +44,7 @@ const BookReader = () => {
     }
   }
 
-  const debouncedUpdateLocation = useCallback(debounce(updateLocation, 60000, { maxWait: 60000 }), []);
+  const debouncedUpdateLocation = useCallback(debounce(updateLocation, 30000, { maxWait: 60000 }), []);
 
   const getSavedStyles = () => {
     const bookStyles = localStorage.getItem("bookStyles");
