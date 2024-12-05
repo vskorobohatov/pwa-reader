@@ -49,7 +49,7 @@ const BookReader = () => {
     }
   }
 
-  const debouncedUpdateLocation = useCallback(debounce(updatePosition, 15000, { maxWait: 30000 }), []);
+  const debouncedUpdateLocation = useCallback(debounce(updatePosition, 5000, { maxWait: 30000 }), []);
 
   const handleClose = () => {
     updatePosition();
