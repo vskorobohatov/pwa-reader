@@ -5,7 +5,6 @@ import { SIGN_IN } from "pathnameVariables";
 
 const PrivateRoute = ({ element }) => {
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     if (!getToken()) {

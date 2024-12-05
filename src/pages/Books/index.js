@@ -1,25 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import Dropzone from "react-dropzone";
 import { toast } from "react-toastify";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
-import { formatBytes } from "helpers/format";
 
-import StyledTextField from "components/StyledTextField";
+import Loader from "components/Loader";
+import UploadPopover from "components/UploadPopover";
 import DefaultPopover, { PopoverItem } from "components/DefaultPopover";
 
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
-import CloseIcon from '@mui/icons-material/Close';
 import ModalWrapper from "components/ModalWrapper";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import "./styles.scss";
-
-const defaultLinkValue = { name: "", url: "" };
 
 const Books = () => {
   const navigate = useNavigate();
@@ -27,15 +23,24 @@ const Books = () => {
   const [addBookPopoverState, setAddBookPopoverState] = useState(null);
   const [activeBook, setActiveBook] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [filesToUpload, setFilesToUpload] = useState([]);
-  const [linkToUpload, setLinkToUpload] = useState(defaultLinkValue);
-  const [uploadError, setUploadError] = useState(null);
   const [books, setBooks] = useState([
-    // {
-    //   id: 1,
-    //   name: "Test book for development purposes. Ignore it."
-    // }
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
+    { id: "1", name: "test" },
   ]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getBooksList();
@@ -43,10 +48,13 @@ const Books = () => {
 
   const getBooksList = async () => {
     try {
+      setIsLoading(true);
       const res = await User.getBooks();
       setBooks(res?.books || []);
     } catch (e) {
       console.log(e);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -55,28 +63,6 @@ const Books = () => {
     e.stopPropagation();
     setPopoverState(e.currentTarget);
     setActiveBook(book);
-  };
-
-  const handleUploadFile = async () => {
-    try {
-
-      await Promise.all([
-        ...filesToUpload.map(file => {
-          const fileFormData = new FormData();
-          fileFormData.append('file', file);
-          return User.uploadFile(fileFormData);
-        })
-      ]);
-
-      await User.uploadLink(linkToUpload);
-
-      setAddBookPopoverState(null);
-      toast.success("File was uploaded successfully!");
-      getBooksList();
-    } catch (e) {
-      console.log(e);
-      setUploadError(e?.response?.data?.message || "Something went wrong...");
-    }
   };
 
   const handleDelete = async () => {
@@ -92,13 +78,6 @@ const Books = () => {
     }
   };
 
-  const clearUploadForm = () => {
-    setTimeout(() => {
-      setFilesToUpload([]);
-      setLinkToUpload(defaultLinkValue);
-    }, 150);
-  };
-
   const closeDeleteModals = () => {
     setActiveBook(null);
     setShowDeleteModal(false);
@@ -106,14 +85,24 @@ const Books = () => {
 
   return (
     <div className="books-wrapper">
-      {books.map(book => (
-        <div className="book-item" key={book.id} onClick={() => navigate(`${BOOKS}/${book.id}`)}>
-          <div className="name">{book.name}</div>
-          <Button className="menu-btn" onClick={e => handleBookMenuClick(e, book)}>
-            <MoreVertIcon />
-          </Button>
+      {isLoading ? (
+        <Loader />
+      ) : !!books.length ? (
+        <div className="books-list">
+          {books.map(book => (
+            <div className="book-item" key={book.id} onClick={() => navigate(`${BOOKS}/${book.id}`)}>
+              <div className="name">{book.name}</div>
+              <Button className="menu-btn" onClick={e => handleBookMenuClick(e, book)}>
+                <MoreVertIcon />
+              </Button>
+            </div>
+          ))}
         </div>
-      ))}
+      ) : (
+        <div className="empty-box">
+          You don't have any books...
+        </div>
+      )}
 
       <Button className="add-book-btn" onClick={e => setAddBookPopoverState(e.currentTarget)}>
         <AddIcon />
@@ -155,83 +144,11 @@ const Books = () => {
         </div>
       </ModalWrapper>
 
-      <DefaultPopover className="dropzone-popover" state={addBookPopoverState} setState={setAddBookPopoverState} onClose={clearUploadForm}>
-        <div className="dropzone-popover-content">
-          <div className="title">
-            Upload file(s)
-            <Button
-              className="close-modal-btn"
-              onClick={() => {
-                setAddBookPopoverState(false)
-                clearUploadForm();
-              }}
-            >
-              <CloseIcon />
-            </Button>
-          </div>
-          {!!filesToUpload.length ? (
-            <div className="files-list">
-              {filesToUpload.map(file => (
-                <div className="file-info-wrapper">
-                  <div className="info-item name">
-                    <div className="item-label">Name</div>
-                    <div className="item-value">{file.name}</div>
-                  </div>
-                  <div className="info-item size">
-                    <div className="item-label">Size</div>
-                    <div className="item-value">{formatBytes(file.size)}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <>
-              <Dropzone
-                onDrop={acceptedFiles => {
-                  setFilesToUpload(acceptedFiles);
-                  setUploadError("");
-                }}
-              >
-                {({ getRootProps, getInputProps }) => (
-                  <div className="dropzone-wrapper">
-                    <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      <div className="dropzone-label">Drag 'n' drop some files here, <br />or click to select files</div>
-                    </div>
-                  </div>
-                )}
-              </Dropzone>
-              <div className="divider">
-                <span></span>
-                <div>or</div>
-                <span></span>
-              </div>
-              <div className="link-upload-wrapper">
-                <StyledTextField
-                  label="File name"
-                  placeholder="Mybook.epub"
-                  value={linkToUpload.name}
-                  onChange={e => {
-                    setLinkToUpload(prevState => ({ ...prevState, name: e.target.value }));
-                    setUploadError("");
-                  }}
-                />
-                <StyledTextField
-                  label="Link to the file"
-                  placeholder="https://example.com/file.epub"
-                  value={linkToUpload.url}
-                  onChange={e => {
-                    setLinkToUpload(prevState => ({ ...prevState, url: e.target.value }));
-                    setUploadError("");
-                  }}
-                />
-              </div>
-            </>
-          )}
-          <Button className="upload-btn" onClick={handleUploadFile}>Confirm</Button>
-          {uploadError && <div className="error-text">{uploadError}</div>}
-        </div>
-      </DefaultPopover>
+      <UploadPopover
+        state={addBookPopoverState}
+        setState={setAddBookPopoverState}
+        onSuccess={getBooksList}
+      />
     </div>
   )
 };

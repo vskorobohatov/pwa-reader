@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Button, Drawer } from '@mui/material';
 
-import { ABOUT, HOME, SETTINGS, SIGN_IN } from 'pathnameVariables';
+import { ABOUT, BOOKS, HOME, SETTINGS, SIGN_IN } from 'pathnameVariables';
 import { removeToken } from 'helpers/tokenHelper';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -13,6 +13,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import './styles.scss';
 
 function Header() {
+  const location = useLocation();
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -27,7 +28,7 @@ function Header() {
   }
 
   return (
-    <div className='header-wrapper'>
+    <div className={`header-wrapper ${location.pathname.includes(`${BOOKS}/`) ? "compact" : ""}`}>
       <Button className='menu-btn' onClick={() => setDrawerOpen(true)}>
         <MenuIcon color='#FFFFFF' />
       </Button>

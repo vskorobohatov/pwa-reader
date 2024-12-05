@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Checkbox } from "@mui/material";
+import { toast } from "react-toastify";
 
 import StyledTextField from "components/StyledTextField";
 
@@ -31,7 +32,10 @@ const Settings = () => {
     }
   };
 
-  const saveStyles = () => localStorage.setItem("bookStyles", JSON.stringify(styles));
+  const saveStyles = () => {
+    localStorage.setItem("bookStyles", JSON.stringify(styles));
+    toast.success("Settings were saved successfully!");
+  };
 
   return (
     <div className="settings-wrapper">

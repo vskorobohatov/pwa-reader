@@ -71,8 +71,6 @@ const BookReader = () => {
     themes.override('padding-left', savedStyles.paddingLeft);
     themes.override('padding-right', savedStyles.paddingRight);
   }
-  console.log(ReactReaderStyle)
-  console.log(savedStyles)
 
   const darkReaderTheme = {
     ...ReactReaderStyle,
@@ -82,6 +80,7 @@ const BookReader = () => {
       bottom: savedStyles.paddingBottom,
       left: savedStyles.paddingLeft,
       right: savedStyles.paddingRight,
+      zIndex: 2
     },
     loadingView: {
       ...ReactReaderStyle.loadingView,
@@ -89,17 +88,17 @@ const BookReader = () => {
     },
     next: {
       ...ReactReaderStyle.next,
-      height: "100%",
+      height: "80%",
       bottom: 0,
       top: "unset",
-      zIndex: 19
+      zIndex: 3
     },
     prev: {
       ...ReactReaderStyle.prev,
-      height: "100%",
+      height: "80%",
       bottom: 0,
       top: "unset",
-      zIndex: 19
+      zIndex: 3
     },
     arrow: {
       ...ReactReaderStyle.arrow,
@@ -133,7 +132,9 @@ const BookReader = () => {
     tocButton: {
       ...ReactReaderStyle.tocButton,
       color: savedStyles.color,
-      zIndex: 20
+      zIndex: 4,
+      top: 56,
+      left: 8
     },
   }
 

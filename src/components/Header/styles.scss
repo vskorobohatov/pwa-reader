@@ -7,6 +7,21 @@
   justify-content: space-between;
   padding: 0 4px;
   background: var(--main-bg);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  &.compact {
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    padding: 0;
+    width: fit-content;
+    height: fit-content;
+    background-color: transparent;
+    .menu-btn {
+      color: var(--main-text-opo);
+    }
+  }
 
   .menu-btn {
     min-width: 0;
