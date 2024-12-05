@@ -38,6 +38,7 @@ const UploadPopover = ({ state, setState, onSuccess }) => {
       setState(null);
       toast.success("File was uploaded successfully!");
       onSuccess();
+      clearUploadForm();
     } catch (e) {
       console.log(e);
       setUploadError(e?.response?.data?.message || "Something went wrong...");
