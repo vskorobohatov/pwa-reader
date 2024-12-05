@@ -46,5 +46,16 @@
       font-size: 14px;
       text-align: left;
     }
+
+    .bottom-text {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: var(--items-gap);
+      span {
+        color: var(--primary-color);
+        cursor: pointer;
+      }
+    }
   }
 }

@@ -31,7 +31,7 @@
       }
     }
 
-    .styled-text-field{
+    .styled-text-field {
       width: 100%;
     }
 
@@ -45,6 +45,17 @@
       color: #FF2B2B;
       font-size: 14px;
       text-align: left;
+    }
+
+    .bottom-text {
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: var(--items-gap);
+      span {
+        color: var(--primary-color);
+        cursor: pointer;
+      }
     }
   }
 }

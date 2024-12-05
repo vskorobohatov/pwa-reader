@@ -3,7 +3,7 @@ import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { User } from 'services/User';
-import { HOME } from 'pathnameVariables';
+import { HOME, SIGN_IN } from 'pathnameVariables';
 import { saveToken } from 'helpers/tokenHelper';
 
 import StyledTextField from 'components/StyledTextField';
@@ -106,6 +106,11 @@ function SignUp() {
         {errors.request ? (
           <div className="form-error-box">{errors.request}</div>
         ) : null}
+
+        <div className='bottom-text'>
+          Already have an account?
+          <span onClick={() => navigate(SIGN_IN)}>Sign In</span>
+        </div>
 
       </div>
     </div>
