@@ -31,8 +31,9 @@ const UploadPopover = ({ state, setState, onSuccess }) => {
           return User.uploadFile(fileFormData);
         })
       ]);
-
-      await User.uploadLink(linkToUpload);
+      if (!!linkToUpload.name.trim() && !!linkToUpload.url.trim()) {
+        await User.uploadLink(linkToUpload);
+      }
 
       setState(null);
       toast.success("File was uploaded successfully!");

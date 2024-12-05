@@ -23,23 +23,7 @@ const Books = () => {
   const [addBookPopoverState, setAddBookPopoverState] = useState(null);
   const [activeBook, setActiveBook] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [books, setBooks] = useState([
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-    { id: "1", name: "test" },
-  ]);
+  const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
