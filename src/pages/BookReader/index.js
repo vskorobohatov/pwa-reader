@@ -151,7 +151,7 @@ const BookReader = () => {
   return (
     <div className="book-reader-wrapper">
       <div className="toggle-ui-button" onClick={() => setShowUi(!showUi)} />
-      <Button className={`close-btn ${!showUi ? "hidden" : ""}`} onClick={handleClose}>
+      <Button style={{ color: savedStyles.color, background: savedStyles.backgroundColor }} className={`close-btn ${!showUi ? "hidden" : ""}`} onClick={handleClose}>
         <CloseIcon />
       </Button>
       <ReactReader
