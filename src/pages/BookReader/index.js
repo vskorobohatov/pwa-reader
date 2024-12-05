@@ -18,6 +18,7 @@ const BookReader = () => {
   const rendition = useRef(undefined)
   const [bookData, setBookData] = useState({});
   const [showUi, setShowUi] = useState(true);
+  const [lastSavedPage, setLastSavedPage] = useState(null);
 
   useEffect(() => {
     getBookData(bookId);
@@ -39,11 +40,15 @@ const BookReader = () => {
 
   const updatePosition = position => {
     try {
-      User.updateBookInfo({
-        bookId,
-        position: position || bookData.position,
-        updatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
-      });
+      const pos = position || bookData.position;
+      if (pos !== lastSavedPage) {
+        User.updateBookInfo({
+          bookId,
+          position: pos,
+          updatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
+        });
+        setLastSavedPage(pos)
+      }
     } catch (e) {
       console.log(e)
     }
