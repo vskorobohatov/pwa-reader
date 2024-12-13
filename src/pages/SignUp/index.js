@@ -9,6 +9,7 @@ import { saveToken } from 'helpers/tokenHelper';
 import StyledTextField from 'components/StyledTextField';
 
 import './styles.scss';
+import axios from 'axios';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -52,6 +53,15 @@ function SignUp() {
           console.log(e)
           setErrors({ ...errors, request: e?.response?.data?.message || "Something went wrong! Try again later." })
         });
+    }
+  }
+
+  const handleTestApi = async () => {
+    try {
+      const res = await axios.post("http://localhost:3001/sign-up", { name, email, password });
+      console.log(res)
+    } catch (e) {
+      console.error("error", e)
     }
   }
 
@@ -102,6 +112,8 @@ function SignUp() {
         />
 
         <Button className="sign-button" onClick={handleSignUp}>Sign In</Button>
+
+        <Button onClick={handleTestApi}>Test</Button>
 
         {errors.request ? (
           <div className="form-error-box">{errors.request}</div>
