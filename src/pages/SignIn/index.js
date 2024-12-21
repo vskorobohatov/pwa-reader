@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import axios from "axios";
 
 import { User } from 'services/User';
 import { HOME, SIGN_UP } from 'pathnameVariables';
@@ -51,15 +50,6 @@ function SignIn() {
     }
   }
 
-  const handleTestApi = async () => {
-    try {
-      const res = await axios.post("http://localhost:3001/sign-in", { email, password });
-      console.log(res)
-    } catch (e) {
-      console.error("error", e)
-    }
-  }
-
   return (
     <div className='sign-in-page'>
       <div className="form">
@@ -94,8 +84,6 @@ function SignIn() {
         />
 
         <Button className="sign-button" onClick={handleSignIn}>Sign In</Button>
-
-        <Button onClick={handleTestApi}>Test</Button>
 
         {errors.request ? (
           <div className="form-error-box">{errors.request}</div>

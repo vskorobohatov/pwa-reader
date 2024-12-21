@@ -23,6 +23,16 @@
   src: url(./assets/fonts/GeneralSans/GeneralSans-Regular.otf);
 }
 
+@font-face {
+  font-family: "GeneralSans";
+  src: url(./assets/fonts/GeneralSans/GeneralSans-Regular.otf);
+}
+
+@font-face {
+  font-family: "Calibri";
+  src: url(./assets/fonts/Calibri/calibri-regular.ttf);
+}
+
 .app {
   width: 100%;
   height: 100%;

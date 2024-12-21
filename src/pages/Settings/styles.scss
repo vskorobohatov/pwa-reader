@@ -31,8 +31,11 @@
         font-size: 14px;
       }
 
-      .styled-text-field {
+      .styled-select-wrapper {
         width: 75px;
+        &.wide {
+          width: 125px;
+        }
       }
 
       .MuiCheckbox-root {
