@@ -6,7 +6,7 @@ import moment from "moment";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
-import { getSelectionText } from "helpers/ui";
+import { getSelectionText, isElementInViewport } from "helpers/ui";
 import { defaultStyles } from "pages/Settings";
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,7 +14,7 @@ import "./styles.scss";
 
 const defaultPosition = {
   section: 0,
-  scroll: 0
+  paragraph: 0
 };
 
 const BookReader = () => {
@@ -26,7 +26,6 @@ const BookReader = () => {
   const [sectionsList, setSectionsList] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(defaultPosition);
 
-
   useEffect(() => {
     getBookData(bookId);
   }, [bookId]);
@@ -35,7 +34,7 @@ const BookReader = () => {
     if (sectionsList.length) {
       renderSection(sectionsList, currentPosition);
     }
-  }, [sectionsList, currentPosition.section, currentPosition.scroll])
+  }, [sectionsList, currentPosition.section, currentPosition.paragraph])
 
   useEffect(() => {
     document.addEventListener('selectionchange', handleSelection);
@@ -84,9 +83,11 @@ const BookReader = () => {
 
   const updatePosition = position => {
     try {
+      const paragraphs = Array.from(contentRef.current.getElementsByTagName("p"));
+      const firstVisibleElem = paragraphs.findIndex(elem => isElementInViewport(elem));
       User.updateBookInfo({
         bookId,
-        position: JSON.stringify(defaultPosition),
+        position: JSON.stringify({ ...position, paragraph: firstVisibleElem }),
         updatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
       });
     } catch (e) {
@@ -97,15 +98,19 @@ const BookReader = () => {
   const renderSection = (list, position) => {
     contentRef.current.innerHTML = "";
     contentRef.current.appendChild(list[position.section]);
-    scrollRef.current.scrollTo({
-      top: position.scroll,
-    });
+    const paragraphs = contentRef.current.getElementsByTagName("p");
+    const paragraphToScroll = paragraphs[position.paragraph || 0];
+    if (paragraphToScroll) {
+      setTimeout(() => {
+        paragraphToScroll.scrollIntoView();
+      }, 50)
+    }
   }
 
   const debouncedUpdateLocation = useCallback(debounce(updatePosition, 5000, { maxWait: 30000 }), []);
 
   const handleClose = () => {
-    updatePosition();
+    updatePosition(currentPosition);
     navigate(BOOKS);
   }
 
@@ -133,7 +138,7 @@ const BookReader = () => {
       <Button style={{ color: savedStyles.color, background: savedStyles.backgroundColor }} className={`close-btn ${!showUi ? "hidden" : ""}`} onClick={handleClose}>
         <CloseIcon />
       </Button>
-      <div className="scroll-wrapper" ref={scrollRef}>
+      <div className="scroll-wrapper" ref={scrollRef} onScroll={() => debouncedUpdateLocation(currentPosition)}>
         <div
           onClick={() => setShowUi(!showUi)}
           className="book-content"
@@ -143,13 +148,13 @@ const BookReader = () => {
         <div className="navigation-controls">
           <Button
             disabled={currentPosition.section === 0}
-            onClick={() => setCurrentPosition(prevState => ({ section: prevState.section - 1, scroll: 0 }))}
+            onClick={() => setCurrentPosition(prevState => ({ section: prevState.section - 1, paragraph: 0 }))}
           >
             Prev
           </Button>
           <Button
             disabled={currentPosition.section === sectionsList.length - 1}
-            onClick={() => setCurrentPosition(prevState => ({ section: prevState.section + 1, scroll: 0 }))}
+            onClick={() => setCurrentPosition(prevState => ({ section: prevState.section + 1, paragraph: 0 }))}
           >
             Next
           </Button>
