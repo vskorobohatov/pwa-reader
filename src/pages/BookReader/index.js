@@ -6,8 +6,9 @@ import moment from "moment";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
-import { getSelectionText, isElementInViewport } from "helpers/ui";
-import { defaultStyles } from "pages/Settings";
+import { getSavedSettings, getSelectionText, isElementInViewport } from "helpers/ui";
+
+import ModalWrapper from "components/ModalWrapper";
 
 import CloseIcon from '@mui/icons-material/Close';
 import "./styles.scss";
@@ -37,14 +38,25 @@ const BookReader = () => {
   }, [sectionsList, currentPosition.section, currentPosition.paragraph])
 
   useEffect(() => {
-    document.addEventListener('selectionchange', handleSelection);
-    return () => {
-      document.removeEventListener('selectionchange', handleSelection);
+    const isTranslationEnabled = getSavedSettings()?.translations !== "disabled";
+    if (isTranslationEnabled) {
+      document.addEventListener('selectionchange', debouncedTranslateSelection);
+      return () => {
+        document.removeEventListener('selectionchange', debouncedTranslateSelection);
+      }
     }
   }, []);
 
-  const handleSelection = () => {
-    console.log(getSelectionText());
+  const translateSelection = async () => {
+    try {
+      const selectionText = getSelectionText();
+      if (!!selectionText.trim()) {
+        const translations = await User.translate(selectionText);
+        console.log(selectionText, translations);
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const getBookData = async (id) => {
@@ -108,21 +120,14 @@ const BookReader = () => {
   }
 
   const debouncedUpdateLocation = useCallback(debounce(updatePosition, 5000, { maxWait: 30000 }), []);
+  const debouncedTranslateSelection = useCallback(debounce(translateSelection, 2000), []);
 
   const handleClose = () => {
     updatePosition(currentPosition);
     navigate(BOOKS);
   }
 
-  const getSavedStyles = () => {
-    const bookStyles = localStorage.getItem("bookStyles");
-    if (bookStyles) {
-      return JSON.parse(bookStyles);
-    }
-    return defaultStyles;
-  };
-
-  const savedStyles = getSavedStyles();
+  const savedStyles = getSavedSettings();
 
   const bookStyles = {
     paddingTop: savedStyles.paddingTop,
@@ -134,8 +139,8 @@ const BookReader = () => {
   };
 
   return (
-    <div className="book-reader-wrapper">
-      <Button style={{ color: savedStyles.color, background: savedStyles.backgroundColor }} className={`close-btn ${!showUi ? "hidden" : ""}`} onClick={handleClose}>
+    <div className="book-reader-wrapper" style={{ color: savedStyles.color, background: savedStyles.background }}>
+      <Button className={`close-btn ${!showUi ? "hidden" : ""}`} onClick={handleClose}>
         <CloseIcon />
       </Button>
       <div className="scroll-wrapper" ref={scrollRef} onScroll={() => debouncedUpdateLocation(currentPosition)}>
@@ -148,18 +153,32 @@ const BookReader = () => {
         <div className="navigation-controls">
           <Button
             disabled={currentPosition.section === 0}
-            onClick={() => setCurrentPosition(prevState => ({ section: prevState.section - 1, paragraph: 0 }))}
+            onClick={() => {
+              const newPosition = { section: currentPosition.section - 1, paragraph: 0 };
+              setCurrentPosition(newPosition);
+              updatePosition(newPosition);
+            }}
           >
             Prev
           </Button>
           <Button
             disabled={currentPosition.section === sectionsList.length - 1}
-            onClick={() => setCurrentPosition(prevState => ({ section: prevState.section + 1, paragraph: 0 }))}
+            onClick={() => {
+              const newPosition = { section: currentPosition.section + 1, paragraph: 0 };
+              setCurrentPosition(newPosition);
+              updatePosition(newPosition);
+            }}
           >
             Next
           </Button>
         </div>
       </div>
+
+      <ModalWrapper title="Translation">
+        <div className="translation-wrapper">
+
+        </div>
+      </ModalWrapper>
     </div>
   )
 };

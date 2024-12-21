@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox } from "@mui/material";
+import { Button } from "@mui/material";
 import { toast } from "react-toastify";
 
 import StyledSelect from "components/StyledSelect";
+import { defaultSettings, getSavedSettings, saveSettings } from "helpers/ui";
 
 import "./styles.scss";
-
-export const defaultStyles = {
-  fontSize: `16px`,
-  fontFamily: "GeneralSans",
-  background: "#FFFFFF",
-  color: "#000000",
-  paddingTop: `20px`,
-  paddingBottom: `20px`,
-  paddingLeft: `20px`,
-  paddingRight: `20px`,
-};
 
 const fontFamilyOptions = [
   { label: "Calibri", value: "Calibri" },
@@ -23,21 +13,19 @@ const fontFamilyOptions = [
 ]
 
 const Settings = () => {
-  const [styles, setStyles] = useState(defaultStyles);
+  const [settingsData, setSettingsData] = useState(defaultSettings);
 
   useEffect(() => {
-    getSavedStyles()
+    initSettings()
   }, []);
 
-  const getSavedStyles = () => {
-    const savedStyles = localStorage.getItem("bookStyles");
-    if (!!savedStyles) {
-      setStyles(JSON.parse(savedStyles));
-    }
+  const initSettings = () => {
+    const savedSettings = getSavedSettings();
+    setSettingsData(savedSettings);
   };
 
-  const saveStyles = () => {
-    localStorage.setItem("bookStyles", JSON.stringify(styles));
+  const handleSaveSettings = () => {
+    saveSettings(settingsData);
     toast.success("Settings were saved successfully!");
   };
 
@@ -57,8 +45,8 @@ const Settings = () => {
         <div className="input-box">
           <div className="label">Font Size</div>
           <StyledSelect
-            value={styles.fontSize}
-            onChange={val => setStyles({ ...styles, fontSize: val })}
+            value={settingsData.fontSize}
+            onChange={val => setSettingsData({ ...settingsData, fontSize: val })}
             options={getSizeOptions()}
           />
         </div>
@@ -66,20 +54,20 @@ const Settings = () => {
           <div className="label">Font Family</div>
           <StyledSelect
             className="wide"
-            value={styles.fontFamily}
-            onChange={val => setStyles({ ...styles, fontFamily: val })}
+            value={settingsData.fontFamily}
+            onChange={val => setSettingsData({ ...settingsData, fontFamily: val })}
             options={fontFamilyOptions}
           />
         </div>
         <div className="input-box">
           <div className="label">Font color</div>
-          <label className="color-value" htmlFor="fontColor" style={{ background: styles.color }} />
-          <input className="color-input" id="fontColor" type="color" value={styles.color} onChange={e => setStyles({ ...styles, color: e.target.value })} />
+          <label className="color-value" htmlFor="fontColor" style={{ background: settingsData.color }} />
+          <input className="color-input" id="fontColor" type="color" value={settingsData.color} onChange={e => setSettingsData({ ...settingsData, color: e.target.value })} />
         </div>
         <div className="input-box">
           <div className="label">Background color</div>
-          <label className="color-value" htmlFor="backgroundColor" style={{ background: styles.background }} />
-          <input className="color-input" id="backgroundColor" type="color" value={styles.background} onChange={e => setStyles({ ...styles, background: e.target.value })} />
+          <label className="color-value" htmlFor="backgroundColor" style={{ background: settingsData.background }} />
+          <input className="color-input" id="backgroundColor" type="color" value={settingsData.background} onChange={e => setSettingsData({ ...settingsData, background: e.target.value })} />
         </div>
       </div>
 
@@ -88,39 +76,53 @@ const Settings = () => {
         <div className="input-box">
           <div className="label">Padding Top</div>
           <StyledSelect
-            value={styles.paddingTop}
-            onChange={val => setStyles({ ...styles, paddingTop: val })}
+            value={settingsData.paddingTop}
+            onChange={val => setSettingsData({ ...settingsData, paddingTop: val })}
             options={getSizeOptions(0, 50)}
           />
         </div>
         <div className="input-box">
           <div className="label">Padding Bottom</div>
           <StyledSelect
-            value={styles.paddingBottom}
-            onChange={val => setStyles({ ...styles, paddingBottom: val })}
+            value={settingsData.paddingBottom}
+            onChange={val => setSettingsData({ ...settingsData, paddingBottom: val })}
             options={getSizeOptions(0, 50)}
           />
         </div>
         <div className="input-box">
           <div className="label">Padding Left</div>
           <StyledSelect
-            value={styles.paddingLeft}
-            onChange={val => setStyles({ ...styles, paddingLeft: val })}
+            value={settingsData.paddingLeft}
+            onChange={val => setSettingsData({ ...settingsData, paddingLeft: val })}
             options={getSizeOptions(0, 50)}
           />
         </div>
         <div className="input-box">
           <div className="label">Padding Right</div>
           <StyledSelect
-            value={styles.paddingRight}
-            onChange={val => setStyles({ ...styles, paddingRight: val })}
+            value={settingsData.paddingRight}
+            onChange={val => setSettingsData({ ...settingsData, paddingRight: val })}
             options={getSizeOptions(0, 50)}
           />
         </div>
       </div>
+
+      <div className="section">
+        <div className="section-title">Misc.</div>
+        <div className="input-box">
+          <div className="label">Translations for selections</div>
+          <StyledSelect
+            className="wide"
+            value={settingsData.translations}
+            onChange={val => setSettingsData({ ...settingsData, translations: val })}
+            options={[{ label: "Enabled", value: "enabled" }, { label: "Disabled", value: "disabled" }]}
+          />
+        </div>
+      </div>
+
       <div className="controls-wrapper">
-        <Button className="reset" onClick={() => setStyles(defaultStyles)}>Reset to default</Button>
-        <Button className="save" onClick={saveStyles}>Save changes</Button>
+        <Button className="reset" onClick={() => setSettingsData(defaultSettings)}>Reset to default</Button>
+        <Button className="save" onClick={handleSaveSettings}>Save changes</Button>
       </div>
     </div>
   )

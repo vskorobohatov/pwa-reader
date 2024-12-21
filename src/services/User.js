@@ -57,4 +57,10 @@ export class User {
       data: { bookId }
     });
   }
+  static async translate(text) {
+    return ApiService._requestAsync({
+      url: `/getTranslation.php?word=${encodeURI(text)}`,
+      method: "GET"
+    });
+  }
 }
