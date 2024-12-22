@@ -26,6 +26,8 @@ const BookReader = () => {
   const [showUi, setShowUi] = useState(false);
   const [sectionsList, setSectionsList] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(defaultPosition);
+  const [translationModalState, setTranslationModalState] = useState(false);
+  const [translations, setTranslations] = useState([]);
 
   useEffect(() => {
     getBookData(bookId);
@@ -51,8 +53,9 @@ const BookReader = () => {
     try {
       const selectionText = getSelectionText();
       if (!!selectionText.trim()) {
-        const translations = await User.translate(selectionText);
-        console.log(selectionText, translations);
+        const translations = await User.translate(selectionText.trim());
+        setTranslationModalState(true);
+        setTranslations(translations?.result || []);
       }
     } catch (e) {
       console.log(e)
@@ -174,9 +177,14 @@ const BookReader = () => {
         </div>
       </div>
 
-      <ModalWrapper title="Translation">
+      <ModalWrapper open={translationModalState} onClose={() => setTranslationModalState(false)} title="Translations">
         <div className="translation-wrapper">
-
+          {translations.map(item => (
+            <div className="translation-item" key={`translation-item-${item.word}`}>
+              <div className="word">{item.word}</div>
+              <div className="translation">{item.translates}</div>
+            </div>
+          ))}
         </div>
       </ModalWrapper>
     </div>
