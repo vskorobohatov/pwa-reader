@@ -12,7 +12,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 16px;
+    gap: var(--wrapper-gap);
     @include scroll-styles();
     .book-content {
       section {
@@ -33,7 +33,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 16px;
+      gap: var(--wrapper-gap);
+      padding: 0 16px;
       button {
         @include outline-btn();
 
