@@ -79,7 +79,21 @@ const BookReader = () => {
 
   const loadBookSections = async (url) => {
     if (!url) return;
-    const bookContent = await fetch(url).then(res => res.blob());
+
+    let bookContent;
+
+    const cache = await caches.open("books-cache");
+    const cachedResponse = await cache.match(url);
+    if (cachedResponse) {
+      bookContent = await cachedResponse.blob();
+    } else {
+      bookContent = await fetch(url).then(res => {
+        const cloned = res.clone();
+        cache.put(url, res);
+        return cloned.blob();
+      });
+    }
+
     return new Promise((resolve) => {
       const reader = new FileReader();
       reader.addEventListener(
