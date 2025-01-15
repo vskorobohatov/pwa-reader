@@ -7,13 +7,13 @@
   flex-direction: column;
   position: relative;
   height: 100%;
-  max-height: calc(100% - 48px);
   overflow: auto;
 
   .books-list {
     display: flex;
     align-items: stretch;
     flex-direction: column;
+
     .book-item {
       height: 60px;
       display: flex;
@@ -22,14 +22,17 @@
       padding: 0 4px 0 16px;
       border-bottom: 1px solid var(--divider-color);
       transition: 0.3s all;
+
       &:hover {
         cursor: pointer;
         background-color: var(--third-bg);
       }
+
       .name {
         @include text-overflow(calc(100% - 40px));
         font-size: 14px;
       }
+
       .menu-btn {
         min-width: 0;
         padding: 0;
@@ -76,6 +79,7 @@
       flex-direction: column;
       gap: var(--wrapper-gap);
     }
+
     .title {
       font-size: 18px;
       line-height: 22px;
@@ -83,6 +87,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       .close-modal-btn {
         @include outline-btn();
         padding: 0;
@@ -91,20 +96,24 @@
         height: 22px;
       }
     }
+
     .files-list {
       display: flex;
       align-items: stretch;
       flex-direction: column;
+
       .file-info-wrapper {
         display: flex;
         align-items: stretch;
         gap: var(--content-gap);
         padding: 8px 0;
         border-bottom: 1px solid var(--divider-color);
+
         &:last-child {
           border-bottom: none;
           padding-bottom: 0;
         }
+
         .info-item {
           display: flex;
           align-items: stretch;
@@ -115,6 +124,7 @@
           &.name {
             max-width: calc(75% - var(--items-gap) / 2);
           }
+
           &.size {
             max-width: calc(25% - var(--items-gap) / 2);
           }
@@ -122,12 +132,14 @@
           .item-label {
             @include field-label();
           }
+
           .item-value {
             @include text-overflow();
           }
         }
       }
     }
+
     .dropzone-wrapper {
       height: 120px;
       padding: 8px;
@@ -138,13 +150,16 @@
       justify-content: center;
       transition: 0.3s all;
       border-radius: var(--button-radius);
+
       &:hover {
         cursor: pointer;
         border: 1px dashed var(--border-hover);
       }
+
       &>div {
         width: 100%;
       }
+
       .dropzone-label {
         width: 100%;
         height: 100%;
@@ -155,32 +170,38 @@
         text-align: center;
       }
     }
+
     .divider {
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--second-text);
       font-size: 14px;
+
       div {
         width: 40px;
         text-align: center;
       }
+
       span {
         flex: 1;
         height: 1px;
         background-color: var(--second-text);
       }
     }
+
     .link-upload-wrapper {
       display: flex;
       flex-direction: column;
       align-items: stretch;
       gap: var(--content-gap)
     }
+
     .upload-btn {
       @include primary-btn();
       justify-content: center;
     }
+
     .error-text {
       font-size: 14px;
       color: var(--error-color);
@@ -193,20 +214,25 @@
   align-items: stretch;
   flex-direction: column;
   gap: var(--content-gap);
+
   .controls-wrapper {
     display: flex;
     align-items: stretch;
     gap: var(--content-gap);
+
     button {
       &.cancel {
         @include outline-btn();
+
         &:hover {
           border: 1px solid var(--border-hover);
         }
       }
+
       &.delete {
         @include primary-btn();
         background: var(--error-color);
+
         &:hover {
           background: var(--error-color-hover);
         }

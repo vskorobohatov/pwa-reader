@@ -32,7 +32,8 @@ export const defaultSettings = {
   paddingLeft: `20px`,
   paddingRight: `20px`,
   // Misc
-  translations: "enabled"
+  translations: "enabled",
+  textAlign: "justify"
 };
 
 export const getSavedSettings = () => {

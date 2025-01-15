@@ -2,13 +2,13 @@
 
 .header-wrapper {
   height: 48px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 4px;
   background: var(--main-bg);
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 50;
 
   .menu-btn {
@@ -38,6 +38,7 @@
       display: flex;
       align-items: center;
     }
+
     button {
       text-align: left;
       text-transform: none;
@@ -45,9 +46,13 @@
       color: var(--main-text);
       gap: 4px;
       height: 40px;
-      &:hover {
+      transition: 0.3s all;
+
+      &:hover,
+      &.active {
         color: var(--primary-color);
       }
+
       &.sign-out-btn {
         margin-top: auto;
       }

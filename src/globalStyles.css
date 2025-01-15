@@ -30,7 +30,17 @@
 
 @font-face {
   font-family: "Calibri";
-  src: url(./assets/fonts/Calibri/calibri-regular.ttf);
+  src: url(./assets/fonts/Calibri/CalibriRegular.ttf);
+}
+
+@font-face {
+  font-family: "TimesNewRoman";
+  src: url(./assets/fonts/TimesNewRoman/TimesNewRoman.ttf);
+}
+
+@font-face {
+  font-family: "DroidSans";
+  src: url(./assets/fonts/DroidSans/DroidSans.ttf);
 }
 
 .app {

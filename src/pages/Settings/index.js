@@ -4,13 +4,9 @@ import { toast } from "react-toastify";
 
 import StyledSelect from "components/StyledSelect";
 import { defaultSettings, getSavedSettings, saveSettings } from "helpers/ui";
+import { fontFamilyOptions, textAlignOptions } from "./options";
 
 import "./styles.scss";
-
-const fontFamilyOptions = [
-  { label: "Calibri", value: "Calibri" },
-  { label: "General Sans", value: "GeneralSans" },
-]
 
 const Settings = () => {
   const [settingsData, setSettingsData] = useState(defaultSettings);
@@ -109,6 +105,15 @@ const Settings = () => {
 
       <div className="section">
         <div className="section-title">Misc.</div>
+        <div className="input-box">
+          <div className="label">Align text</div>
+          <StyledSelect
+            className="wide"
+            value={settingsData.textAlign}
+            onChange={val => setSettingsData({ ...settingsData, textAlign: val })}
+            options={textAlignOptions}
+          />
+        </div>
         <div className="input-box">
           <div className="label">Translations for selections</div>
           <StyledSelect

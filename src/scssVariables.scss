@@ -84,7 +84,7 @@ $breakpoint-mobile: 767px;
   }
 }
 
-@mixin outline-btn() {
+@mixin outline-btn($color: var(--main-text)) {
   height: var(--button-height);
   display: flex;
   padding: var(--button-padding);
@@ -104,7 +104,6 @@ $breakpoint-mobile: 767px;
   letter-spacing: unset;
   gap: var(--items-gap);
   &:hover {
-    background: var(--main-bg);
     border-color: var(--primary-color-hover);
   }
 

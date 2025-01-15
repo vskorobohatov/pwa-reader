@@ -1,6 +1,10 @@
 .owner-app-wrapper {
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
   .owner-app-content {
-    height: 100%;
+    flex: 1;
   }
 }

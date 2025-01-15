@@ -8,6 +8,7 @@ import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
 import { getSavedSettings, getSelectionText, isElementInViewport } from "helpers/ui";
 
+import Loader from "components/Loader";
 import ModalWrapper from "components/ModalWrapper";
 
 import CloseIcon from '@mui/icons-material/Close';
@@ -28,6 +29,7 @@ const BookReader = () => {
   const [currentPosition, setCurrentPosition] = useState(defaultPosition);
   const [translationModalState, setTranslationModalState] = useState(false);
   const [translations, setTranslations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     getBookData(bookId);
@@ -64,6 +66,7 @@ const BookReader = () => {
 
   const getBookData = async (id) => {
     try {
+      setIsLoading(true);
       const res = await User.getBookInfo(id);
       let position = defaultPosition;
       if (res?.result?.position) {
@@ -74,6 +77,8 @@ const BookReader = () => {
       setSectionsList(sectionsListData)
     } catch (e) {
       console.log(e)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -153,10 +158,16 @@ const BookReader = () => {
     paddingLeft: savedStyles.paddingLeft,
     fontSize: savedStyles.fontSize,
     fontFamily: savedStyles.fontFamily,
+    textAlign: savedStyles.textAlign,
   };
 
+  const colorStyles = { color: savedStyles.color, background: savedStyles.background };
+
   return (
-    <div className="book-reader-wrapper" style={{ color: savedStyles.color, background: savedStyles.background }}>
+    <div className="book-reader-wrapper" style={colorStyles}>
+      {isLoading && (
+        <Loader style={colorStyles} />
+      )}
       <Button className={`close-btn ${!showUi ? "hidden" : ""}`} onClick={handleClose}>
         <CloseIcon />
       </Button>
@@ -191,15 +202,24 @@ const BookReader = () => {
         </div>
       </div>
 
-      <ModalWrapper open={translationModalState} onClose={() => setTranslationModalState(false)} title="Translations">
-        <div className="translation-wrapper">
-          {translations.map(item => (
-            <div className="translation-item" key={`translation-item-${item.word}`}>
-              <div className="word">{item.word}</div>
-              <div className="translation">{item.translates}</div>
-            </div>
-          ))}
-        </div>
+      <ModalWrapper
+        open={translationModalState}
+        onClose={() => setTranslationModalState(false)}
+        title="Translations"
+        contentClassName="tranlsation-modal"
+      >
+        {!!translations.length ? (
+          <div className="translation-wrapper">
+            {translations.map(item => (
+              <div className="translation-item" key={`translation-item-${item.word}`}>
+                <div className="word">{item.word}</div>
+                <div className="translation">{item.translates}</div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-state">0 tranlsations found...</div>
+        )}
       </ModalWrapper>
     </div>
   )

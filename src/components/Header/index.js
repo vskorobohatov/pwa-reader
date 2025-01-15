@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Button, Drawer } from '@mui/material';
 
-import { ABOUT, HOME, SETTINGS, SIGN_IN } from 'pathnameVariables';
+import { ABOUT, BOOKS, SETTINGS, SIGN_IN } from 'pathnameVariables';
 import { removeToken } from 'helpers/tokenHelper';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -15,6 +15,7 @@ import './styles.scss';
 function Header() {
   const { bookId } = useParams();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleLogout = () => {
@@ -26,6 +27,27 @@ function Header() {
     navigate(path);
     setDrawerOpen(false);
   }
+
+  const routes = [
+    {
+      label: "Home",
+      icon: <HomeIcon />,
+      isActive: pathname === BOOKS,
+      onClick: () => redirect(BOOKS)
+    },
+    {
+      label: "Settings",
+      icon: <SettingsIcon />,
+      isActive: pathname === SETTINGS,
+      onClick: () => redirect(SETTINGS)
+    },
+    {
+      label: "About",
+      icon: <HelpIcon />,
+      isActive: pathname === ABOUT,
+      onClick: () => redirect(ABOUT)
+    },
+  ]
 
   if (!!bookId) {
     return null;
@@ -39,18 +61,12 @@ function Header() {
 
       <Drawer className='drawer-wrapper' open={drawerOpen} onClose={() => setDrawerOpen(false)}>
         <div className='logo'>PWA-Reader</div>
-        <Button onClick={() => redirect(HOME)}>
-          <HomeIcon />
-          Home
-        </Button>
-        <Button onClick={() => redirect(SETTINGS)}>
-          <SettingsIcon />
-          Settings
-        </Button>
-        <Button onClick={() => redirect(ABOUT)}>
-          <HelpIcon />
-          About
-        </Button>
+        {routes.map(route => (
+          <Button onClick={route.onClick} className={route.isActive ? "active" : ""}>
+            {route.icon}
+            {route.label}
+          </Button>
+        ))}
         <Button className='sign-out-btn' onClick={handleLogout}>
           <LogoutIcon />
           Sign out
