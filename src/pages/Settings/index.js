@@ -3,7 +3,8 @@ import { Button } from "@mui/material";
 import { toast } from "react-toastify";
 
 import StyledSelect from "components/StyledSelect";
-import { defaultSettings, getSavedSettings, saveSettings } from "helpers/ui";
+import { defaultSettings } from "helpers/defaults";
+import { getSavedSettings, saveSettings } from "helpers/ui";
 import { fontFamilyOptions, textAlignOptions } from "./options";
 
 import "./styles.scss";

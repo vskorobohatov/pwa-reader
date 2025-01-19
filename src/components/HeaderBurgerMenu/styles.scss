@@ -1,0 +1,7 @@
+@import "scssVariables.scss";
+
+.header-menu-wrapper {
+  .header-menu-btn {
+    @include header-btn();
+  }
+}

@@ -2,10 +2,12 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { debounce } from "lodash";
 import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
 import moment from "moment";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
+import { setShowHeader } from "store/reducers/ui";
 import { getSavedSettings, getSelectionText, isElementInViewport } from "helpers/ui";
 
 import Loader from "components/Loader";
@@ -20,6 +22,7 @@ const defaultPosition = {
 };
 
 const BookReader = () => {
+  const dispatch = useDispatch();
   const { bookId } = useParams();
   const navigate = useNavigate();
   const scrollRef = useRef();
@@ -49,7 +52,15 @@ const BookReader = () => {
         document.removeEventListener('selectionchange', debouncedTranslateSelection);
       }
     }
+    
+    toggleHeader(false);
+
+    return () => {
+      toggleHeader(true);
+    }
   }, []);
+
+  const toggleHeader = val => dispatch(setShowHeader(val));
 
   const translateSelection = async () => {
     try {

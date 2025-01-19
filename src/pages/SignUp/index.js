@@ -39,9 +39,10 @@ function SignUp() {
     if (validationKeys.length) {
       setErrors({ ...errors, ...validationErrors });
       document.getElementById(`${validationKeys[0]}-input`)?.focus();
+      console.log(validationErrors)
     } else {
       User
-        .signup({ email, password })
+        .signup({ email, password, name })
         .then(res => {
           if (res?.jwt) {
             saveToken(res.jwt)
@@ -101,7 +102,7 @@ function SignUp() {
           error={errors.password}
         />
 
-        <Button className="sign-button" onClick={handleSignUp}>Sign In</Button>
+        <Button className="sign-button" onClick={handleSignUp}>Sign Up</Button>
 
         {errors.request ? (
           <div className="form-error-box">{errors.request}</div>
@@ -109,7 +110,7 @@ function SignUp() {
 
         <div className='bottom-text'>
           Already have an account?
-          <span onClick={() => navigate(SIGN_IN)}>Sign In</span>
+          <span onClick={() => navigate(SIGN_IN)}>Sign Up</span>
         </div>
 
       </div>

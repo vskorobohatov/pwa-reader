@@ -1,77 +1,29 @@
-import React, { useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Button, Drawer } from '@mui/material';
+import React from 'react';
+import { useSelector } from 'react-redux';
 
-import { ABOUT, BOOKS, SETTINGS, SIGN_IN } from 'pathnameVariables';
-import { removeToken } from 'helpers/tokenHelper';
+import HeaderBurgerMenu from 'components/HeaderBurgerMenu';
+import BooksFiltersComponent, { booksFiltersComponentKey } from 'components/BooksFilters';
 
-import MenuIcon from '@mui/icons-material/Menu';
-import HomeIcon from '@mui/icons-material/Home';
-import HelpIcon from '@mui/icons-material/Help';
-import LogoutIcon from '@mui/icons-material/Logout';
-import SettingsIcon from '@mui/icons-material/Settings';
 import './styles.scss';
 
-function Header() {
-  const { bookId } = useParams();
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  const [drawerOpen, setDrawerOpen] = useState(false);
+const sideComponents = {
+  [booksFiltersComponentKey]: BooksFiltersComponent
+};
 
-  const handleLogout = () => {
-    removeToken();
-    navigate(SIGN_IN);
-  }
+const Header = () => {
+  const { headerSideComponent, showHeader } = useSelector(store => store.ui);
 
-  const redirect = path => {
-    navigate(path);
-    setDrawerOpen(false);
-  }
-
-  const routes = [
-    {
-      label: "Home",
-      icon: <HomeIcon />,
-      isActive: pathname === BOOKS,
-      onClick: () => redirect(BOOKS)
-    },
-    {
-      label: "Settings",
-      icon: <SettingsIcon />,
-      isActive: pathname === SETTINGS,
-      onClick: () => redirect(SETTINGS)
-    },
-    {
-      label: "About",
-      icon: <HelpIcon />,
-      isActive: pathname === ABOUT,
-      onClick: () => redirect(ABOUT)
-    },
-  ]
-
-  if (!!bookId) {
+  if (!showHeader) {
     return null;
   }
 
+  const SideComponent = sideComponents[headerSideComponent] || null;
+
   return (
     <div className="header-wrapper">
-      <Button className='menu-btn' onClick={() => setDrawerOpen(true)}>
-        <MenuIcon color='#FFFFFF' />
-      </Button>
+      <HeaderBurgerMenu />
 
-      <Drawer className='drawer-wrapper' open={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <div className='logo'>PWA-Reader</div>
-        {routes.map(route => (
-          <Button onClick={route.onClick} className={route.isActive ? "active" : ""}>
-            {route.icon}
-            {route.label}
-          </Button>
-        ))}
-        <Button className='sign-out-btn' onClick={handleLogout}>
-          <LogoutIcon />
-          Sign out
-        </Button>
-      </Drawer>
+      {!!SideComponent ? <SideComponent /> : null}
     </div>
   );
 }

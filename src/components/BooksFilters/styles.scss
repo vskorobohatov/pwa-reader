@@ -1,0 +1,7 @@
+@import "scssVariables.scss";
+
+.books-filters-wrapper{
+  .books-filter-btn {
+    @include header-btn();
+  }
+}

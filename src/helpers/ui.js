@@ -1,3 +1,5 @@
+import { defaultSettings } from "./defaults";
+
 export const isElementInViewport = el => {
   var rect = el.getBoundingClientRect();
   return (
@@ -20,22 +22,6 @@ export const getSelectionText = () => {
   return text;
 }
 
-export const defaultSettings = {
-  // Basic
-  fontSize: `16px`,
-  fontFamily: "GeneralSans",
-  background: "#FFFFFF",
-  color: "#000000",
-  // Paddings
-  paddingTop: `20px`,
-  paddingBottom: `20px`,
-  paddingLeft: `20px`,
-  paddingRight: `20px`,
-  // Misc
-  translations: "enabled",
-  textAlign: "justify"
-};
-
 export const getSavedSettings = () => {
   const settings = localStorage.getItem("settings");
   if (settings) {
@@ -46,5 +32,5 @@ export const getSavedSettings = () => {
 
 export const saveSettings = settings => {
   localStorage.setItem("settings", JSON.stringify(settings));
-
 };
+

@@ -2,12 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
+import { setHeaderSideComponent } from "store/reducers/ui";
 
 import Loader from "components/Loader";
+import StyledSelect from "components/StyledSelect";
 import UploadPopover from "components/UploadPopover";
+import { booksFiltersComponentKey } from "components/BooksFilters";
 import DefaultPopover, { PopoverItem } from "components/DefaultPopover";
 
 import AddIcon from '@mui/icons-material/Add';
@@ -16,8 +20,10 @@ import ModalWrapper from "components/ModalWrapper";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import "./styles.scss";
+import { setSortBy, setSortDirection } from "store/reducers/booksList";
 
 const Books = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [popoverState, setPopoverState] = useState(null);
   const [addBookPopoverState, setAddBookPopoverState] = useState(null);
@@ -27,8 +33,14 @@ const Books = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    updateHeader(booksFiltersComponentKey);
     getBooksList();
+    return () => {
+      updateHeader(null);
+    }
   }, []);
+
+  const updateHeader = val => dispatch(setHeaderSideComponent(val));
 
   const getBooksList = async () => {
     try {

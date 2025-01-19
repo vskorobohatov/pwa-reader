@@ -130,6 +130,30 @@ $breakpoint-mobile: 767px;
   }
 }
 
+@mixin header-btn($color: var(--main-text)) {
+  height: var(--button-height);
+  width: var(--button-height);
+  padding: 0;
+  min-width: unset;
+  color: var(--main-text);
+  border: none;
+  background: transparent;
+  border-radius: var(--button-radius);
+  transition: .3s all;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  svg {
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
+
+  .MuiTouchRipple-root {
+    display: none;
+  }
+}
+
 @keyframes transform-animation {
   0% {
     transform: translate(-50%, -50%);
