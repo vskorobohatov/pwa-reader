@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { orderBy } from "lodash";
+import { useDispatch, useSelector } from "react-redux";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
 import { setHeaderSideComponent } from "store/reducers/ui";
 
 import Loader from "components/Loader";
-import StyledSelect from "components/StyledSelect";
 import UploadPopover from "components/UploadPopover";
 import { booksFiltersComponentKey } from "components/BooksFilters";
 import DefaultPopover, { PopoverItem } from "components/DefaultPopover";
@@ -20,11 +20,11 @@ import ModalWrapper from "components/ModalWrapper";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import "./styles.scss";
-import { setSortBy, setSortDirection } from "store/reducers/booksList";
 
 const Books = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { sortBy, sortDirection } = useSelector(store => store.booksList);
   const [popoverState, setPopoverState] = useState(null);
   const [addBookPopoverState, setAddBookPopoverState] = useState(null);
   const [activeBook, setActiveBook] = useState(null);
@@ -46,13 +46,19 @@ const Books = () => {
     try {
       setIsLoading(true);
       const res = await User.getBooks();
-      setBooks(res?.books || []);
+      setBooks(res?.books ? orderBy(res?.books, sortBy, sortDirection) : []);
     } catch (e) {
       console.log(e);
     } finally {
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    updateBooksSort();
+  }, [sortBy, sortDirection]);
+
+  const updateBooksSort = () => setBooks(prevState => orderBy(prevState, sortBy, sortDirection));
 
   const handleBookMenuClick = (e, book) => {
     e.preventDefault();

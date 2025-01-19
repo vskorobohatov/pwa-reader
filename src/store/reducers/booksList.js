@@ -5,7 +5,7 @@ export const uiSlice = createSlice({
   initialState: {
     bookFiltersState: false,
     sortBy: "updatedAt",
-    sortDirection: "DESC"
+    sortDirection: "desc"
   },
   reducers: {
     setBookFiltersState: (state, action) => {
