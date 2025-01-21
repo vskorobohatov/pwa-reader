@@ -1,6 +1,7 @@
 @import "scssVariables.scss";
 
 .settings-wrapper {
+  @include page-styles();
   height: 100%;
   display: flex;
   align-items: stretch;
@@ -33,6 +34,7 @@
 
       .styled-select-wrapper {
         width: 75px;
+
         &.wide {
           width: 125px;
         }
@@ -51,11 +53,66 @@
         top: 50%;
         right: 0;
       }
+
       .color-value {
         width: var(--input-height);
         height: var(--input-height);
         border-radius: var(--input-radius);
         border: 1px solid var(--border-color);
+      }
+    }
+
+    .themes-wrapper {
+      display: flex;
+      align-items: stretch;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+      gap: var(--wrapper-gap);
+
+      .theme-item {
+        width: calc(100% / 6 - var(--wrapper-gap) / 6 * 5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        @media (max-width: $breakpoint-mobile) {
+          width: calc(100% / 3 - var(--wrapper-gap) / 3 * 2);
+        }
+
+        .state-wrapper {
+          flex: 1;
+          padding: 8px;
+          display: flex;
+          align-items: center;
+          flex-direction: column;
+          gap: var(--content-gap);
+          transition: 0.3s all;
+          cursor: pointer;
+
+          &.active,
+          &:hover {
+            background-color: var(--main-bg);
+            border-radius: var(--button-radius);
+          }
+        }
+
+        .preview {
+          width: 64px;
+          min-height: 64px;
+          border-radius: var(--button-radius);
+          border: 1px solid var(--border-color);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 1;
+        }
+
+        .label {
+          font-size: 12px;
+          text-align: center;
+          font-family: var(--font-medium);
+          flex: 1;
+        }
       }
     }
   }
@@ -66,9 +123,11 @@
 
     button {
       flex: 1;
+
       &.reset {
         @include outline-btn();
       }
+
       &.save {
         @include primary-btn();
       }

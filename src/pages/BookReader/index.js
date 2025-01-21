@@ -8,7 +8,8 @@ import moment from "moment";
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
 import { setShowHeader } from "store/reducers/ui";
-import { getSavedSettings, getSelectionText, isElementInViewport } from "helpers/ui";
+import { SETTINGS_STORAGE_KEY } from "storageVariables";
+import { getSavedValue, getSelectionText, isElementInViewport } from "helpers/ui";
 
 import Loader from "components/Loader";
 import ModalWrapper from "components/ModalWrapper";
@@ -45,7 +46,7 @@ const BookReader = () => {
   }, [sectionsList, currentPosition.section, currentPosition.paragraph])
 
   useEffect(() => {
-    const isTranslationEnabled = getSavedSettings()?.translations !== "disabled";
+    const isTranslationEnabled = getSavedValue(SETTINGS_STORAGE_KEY)?.translations !== "disabled";
     if (isTranslationEnabled) {
       document.addEventListener('selectionchange', debouncedTranslateSelection);
       return () => {
@@ -160,7 +161,7 @@ const BookReader = () => {
     navigate(BOOKS);
   }
 
-  const savedStyles = getSavedSettings();
+  const savedStyles = getSavedValue(SETTINGS_STORAGE_KEY);
 
   const bookStyles = {
     paddingTop: savedStyles.paddingTop,

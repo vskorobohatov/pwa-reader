@@ -4,8 +4,9 @@ import { toast } from "react-toastify";
 
 import StyledSelect from "components/StyledSelect";
 import { defaultSettings } from "helpers/defaults";
-import { getSavedSettings, saveSettings } from "helpers/ui";
-import { fontFamilyOptions, textAlignOptions } from "./options";
+import { getSavedValue, saveValue } from "helpers/ui";
+import { SETTINGS_STORAGE_KEY } from "storageVariables";
+import { fontFamilyOptions, textAlignOptions, themes } from "./options";
 
 import "./styles.scss";
 
@@ -17,12 +18,12 @@ const Settings = () => {
   }, []);
 
   const initSettings = () => {
-    const savedSettings = getSavedSettings();
+    const savedSettings = getSavedValue(SETTINGS_STORAGE_KEY);
     setSettingsData(savedSettings);
   };
 
-  const handleSaveSettings = () => {
-    saveSettings(settingsData);
+  const handlesaveValue = () => {
+    saveValue(SETTINGS_STORAGE_KEY, settingsData);
     toast.success("Settings were saved successfully!");
   };
 
@@ -37,6 +38,23 @@ const Settings = () => {
 
   return (
     <div className="settings-wrapper">
+      <div className="section">
+        <div className="section-title">Themes</div>
+        <div className="themes-wrapper">
+          {themes.map(({ color, background, label }) => {
+            const isActive = settingsData.color === color && settingsData.background === background;
+            return (
+              <div className="theme-item">
+                <div className={`state-wrapper ${isActive ? "active" : ""}`} onClick={() => setSettingsData({ ...settingsData, color, background })}>
+                  <div className="preview" style={{ color, background }}>Aa</div>
+                  <div className="label">{label}</div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+
       <div className="section">
         <div className="section-title">Basic</div>
         <div className="input-box">
@@ -128,7 +146,7 @@ const Settings = () => {
 
       <div className="controls-wrapper">
         <Button className="reset" onClick={() => setSettingsData(defaultSettings)}>Reset to default</Button>
-        <Button className="save" onClick={handleSaveSettings}>Save changes</Button>
+        <Button className="save" onClick={handlesaveValue}>Save changes</Button>
       </div>
     </div>
   )

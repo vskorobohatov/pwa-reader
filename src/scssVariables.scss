@@ -32,6 +32,11 @@ $breakpoint-mobile: 767px;
   white-space: nowrap;
 }
 
+@mixin page-styles() {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
 @mixin scroll-styles($color: var(--border-color), $bgColor: transparent) {
   @media (min-width: $breakpoint-mobile) {
     &::-webkit-scrollbar {
@@ -49,7 +54,7 @@ $breakpoint-mobile: 767px;
 }
 
 @mixin primary-btn() {
-  height: var(--button-height);
+  min-height: var(--button-height);
   display: flex;
   padding: var(--button-padding);
   min-width: unset;
@@ -85,7 +90,7 @@ $breakpoint-mobile: 767px;
 }
 
 @mixin outline-btn($color: var(--main-text)) {
-  height: var(--button-height);
+  min-height: var(--button-height);
   display: flex;
   padding: var(--button-padding);
   min-width: unset;

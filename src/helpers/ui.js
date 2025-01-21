@@ -22,15 +22,15 @@ export const getSelectionText = () => {
   return text;
 }
 
-export const getSavedSettings = () => {
-  const settings = localStorage.getItem("settings");
+export const getSavedValue = key => {
+  const settings = localStorage.getItem(key);
   if (settings) {
     return JSON.parse(settings);
   }
   return defaultSettings;
 };
 
-export const saveSettings = settings => {
-  localStorage.setItem("settings", JSON.stringify(settings));
+export const saveValue = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
 };
 

@@ -1,6 +1,7 @@
 @import "scssVariables.scss";
 
 .books-wrapper {
+  @include page-styles();
   @include scroll-styles();
   display: flex;
   align-items: stretch;
