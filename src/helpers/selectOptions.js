@@ -5,6 +5,6 @@ export const sortByOptions = [
 ];
 
 export const sortDirOptions = [
+  { label: "Asc", value: "asc" },
   { label: "Desc", value: "desc" },
-  { label: "Asc", value: "asc" }
 ];

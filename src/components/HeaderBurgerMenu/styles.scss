@@ -1,6 +1,11 @@
 @import "scssVariables.scss";
 
 .header-menu-wrapper {
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  font-family: var(--font-semibold);
+  gap: var(--content-gap);
   .header-menu-btn {
     @include header-btn();
   }

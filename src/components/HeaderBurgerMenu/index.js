@@ -8,7 +8,7 @@ import { removeToken } from 'helpers/tokenHelper';
 import { setMenuDrawerState } from "store/reducers/ui";
 
 import MenuIcon from '@mui/icons-material/Menu';
-import HomeIcon from '@mui/icons-material/Home';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
 import HelpIcon from '@mui/icons-material/Help';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -32,23 +32,28 @@ const HeaderBurgerMenu = () => {
     dispatch(setMenuDrawerState(false));
   }
 
+  const compareStrings = (str1, str2) => {
+    const regex = /[^a-zA-Z0-9]/g;
+    return str1.replace(regex, '').toLowerCase() === str2.replace(regex, '').toLowerCase();
+  };
+
   const routes = [
     {
-      label: "Home",
-      icon: <HomeIcon />,
-      isActive: pathname === BOOKS,
+      label: "Library",
+      icon: <MenuBookIcon />,
+      isActive: compareStrings(pathname, BOOKS),
       onClick: () => redirect(BOOKS)
     },
     {
       label: "Settings",
       icon: <SettingsIcon />,
-      isActive: pathname === SETTINGS,
+      isActive: compareStrings(pathname, SETTINGS),
       onClick: () => redirect(SETTINGS)
     },
     {
       label: "About",
       icon: <HelpIcon />,
-      isActive: pathname === ABOUT,
+      isActive: compareStrings(pathname, ABOUT),
       onClick: () => redirect(ABOUT)
     },
   ];
@@ -58,6 +63,8 @@ const HeaderBurgerMenu = () => {
       <Button className='header-menu-btn' onClick={() => dispatch(setMenuDrawerState(true))}>
         <MenuIcon />
       </Button>
+
+      {routes.find(it => it.isActive)?.label}
 
       <Drawer className='drawer-wrapper menu' open={menuDrawerState} onClose={() => dispatch(setMenuDrawerState(false))}>
         <div className='logo'>PWA-Reader</div>

@@ -53,9 +53,11 @@ const BookReader = () => {
         document.removeEventListener('selectionchange', debouncedTranslateSelection);
       }
     }
-    
-    toggleHeader(false);
+  }, []);
 
+  useEffect(() => {    
+    toggleHeader(false);
+    
     return () => {
       toggleHeader(true);
     }

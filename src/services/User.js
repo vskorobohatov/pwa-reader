@@ -57,6 +57,13 @@ export class User {
       data: { bookId }
     });
   }
+  static async editBook(bookId, data) {
+    return ApiService._requestAsync({
+      url: `/updateBook.php`,
+      method: "POST",
+      data: { bookId, ...data }
+    });
+  }
   static async translate(text) {
     return ApiService._requestAsync({
       url: `/getTranslation.php?word=${encodeURI(text)}`,

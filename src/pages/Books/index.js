@@ -11,6 +11,7 @@ import { setHeaderSideComponent } from "store/reducers/ui";
 
 import Loader from "components/Loader";
 import UploadPopover from "components/UploadPopover";
+import EditBookModal from "components/EditBookModal";
 import { booksFiltersComponentKey } from "components/BooksFilters";
 import DefaultPopover, { PopoverItem } from "components/DefaultPopover";
 
@@ -29,8 +30,11 @@ const Books = () => {
   const [addBookPopoverState, setAddBookPopoverState] = useState(null);
   const [activeBook, setActiveBook] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [books, setBooks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const sortedBooks = orderBy(books, sortBy, sortDirection);
 
   useEffect(() => {
     updateHeader(booksFiltersComponentKey);
@@ -46,19 +50,13 @@ const Books = () => {
     try {
       setIsLoading(true);
       const res = await User.getBooks();
-      setBooks(res?.books ? orderBy(res?.books, sortBy, sortDirection) : []);
+      setBooks(res?.books || []);
     } catch (e) {
       console.log(e);
     } finally {
       setIsLoading(false);
     }
   };
-
-  useEffect(() => {
-    updateBooksSort();
-  }, [sortBy, sortDirection]);
-
-  const updateBooksSort = () => setBooks(prevState => orderBy(prevState, sortBy, sortDirection));
 
   const handleBookMenuClick = (e, book) => {
     e.preventDefault();
@@ -76,13 +74,19 @@ const Books = () => {
       console.log(e);
       toast.error(e?.response?.data?.message || "Something went wrong...");
     } finally {
-      closeDeleteModals();
+      closeDeleteModal();
     }
   };
 
-  const closeDeleteModals = () => {
+  const closeDeleteModal = () => {
     setActiveBook(null);
     setShowDeleteModal(false);
+  };
+
+  const closeEditModal = () => {
+    setActiveBook(null);
+    setShowEditModal(false);
+    getBooksList();
   };
 
   return (
@@ -91,7 +95,7 @@ const Books = () => {
         <Loader />
       ) : !!books.length ? (
         <div className="books-list">
-          {books.map(book => (
+          {sortedBooks.map(book => (
             <div className="book-item" key={book.id} onClick={() => navigate(`${BOOKS}/${book.id}`)}>
               <div className="name">{book.name}</div>
               <Button className="menu-btn" onClick={e => handleBookMenuClick(e, book)}>
@@ -111,7 +115,14 @@ const Books = () => {
       </Button>
 
       <DefaultPopover state={popoverState} setState={setPopoverState}>
-        <PopoverItem icon={<EditIcon />} label="Edit" />
+        <PopoverItem
+          icon={<EditIcon />}
+          label="Rename"
+          onClick={() => {
+            setShowEditModal(true);
+            setPopoverState(null);
+          }}
+        />
         <PopoverItem
           isDelete
           icon={<DeleteOutlineIcon />}
@@ -123,17 +134,19 @@ const Books = () => {
         />
       </DefaultPopover>
 
+      <EditBookModal state={showEditModal} setState={setShowEditModal} onSuccess={closeEditModal} data={activeBook} />
+
       <ModalWrapper
         title="Are you sure?"
         subtitle="This action will remove file and all corresponding data."
         open={showDeleteModal && activeBook}
-        onClose={closeDeleteModals}
+        onClose={closeDeleteModal}
         contentClassName="confirm-delete-modal"
       >
         <div className="controls-wrapper">
           <Button
             className="cancel"
-            onClick={closeDeleteModals}
+            onClick={closeDeleteModal}
           >
             Cancel
           </Button>

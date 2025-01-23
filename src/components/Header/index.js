@@ -12,7 +12,7 @@ const sideComponents = {
 
 const Header = () => {
   const { headerSideComponent, showHeader } = useSelector(store => store.ui);
-
+  console.log(showHeader)
   if (!showHeader) {
     return null;
   }
