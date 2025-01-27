@@ -112,7 +112,7 @@ html,
 body {
   margin: 0;
   height: 100%;
-  font-family: var(--font-regular);
+  font-family: var(--font-medium);
   color: var(--main-text);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

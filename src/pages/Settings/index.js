@@ -134,7 +134,7 @@ const Settings = () => {
           />
         </div>
         <div className="input-box">
-          <div className="label">Translations for selections</div>
+          <div className="label">Translations for selection</div>
           <StyledSelect
             className="wide"
             value={settingsData.translations}
