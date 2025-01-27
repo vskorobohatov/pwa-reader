@@ -33,8 +33,12 @@ $breakpoint-mobile: 767px;
 }
 
 @mixin page-styles() {
+  @include scroll-styles();
+  width: 100%;
   max-width: 768px;
   margin: 0 auto;
+  max-height: calc(100% - var(--header-height));
+  overflow: auto;
 }
 
 @mixin scroll-styles($color: var(--border-color), $bgColor: transparent) {

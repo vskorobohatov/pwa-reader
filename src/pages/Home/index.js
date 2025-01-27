@@ -18,9 +18,7 @@ const Home = () => {
         draggable
       />
       <Header />
-      <div className="owner-app-content">
-        <Outlet />
-      </div>
+      <Outlet />
     </div>
   )
 };

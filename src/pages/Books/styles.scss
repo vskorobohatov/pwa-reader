@@ -2,13 +2,10 @@
 
 .books-wrapper {
   @include page-styles();
-  @include scroll-styles();
   display: flex;
   align-items: stretch;
   flex-direction: column;
   position: relative;
-  height: 100%;
-  overflow: auto;
   gap: var(--content-gap);
   padding: var(--card-padding);
 
@@ -17,9 +14,13 @@
     align-items: stretch;
     flex-direction: column;
     gap: var(--items-gap);
+    height: calc(100% - 56px - 8px);
+    overflow: auto;
+    @include scroll-styles();
 
     .book-item {
       height: 60px;
+      min-height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;

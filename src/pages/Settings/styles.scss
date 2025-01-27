@@ -2,12 +2,15 @@
 
 .settings-wrapper {
   @include page-styles();
-  height: 100%;
   display: flex;
   align-items: stretch;
   flex-direction: column;
   gap: var(--wrapper-gap);
   padding: 8px 8px 24px;
+
+  @media (max-width: $breakpoint-mobile) {
+    gap: var(--content-gap);
+  }
 
   .section {
     display: flex;
@@ -97,6 +100,10 @@
         @media (max-width: $breakpoint-mobile) {
           width: calc(100% / 3 - var(--wrapper-gap) / 3 * 2);
         }
+        
+        @media (max-width: 300px) {
+          width: calc(50% - var(--wrapper-gap) / 2);
+        }
 
         .state-wrapper {
           flex: 1;
@@ -145,6 +152,10 @@
   .controls-wrapper {
     display: flex;
     gap: var(--content-gap);
+
+    @media (max-width: 250px) {
+      flex-direction: column;
+    }
 
     button {
       flex: 1;
