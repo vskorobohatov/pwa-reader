@@ -97,17 +97,23 @@
         }
 
         .preview {
-          width: 64px;
-          min-height: 64px;
+          width: 100%;
+          max-width: 64px;
+          aspect-ratio: 1 / 1;
           border-radius: var(--button-radius);
           border: 1px solid var(--border-color);
           display: flex;
           align-items: center;
           justify-content: center;
           flex: 1;
+
+          @media (max-width: $breakpoint-mobile) {
+            max-width: 32px;
+          }
         }
 
         .label {
+          @include text-overflow();
           font-size: 12px;
           text-align: center;
           font-family: var(--font-medium);

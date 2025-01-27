@@ -2,17 +2,17 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 import HeaderBurgerMenu from 'components/HeaderBurgerMenu';
-import BooksFiltersComponent, { booksFiltersComponentKey } from 'components/BooksFilters';
+import AddBookComponent, { addBookComponentKey } from 'components/AddBookComponent';
 
 import './styles.scss';
 
 const sideComponents = {
-  [booksFiltersComponentKey]: BooksFiltersComponent
+  [addBookComponentKey]: AddBookComponent,
 };
 
 const Header = () => {
   const { headerSideComponent, showHeader } = useSelector(store => store.ui);
-  console.log(showHeader)
+
   if (!showHeader) {
     return null;
   }

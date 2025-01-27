@@ -18,7 +18,8 @@
     display: flex;
     align-items: stretch;
     flex-direction: column;
-    width: 250px;
+    width: 100%;
+    max-width: 250px;
     padding: 8px 8px 24px;
     background-color: var(--main-bg);
     gap: var(--items-gap);
@@ -29,9 +30,21 @@
       color: var(--primary-color);
       font-size: 18px;
       font-family: var(--font-medium);
-      height: 32px;
+      height: var(--button-height);
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      width: 100%;
+
+      .close-btn {
+        @include header-btn();
+        color: var(--second-text);
+        display: none;
+
+        @media (max-width: $breakpoint-mobile) {
+          display: flex;
+        }
+      }
     }
 
     button {

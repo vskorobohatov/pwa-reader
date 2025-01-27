@@ -1,0 +1,7 @@
+@import "scssVariables.scss";
+
+.add-book-wrapper {
+  .add-book-btn {
+    @include header-btn();
+  }
+}

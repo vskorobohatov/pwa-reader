@@ -7,15 +7,15 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
+import { getBooksList } from "store/sagas/booksList";
 import { setHeaderSideComponent } from "store/reducers/ui";
+import { addBookComponentKey } from "components/AddBookComponent";
 
 import Loader from "components/Loader";
-import UploadPopover from "components/UploadPopover";
 import EditBookModal from "components/EditBookModal";
-import { booksFiltersComponentKey } from "components/BooksFilters";
+import BooksFiltersComponent from "components/BooksFilters";
 import DefaultPopover, { PopoverItem } from "components/DefaultPopover";
 
-import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import ModalWrapper from "components/ModalWrapper";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
@@ -25,38 +25,23 @@ import "./styles.scss";
 const Books = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { sortBy, sortDirection } = useSelector(store => store.booksList);
+  const { sortBy, sortDirection, books, isLoading } = useSelector(store => store.booksList);
   const [popoverState, setPopoverState] = useState(null);
-  const [addBookPopoverState, setAddBookPopoverState] = useState(null);
   const [activeBook, setActiveBook] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [books, setBooks] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   const sortedBooks = orderBy(books, sortBy, sortDirection);
 
   useEffect(() => {
-    updateHeader(booksFiltersComponentKey);
-    getBooksList();
+    updateHeader(addBookComponentKey);
+    dispatch(getBooksList());
     return () => {
       updateHeader(null);
     }
   }, []);
 
   const updateHeader = val => dispatch(setHeaderSideComponent(val));
-
-  const getBooksList = async () => {
-    try {
-      setIsLoading(true);
-      const res = await User.getBooks();
-      setBooks(res?.books || []);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleBookMenuClick = (e, book) => {
     e.preventDefault();
@@ -94,25 +79,24 @@ const Books = () => {
       {isLoading ? (
         <Loader />
       ) : !!books.length ? (
-        <div className="books-list">
-          {sortedBooks.map(book => (
-            <div className="book-item" key={book.id} onClick={() => navigate(`${BOOKS}/${book.id}`)}>
-              <div className="name">{book.name}</div>
-              <Button className="menu-btn" onClick={e => handleBookMenuClick(e, book)}>
-                <MoreVertIcon />
-              </Button>
-            </div>
-          ))}
-        </div>
+        <>
+          <BooksFiltersComponent />
+          <div className="books-list">
+            {sortedBooks.map(book => (
+              <div className="book-item" key={book.id} onClick={() => navigate(`${BOOKS}/${book.id}`)}>
+                <div className="name">{book.name}</div>
+                <Button className="menu-btn" onClick={e => handleBookMenuClick(e, book)}>
+                  <MoreVertIcon />
+                </Button>
+              </div>
+            ))}
+          </div>
+        </>
       ) : (
         <div className="empty-box">
           You don't have any books...
         </div>
       )}
-
-      <Button className="add-book-btn" onClick={e => setAddBookPopoverState(e.currentTarget)}>
-        <AddIcon />
-      </Button>
 
       <DefaultPopover state={popoverState} setState={setPopoverState}>
         <PopoverItem
@@ -159,11 +143,6 @@ const Books = () => {
         </div>
       </ModalWrapper>
 
-      <UploadPopover
-        state={addBookPopoverState}
-        setState={setAddBookPopoverState}
-        onSuccess={getBooksList}
-      />
     </div>
   )
 };

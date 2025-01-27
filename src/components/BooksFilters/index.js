@@ -13,8 +13,6 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 
 import './styles.scss';
 
-export const booksFiltersComponentKey = "booksFiltersComponent";
-
 const BooksFiltersComponent = () => {
   const dispatch = useDispatch();
   const { bookFiltersState, sortBy, sortDirection } = useSelector(store => store.booksList);
@@ -54,12 +52,7 @@ const BooksFiltersComponent = () => {
 
   return (
     <div className='books-filters-wrapper'>
-      <Button className='books-filter-btn' onClick={() => dispatch(setBookFiltersState(true))}>
-        <FilterListIcon />
-      </Button>
-      <Drawer anchor='right' className='drawer-wrapper' open={bookFiltersState} onClose={() => dispatch(setBookFiltersState(false))}>
-        {bookFilters.map((filterData, i) => <StyledSelect key={`filter-${i}`} {...filterData} />)}
-      </Drawer>
+      {bookFilters.map((filterData, i) => <StyledSelect key={`filter-${i}`} {...filterData} />)}
     </div>
   );
 }

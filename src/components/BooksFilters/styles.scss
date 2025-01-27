@@ -1,7 +1,11 @@
 @import "scssVariables.scss";
 
-.books-filters-wrapper{
-  .books-filter-btn {
-    @include header-btn();
+.books-filters-wrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--content-gap);
+
+  .styled-select-wrapper {
+    flex: 1;
   }
 }

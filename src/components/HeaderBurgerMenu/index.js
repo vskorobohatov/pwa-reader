@@ -12,6 +12,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import HelpIcon from '@mui/icons-material/Help';
 import LogoutIcon from '@mui/icons-material/Logout';
 import SettingsIcon from '@mui/icons-material/Settings';
+import CloseIcon from '@mui/icons-material/Close';
 import './styles.scss';
 
 export const mainMenuComponentKey = "booksFiltersComponent";
@@ -67,7 +68,12 @@ const HeaderBurgerMenu = () => {
       {routes.find(it => it.isActive)?.label}
 
       <Drawer className='drawer-wrapper menu' open={menuDrawerState} onClose={() => dispatch(setMenuDrawerState(false))}>
-        <div className='logo'>PWA-Reader</div>
+        <div className='logo'>
+          PWA-Reader
+          <Button onClick={() => dispatch(setMenuDrawerState(false))} className='close-btn'>
+            <CloseIcon />
+          </Button>
+        </div>
         {routes.map(route => (
           <Button key={route.label} onClick={route.onClick} className={route.isActive ? "active" : ""}>
             {route.icon}
