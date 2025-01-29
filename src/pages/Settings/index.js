@@ -1,21 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
-import StyledSelect from "components/StyledSelect";
 import { defaultSettings } from "helpers/defaults";
 import { getSavedValue, saveValue } from "helpers/ui";
 import { SETTINGS_STORAGE_KEY } from "storageVariables";
 import { fontFamilyOptions, textAlignOptions, themes } from "./options";
+import { setHeaderSideComponent, setHeaderSideComponentProps } from "store/reducers/ui";
+
+import StyledSelect from "components/StyledSelect";
+import { saveSettingsButtonKey } from "components/SaveSettingsButton";
 
 import "./styles.scss";
 
 const Settings = () => {
+  const dispatch = useDispatch();
   const [settingsData, setSettingsData] = useState(defaultSettings);
 
   useEffect(() => {
-    initSettings()
+    initSettings();
+
+    updateHeader(
+      saveSettingsButtonKey,
+      { onClick: handlesaveValue }
+    );
+
+    return () => {
+      updateHeader();
+    }
   }, []);
+
+  const updateHeader = (val = null, props = null) => {
+    dispatch(setHeaderSideComponent(val));
+    dispatch(setHeaderSideComponentProps(props));
+  };
 
   const initSettings = () => {
     const savedSettings = getSavedValue(SETTINGS_STORAGE_KEY);
@@ -146,7 +165,6 @@ const Settings = () => {
 
       <div className="controls-wrapper">
         <Button className="reset" onClick={() => setSettingsData(defaultSettings)}>Reset to default</Button>
-        <Button className="save" onClick={handlesaveValue}>Save changes</Button>
       </div>
     </div>
   )

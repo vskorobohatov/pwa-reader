@@ -1,0 +1,7 @@
+@import "scssVariables.scss";
+
+.save-settings-wrapper {
+  .save-btn {
+    @include header-btn();
+  }
+}

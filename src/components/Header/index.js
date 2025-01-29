@@ -5,13 +5,15 @@ import HeaderBurgerMenu from 'components/HeaderBurgerMenu';
 import AddBookComponent, { addBookComponentKey } from 'components/AddBookComponent';
 
 import './styles.scss';
+import SaveSettingsButton, { saveSettingsButtonKey } from 'components/SaveSettingsButton';
 
 const sideComponents = {
   [addBookComponentKey]: AddBookComponent,
+  [saveSettingsButtonKey]: SaveSettingsButton,
 };
 
 const Header = () => {
-  const { headerSideComponent, showHeader } = useSelector(store => store.ui);
+  const { headerSideComponent, headerSideComponentProps, showHeader } = useSelector(store => store.ui);
 
   if (!showHeader) {
     return null;
@@ -23,7 +25,7 @@ const Header = () => {
     <div className="header-wrapper">
       <HeaderBurgerMenu />
 
-      {!!SideComponent ? <SideComponent /> : null}
+      {!!SideComponent ? <SideComponent {...headerSideComponentProps} /> : null}
     </div>
   );
 }

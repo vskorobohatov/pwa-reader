@@ -13,17 +13,20 @@ export const addBookComponentKey = "add-book-component";
 
 const AddBookComponent = () => {
   const dispatch = useDispatch();
-  const [addBookPopoverState, setAddBookPopoverState] = useState(null);
+  const [addBookPopoverState, setAddBookPopoverState] = useState(false);
 
   return (
     <div className='add-book-wrapper'>
-      <Button className="add-book-btn" onClick={e => setAddBookPopoverState(e.currentTarget)}>
+      <Button className="add-book-btn" onClick={() => setAddBookPopoverState(true)}>
         <AddIcon />
       </Button>
       <UploadPopover
         state={addBookPopoverState}
         setState={setAddBookPopoverState}
-        onSuccess={()=>dispatch(getBooksList())}
+        onSuccess={() => {
+          dispatch(getBooksList());
+          setAddBookPopoverState(false);
+        }}
       />
     </div>
   );

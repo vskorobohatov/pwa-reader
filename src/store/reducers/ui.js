@@ -6,6 +6,7 @@ export const uiSlice = createSlice({
     theme: localStorage.getItem("theme") || "system",
     menuDrawerState: false,
     headerSideComponent: null,
+    headerSideComponentProps: null,
     showHeader: true
   },
   reducers: {
@@ -21,10 +22,13 @@ export const uiSlice = createSlice({
     setHeaderSideComponent: (state, action) => {
       state.headerSideComponent = action.payload;
     },
+    setHeaderSideComponentProps: (state, action) => {
+      state.headerSideComponentProps = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setMenuDrawerState, setTheme, setHeaderSideComponent, setShowHeader } = uiSlice.actions;
+export const { setMenuDrawerState, setTheme, setHeaderSideComponent, setHeaderSideComponentProps, setShowHeader } = uiSlice.actions;
 
 export default uiSlice.reducer;

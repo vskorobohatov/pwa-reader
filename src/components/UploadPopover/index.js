@@ -12,6 +12,7 @@ import StyledTextField from "components/StyledTextField";
 
 import CloseIcon from '@mui/icons-material/Close';
 import "./styles.scss";
+import ModalWrapper from "components/ModalWrapper";
 
 const defaultLinkValue = { name: "", url: "" };
 
@@ -35,7 +36,7 @@ const UploadPopover = ({ state, setState, onSuccess }) => {
         await User.uploadLink(linkToUpload);
       }
 
-      setState(null);
+      setState(false);
       toast.success("File was uploaded successfully!");
       onSuccess();
       clearUploadForm();
@@ -48,6 +49,7 @@ const UploadPopover = ({ state, setState, onSuccess }) => {
   };
 
   const clearUploadForm = () => {
+    setState(false);
     setTimeout(() => {
       setFilesToUpload([]);
       setLinkToUpload(defaultLinkValue);
@@ -55,84 +57,75 @@ const UploadPopover = ({ state, setState, onSuccess }) => {
   };
 
   return (
-    <DefaultPopover className="dropzone-popover" state={state} setState={setState} onClose={clearUploadForm}>
-      <div className="dropzone-popover-content">
-        {isLoading && <Loader />}
-        <div className="title">
-          Upload file(s)
-          <Button
-            className="close-modal-btn"
-            onClick={() => {
-              setState(false);
-              clearUploadForm();
+    <ModalWrapper
+      title="Upload file(s)"
+      open={state}
+      onClose={clearUploadForm}
+      contentClassName="dropzone-popover-content"
+    >
+      {isLoading && <Loader />}
+      {!!filesToUpload.length ? (
+        <div className="files-list">
+          {filesToUpload.map(file => (
+            <div className="file-info-wrapper">
+              <div className="info-item name">
+                <div className="item-label">Name</div>
+                <div className="item-value">{file.name}</div>
+              </div>
+              <div className="info-item size">
+                <div className="item-label">Size</div>
+                <div className="item-value">{formatBytes(file.size)}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <>
+          <Dropzone
+            onDrop={acceptedFiles => {
+              setFilesToUpload(acceptedFiles);
+              setUploadError("");
             }}
           >
-            <CloseIcon />
-          </Button>
-        </div>
-        {!!filesToUpload.length ? (
-          <div className="files-list">
-            {filesToUpload.map(file => (
-              <div className="file-info-wrapper">
-                <div className="info-item name">
-                  <div className="item-label">Name</div>
-                  <div className="item-value">{file.name}</div>
-                </div>
-                <div className="info-item size">
-                  <div className="item-label">Size</div>
-                  <div className="item-value">{formatBytes(file.size)}</div>
+            {({ getRootProps, getInputProps }) => (
+              <div className="dropzone-wrapper">
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  <div className="dropzone-label">Drag 'n' drop some files here, <br />or click to select files</div>
                 </div>
               </div>
-            ))}
+            )}
+          </Dropzone>
+          <div className="divider">
+            <span></span>
+            <div>or</div>
+            <span></span>
           </div>
-        ) : (
-          <>
-            <Dropzone
-              onDrop={acceptedFiles => {
-                setFilesToUpload(acceptedFiles);
+          <div className="link-upload-wrapper">
+            <StyledTextField
+              label="File name"
+              placeholder="Mybook.epub"
+              value={linkToUpload.name}
+              onChange={e => {
+                setLinkToUpload(prevState => ({ ...prevState, name: e.target.value }));
                 setUploadError("");
               }}
-            >
-              {({ getRootProps, getInputProps }) => (
-                <div className="dropzone-wrapper">
-                  <div {...getRootProps()}>
-                    <input {...getInputProps()} />
-                    <div className="dropzone-label">Drag 'n' drop some files here, <br />or click to select files</div>
-                  </div>
-                </div>
-              )}
-            </Dropzone>
-            <div className="divider">
-              <span></span>
-              <div>or</div>
-              <span></span>
-            </div>
-            <div className="link-upload-wrapper">
-              <StyledTextField
-                label="File name"
-                placeholder="Mybook.epub"
-                value={linkToUpload.name}
-                onChange={e => {
-                  setLinkToUpload(prevState => ({ ...prevState, name: e.target.value }));
-                  setUploadError("");
-                }}
-              />
-              <StyledTextField
-                label="Link to the file"
-                placeholder="https://example.com/file.epub"
-                value={linkToUpload.url}
-                onChange={e => {
-                  setLinkToUpload(prevState => ({ ...prevState, url: e.target.value }));
-                  setUploadError("");
-                }}
-              />
-            </div>
-          </>
-        )}
-        <Button className="upload-btn" onClick={handleUploadFile}>Confirm</Button>
-        {uploadError && <div className="error-text">{uploadError}</div>}
-      </div>
-    </DefaultPopover>
+            />
+            <StyledTextField
+              label="Link to the file"
+              placeholder="https://example.com/file.epub"
+              value={linkToUpload.url}
+              onChange={e => {
+                setLinkToUpload(prevState => ({ ...prevState, url: e.target.value }));
+                setUploadError("");
+              }}
+            />
+          </div>
+        </>
+      )}
+      <Button className="upload-btn" onClick={handleUploadFile}>Confirm</Button>
+      {uploadError && <div className="error-text">{uploadError}</div>}
+    </ModalWrapper>
   )
 };
 

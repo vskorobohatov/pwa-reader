@@ -17,7 +17,7 @@
     align-items: stretch;
     flex-direction: column;
     gap: var(--content-gap);
-    background-color: var(--third-bg);
+    background-color: var(--main-bg);
     border-radius: var(--card-radius);
     padding: var(--card-padding);
 
@@ -152,6 +152,11 @@
   .controls-wrapper {
     display: flex;
     gap: var(--content-gap);
+    padding-top: var(--wrapper-gap);
+    
+    @media (max-width: $breakpoint-mobile) {
+      padding-top: var(--content-gap);
+    }
 
     @media (max-width: 250px) {
       flex-direction: column;

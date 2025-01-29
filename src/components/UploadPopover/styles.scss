@@ -1,17 +1,14 @@
 @import "scssVariables.scss";
 
-.dropzone-popover {
-  .MuiPaper-root {
+.modal-wrapper {
+  .dropzone-popover-content {
+    display: flex;
+    align-items: stretch;
+    flex-direction: column;
+    gap: var(--wrapper-gap);
     width: calc(100% - 32px);
     max-width: 500px;
     overflow: auto !important;
-
-    .dropzone-popover-content {
-      display: flex;
-      align-items: stretch;
-      flex-direction: column;
-      gap: var(--wrapper-gap);
-    }
 
     .title {
       font-size: 18px;
