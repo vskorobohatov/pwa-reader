@@ -23,9 +23,11 @@ const Header = () => {
 
   return (
     <div className="header-wrapper">
-      <HeaderBurgerMenu />
+      <div className="header-content">
+        <HeaderBurgerMenu />
 
-      {!!SideComponent ? <SideComponent {...headerSideComponentProps} /> : null}
+        {!!SideComponent ? <SideComponent {...headerSideComponentProps} /> : null}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 $breakpoint-small-desktop: 1190px;
 $breakpoint-tablet: 1060px;
 $breakpoint-mobile: 767px;
+$content-width: 767px;
 
 @mixin field-label() {
   font-size: 12px;
@@ -35,7 +36,7 @@ $breakpoint-mobile: 767px;
 @mixin page-styles() {
   @include scroll-styles();
   width: 100%;
-  max-width: 768px;
+  max-width: $content-width;
   margin: 0 auto;
   max-height: calc(100% - var(--header-height));
   overflow: auto;

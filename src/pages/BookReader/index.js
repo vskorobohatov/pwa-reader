@@ -55,9 +55,9 @@ const BookReader = () => {
     }
   }, []);
 
-  useEffect(() => {    
+  useEffect(() => {
     toggleHeader(false);
-    
+
     return () => {
       toggleHeader(true);
     }
@@ -135,7 +135,7 @@ const BookReader = () => {
       const firstVisibleElem = paragraphs.findIndex(elem => isElementInViewport(elem));
       User.updateBookInfo({
         bookId,
-        position: JSON.stringify({ ...position, paragraph: firstVisibleElem }),
+        position: JSON.stringify({ ...position, paragraph: firstVisibleElem > 0 ? firstVisibleElem - 1 : 0 }),
         updatedAt: moment().format("YYYY-MM-DD hh:mm:ss")
       });
     } catch (e) {
@@ -147,15 +147,19 @@ const BookReader = () => {
     contentRef.current.innerHTML = "";
     contentRef.current.appendChild(list[position.section]);
     const paragraphs = contentRef.current.getElementsByTagName("p");
-    const paragraphToScroll = paragraphs[position.paragraph || 0];
-    if (paragraphToScroll) {
-      setTimeout(() => {
-        paragraphToScroll.scrollIntoView();
-      }, 50)
+    if (position.paragraph > 0) {
+      const paragraphToScroll = paragraphs[position.paragraph || 0];
+      if (paragraphToScroll) {
+        setTimeout(() => {
+          paragraphToScroll.scrollIntoView();
+        }, 10)
+      }
+    } else {
+      scrollRef.current.scrollTo(0, 0);
     }
   }
 
-  const debouncedUpdateLocation = useCallback(debounce(updatePosition, 5000, { maxWait: 30000 }), []);
+  const debouncedUpdateLocation = useCallback(debounce(updatePosition, 2000, { maxWait: 6000 }), []);
   const debouncedTranslateSelection = useCallback(debounce(translateSelection, 2000), []);
 
   const handleClose = () => {

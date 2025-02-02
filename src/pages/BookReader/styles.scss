@@ -103,7 +103,7 @@
       align-items: stretch;
       flex-direction: column;
       gap: var(--content-gap);
-      min-height: 50px;
+      min-height: fit-content;
 
       .word {
         font-size: 18px;

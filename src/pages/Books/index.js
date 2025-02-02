@@ -4,9 +4,11 @@ import { Button } from "@mui/material";
 import { toast } from "react-toastify";
 import { orderBy } from "lodash";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
+import { formatBytes } from "helpers/format";
 import { getBooksList } from "store/sagas/booksList";
 import { setHeaderSideComponent } from "store/reducers/ui";
 import { addBookComponentKey } from "components/AddBookComponent";
@@ -84,7 +86,15 @@ const Books = () => {
           <div className="books-list">
             {sortedBooks.map(book => (
               <div className="book-item" key={book.id} onClick={() => navigate(`${BOOKS}/${book.id}`)}>
-                <div className="name">{book.name}</div>
+                <div className="info-wrapper">
+                  <div className="overflow-wrapper">
+                    <div className="name">{book.name}</div>
+                    <div className="properties-wrapper">
+                      <div className="item">Uploaded At: {moment(book.uploadedAt).format("DD MMM YYYY")}</div>
+                      <div className="item">Size: {formatBytes(book.size)}</div>
+                    </div>
+                  </div>
+                </div>
                 <Button className="menu-btn" onClick={e => handleBookMenuClick(e, book)}>
                   <MoreVertIcon />
                 </Button>
