@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux';
 
 import HeaderBurgerMenu from 'components/HeaderBurgerMenu';
 import AddBookComponent, { addBookComponentKey } from 'components/AddBookComponent';
+import SaveSettingsButton, { resetSettingsButtonKey } from 'components/ResetSettingsButton';
 
 import './styles.scss';
-import SaveSettingsButton, { saveSettingsButtonKey } from 'components/SaveSettingsButton';
 
 const sideComponents = {
   [addBookComponentKey]: AddBookComponent,
-  [saveSettingsButtonKey]: SaveSettingsButton,
+  [resetSettingsButtonKey]: SaveSettingsButton,
 };
 
 const Header = () => {

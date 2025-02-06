@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { defaultSettings } from 'helpers/defaults';
+import { saveValue } from 'helpers/ui';
+import { SETTINGS_STORAGE_KEY } from 'storageVariables';
 
 export const settingsSlice = createSlice({
   name: 'settings',
@@ -8,7 +10,9 @@ export const settingsSlice = createSlice({
   },
   reducers: {
     setSettings: (state, action) => {
-      state.values = {...state.values, ...action.payload};
+      const newValues = { ...state.values, ...action.payload };
+      saveValue(SETTINGS_STORAGE_KEY, newValues);
+      state.values = newValues;
     },
   },
 });

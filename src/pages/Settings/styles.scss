@@ -148,30 +148,4 @@
       }
     }
   }
-
-  .controls-wrapper {
-    display: flex;
-    gap: var(--content-gap);
-    padding-top: var(--wrapper-gap);
-    
-    @media (max-width: $breakpoint-mobile) {
-      padding-top: var(--content-gap);
-    }
-
-    @media (max-width: 250px) {
-      flex-direction: column;
-    }
-
-    button {
-      flex: 1;
-
-      &.reset {
-        @include outline-btn();
-      }
-
-      &.save {
-        @include primary-btn();
-      }
-    }
-  }
 }

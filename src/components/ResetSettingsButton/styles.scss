@@ -1,7 +1,7 @@
 @import "scssVariables.scss";
 
-.save-settings-wrapper {
-  .save-btn {
+.reset-settings-wrapper {
+  button {
     @include header-btn();
     &.success{
       color: var(--success-color);

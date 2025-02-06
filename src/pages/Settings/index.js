@@ -1,44 +1,22 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
 import { defaultSettings } from "helpers/defaults";
-import { getSavedValue } from "helpers/ui";
-import { SETTINGS_STORAGE_KEY } from "storageVariables";
 import { fontFamilyOptions, textAlignOptions, themes } from "./options";
 import { setHeaderSideComponent, setHeaderSideComponentProps } from "store/reducers/ui";
 import { setSettings } from "store/reducers/settings";
 
 import StyledSelect from "components/StyledSelect";
-import { saveSettingsButtonKey } from "components/SaveSettingsButton";
+import { resetSettingsButtonKey } from "components/ResetSettingsButton";
 
 import "./styles.scss";
 
-const Settings = () => {
+export const SettingsContent = () => {
   const dispatch = useDispatch();
   const settingsData = useSelector(store => store.settings.values);
 
   const setSettingsData = values => dispatch(setSettings(values));
-
-  useEffect(() => {
-    initSettings();
-
-    updateHeader(saveSettingsButtonKey);
-
-    return () => {
-      updateHeader();
-    }
-  }, []);
-
-  const updateHeader = (val = null, props = null) => {
-    dispatch(setHeaderSideComponent(val));
-    dispatch(setHeaderSideComponentProps(props));
-  };
-
-  const initSettings = () => {
-    const savedSettings = getSavedValue(SETTINGS_STORAGE_KEY);
-    setSettingsData(savedSettings);
-  };
 
   const getSizeOptions = (min = 11, max = 34) => {
     const res = [];
@@ -156,12 +134,27 @@ const Settings = () => {
           />
         </div>
       </div>
-
-      <div className="controls-wrapper">
-        <Button className="reset" onClick={() => setSettingsData(defaultSettings)}>Reset to default</Button>
-      </div>
     </div>
   )
+}
+
+const SettingsPage = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    updateHeader(resetSettingsButtonKey);
+
+    return () => {
+      updateHeader();
+    }
+  }, []);
+
+  const updateHeader = (val = null, props = null) => {
+    dispatch(setHeaderSideComponent(val));
+    dispatch(setHeaderSideComponentProps(props));
+  };
+
+  return <SettingsContent />
 };
 
-export default Settings;
+export default SettingsPage;

@@ -2,19 +2,22 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { debounce } from "lodash";
 import { Button } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
 import { User } from "services/User";
 import { BOOKS } from "pathnameVariables";
+import { SettingsContent } from "pages/Settings";
 import { setShowHeader } from "store/reducers/ui";
 import { SETTINGS_STORAGE_KEY } from "storageVariables";
 import { getSavedValue, getSelectionText, isElementInViewport } from "helpers/ui";
 
 import Loader from "components/Loader";
 import ModalWrapper from "components/ModalWrapper";
+import DefaultPopover from "components/DefaultPopover";
 
-import CloseIcon from '@mui/icons-material/Close';
+import SettingsIcon from '@mui/icons-material/Settings';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "./styles.scss";
 
 const defaultPosition = {
@@ -28,12 +31,14 @@ const BookReader = () => {
   const navigate = useNavigate();
   const scrollRef = useRef();
   const contentRef = useRef();
+  const savedStyles = useSelector(store => store.settings.values);
   const [showUi, setShowUi] = useState(false);
   const [sectionsList, setSectionsList] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(defaultPosition);
   const [translationModalState, setTranslationModalState] = useState(false);
   const [translations, setTranslations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showSettingsPopover, setShowSettingsPopover] = useState(false);
 
   useEffect(() => {
     getBookData(bookId);
@@ -167,8 +172,6 @@ const BookReader = () => {
     navigate(BOOKS);
   }
 
-  const savedStyles = getSavedValue(SETTINGS_STORAGE_KEY);
-
   const bookStyles = {
     paddingTop: savedStyles.paddingTop,
     paddingRight: savedStyles.paddingRight,
@@ -179,16 +182,25 @@ const BookReader = () => {
     textAlign: savedStyles.textAlign,
   };
 
-  const colorStyles = { color: savedStyles.color, background: savedStyles.background };
+  const colorStyles = {
+    color: savedStyles.color,
+    background: savedStyles.background
+  };
 
   return (
     <div className="book-reader-wrapper" style={colorStyles}>
       {isLoading && (
         <Loader style={colorStyles} />
       )}
-      <Button className={`close-btn ${!showUi ? "hidden" : ""}`} style={colorStyles} onClick={handleClose}>
-        <CloseIcon />
-      </Button>
+      <div className={`reader-header ${!showUi ? "hidden" : ""}`}>
+        <Button onClick={handleClose}>
+          <ArrowBackIcon />
+        </Button>
+
+        <Button onClick={e => setShowSettingsPopover(e.currentTarget)}>
+          <SettingsIcon />
+        </Button>
+      </div>
       <div className="scroll-wrapper" ref={scrollRef} onScroll={() => debouncedUpdateLocation(currentPosition)}>
         <div
           onClick={() => setShowUi(!showUi)}
@@ -239,6 +251,10 @@ const BookReader = () => {
           <div className="empty-state">0 tranlsations found...</div>
         )}
       </ModalWrapper>
+
+      <DefaultPopover className="settings-popover" state={showSettingsPopover} setState={setShowSettingsPopover}>
+        <SettingsContent withSave />
+      </DefaultPopover>
     </div>
   )
 };
