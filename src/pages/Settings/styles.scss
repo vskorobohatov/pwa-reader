@@ -6,10 +6,11 @@
   align-items: stretch;
   flex-direction: column;
   gap: var(--wrapper-gap);
-  padding: 8px 8px 24px;
-
+  padding: 8px;
+  
   @media (max-width: $breakpoint-mobile) {
     gap: var(--content-gap);
+    padding: 8px 8px 24px;
   }
 
   .section {
