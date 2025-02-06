@@ -17,7 +17,7 @@
     @include scroll-styles();
 
     .book-content {
-      transition: 0.3s all;
+      transition: 0.3s padding;
 
       section {
         display: flex;
@@ -78,7 +78,7 @@
 
     &.hidden {
       top: calc(0px - var(--header-height));
-      // opacity: 0;
+      opacity: 0;
     }
 
     button {
