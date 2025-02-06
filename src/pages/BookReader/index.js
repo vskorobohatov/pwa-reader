@@ -201,7 +201,14 @@ const BookReader = () => {
           <SettingsIcon />
         </Button>
       </div>
-      <div className="scroll-wrapper" ref={scrollRef} onScroll={() => debouncedUpdateLocation(currentPosition)}>
+      <div
+        className="scroll-wrapper"
+        ref={scrollRef}
+        onScroll={() => {
+          setShowUi(false);
+          debouncedUpdateLocation(currentPosition)
+        }}
+      >
         <div
           onClick={() => setShowUi(!showUi)}
           className="book-content"

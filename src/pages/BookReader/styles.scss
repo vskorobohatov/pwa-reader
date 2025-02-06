@@ -3,7 +3,7 @@
 .book-reader-wrapper {
   height: 100%;
   position: relative;
-
+  transition: 0.3s all;
   .scroll-wrapper {
     width: 100%;
     height: 100%;
@@ -17,6 +17,11 @@
 
     .book-content {
       transition: 0.3s all;
+
+      * {
+        transition: 0.3s all;
+      }
+
       section {
         display: flex;
         flex-direction: column;
@@ -75,8 +80,8 @@
     opacity: 1;
 
     &.hidden {
-      top: calc(0 - var(--header-height));
-      opacity: 0;
+      top: calc(0px - var(--header-height));
+      // opacity: 0;
     }
 
     button {
