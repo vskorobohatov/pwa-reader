@@ -3,5 +3,8 @@
 .save-settings-wrapper {
   .save-btn {
     @include header-btn();
+    &.success{
+      color: var(--success-color);
+    }
   }
 }

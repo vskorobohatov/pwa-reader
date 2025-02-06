@@ -186,7 +186,7 @@ const BookReader = () => {
       {isLoading && (
         <Loader style={colorStyles} />
       )}
-      <Button className={`close-btn ${!showUi ? "hidden" : ""}`} onClick={handleClose}>
+      <Button className={`close-btn ${!showUi ? "hidden" : ""}`} style={colorStyles} onClick={handleClose}>
         <CloseIcon />
       </Button>
       <div className="scroll-wrapper" ref={scrollRef} onScroll={() => debouncedUpdateLocation(currentPosition)}>

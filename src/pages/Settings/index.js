@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { defaultSettings } from "helpers/defaults";
-import { getSavedValue, saveValue } from "helpers/ui";
+import { getSavedValue } from "helpers/ui";
 import { SETTINGS_STORAGE_KEY } from "storageVariables";
 import { fontFamilyOptions, textAlignOptions, themes } from "./options";
 import { setHeaderSideComponent, setHeaderSideComponentProps } from "store/reducers/ui";
+import { setSettings } from "store/reducers/settings";
 
 import StyledSelect from "components/StyledSelect";
 import { saveSettingsButtonKey } from "components/SaveSettingsButton";
@@ -16,15 +16,14 @@ import "./styles.scss";
 
 const Settings = () => {
   const dispatch = useDispatch();
-  const [settingsData, setSettingsData] = useState(defaultSettings);
+  const settingsData = useSelector(store => store.settings.values);
+
+  const setSettingsData = values => dispatch(setSettings(values));
 
   useEffect(() => {
     initSettings();
 
-    updateHeader(
-      saveSettingsButtonKey,
-      { onClick: handlesaveValue }
-    );
+    updateHeader(saveSettingsButtonKey);
 
     return () => {
       updateHeader();
@@ -39,11 +38,6 @@ const Settings = () => {
   const initSettings = () => {
     const savedSettings = getSavedValue(SETTINGS_STORAGE_KEY);
     setSettingsData(savedSettings);
-  };
-
-  const handlesaveValue = () => {
-    saveValue(SETTINGS_STORAGE_KEY, settingsData);
-    toast.success("Settings were saved successfully!");
   };
 
   const getSizeOptions = (min = 11, max = 34) => {
@@ -64,7 +58,7 @@ const Settings = () => {
             const isActive = settingsData.color === color && settingsData.background === background;
             return (
               <div className="theme-item">
-                <div className={`state-wrapper ${isActive ? "active" : ""}`} onClick={() => setSettingsData({ ...settingsData, color, background })}>
+                <div className={`state-wrapper ${isActive ? "active" : ""}`} onClick={() => setSettingsData({ color, background })}>
                   <div className="preview" style={{ color, background }}>Aa</div>
                   <div className="label">{label}</div>
                 </div>

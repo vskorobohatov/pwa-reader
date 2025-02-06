@@ -66,8 +66,8 @@ body {
   --primary-color-hover: #246fee;
   --primary-inner-color: #FFFFFF;
 
-  --green-color: #2FAE80;
-  --green-bg: #28353F;
+  --success-color: #2FAE80;
+  --success-bg: #28353F;
   --error-color: #FF4D4D;
   --error-color-hover: #b22626;
   --error-bg: rgba(255, 77, 77, 0.05);

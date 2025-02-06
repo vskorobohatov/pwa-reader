@@ -117,7 +117,7 @@
 
           &.active,
           &:hover {
-            background-color: var(--main-bg);
+            background-color: var(--hover-bg);
             border-radius: var(--button-radius);
           }
         }
