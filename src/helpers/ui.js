@@ -23,11 +23,11 @@ export const getSelectionText = () => {
 }
 
 export const getSavedValue = key => {
-  const settings = localStorage.getItem(key);
-  if (settings) {
-    return JSON.parse(settings);
+  const value = localStorage.getItem(key);
+  if (value) {
+    return JSON.parse(value);
   }
-  return defaultSettings;
+  return null;
 };
 
 export const saveValue = (key, value) => {

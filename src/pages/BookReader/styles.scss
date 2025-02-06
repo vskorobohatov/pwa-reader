@@ -129,14 +129,14 @@
 }
 
 .settings-popover {
+  .MuiPaper-root {
+    background-color: var(--second-bg);
+  }
+
   .settings-wrapper {
     max-height: calc(75vh - var(--header-height));
     padding: 0;
     overflow: hidden;
     overflow-y: auto;
-
-    .section {
-      background-color: var(--hover-bg)
-    }
   }
 }

@@ -1,12 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { defaultSettings } from 'helpers/defaults';
-import { saveValue } from 'helpers/ui';
+import { getSavedValue, saveValue } from 'helpers/ui';
 import { SETTINGS_STORAGE_KEY } from 'storageVariables';
 
 export const settingsSlice = createSlice({
   name: 'settings',
   initialState: {
-    values: defaultSettings
+    values: getSavedValue(SETTINGS_STORAGE_KEY) || defaultSettings
   },
   reducers: {
     setSettings: (state, action) => {
