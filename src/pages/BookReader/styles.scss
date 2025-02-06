@@ -19,10 +19,6 @@
     .book-content {
       transition: 0.3s all;
 
-      * {
-        transition: 0.3s all;
-      }
-
       section {
         display: flex;
         flex-direction: column;
