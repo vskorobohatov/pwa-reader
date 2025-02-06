@@ -33,6 +33,7 @@ const BookReader = () => {
   const contentRef = useRef();
   const savedStyles = useSelector(store => store.settings.values);
   const [showUi, setShowUi] = useState(false);
+  const [title, setTitle] = useState("");
   const [sectionsList, setSectionsList] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(defaultPosition);
   const [translationModalState, setTranslationModalState] = useState(false);
@@ -87,11 +88,13 @@ const BookReader = () => {
     try {
       setIsLoading(true);
       const res = await User.getBookInfo(id);
-      let position = defaultPosition;
-      if (res?.result?.position) {
-        position = JSON.parse(res?.result?.position);
+      const { name, position } = res?.result;
+      setTitle(name)
+      if (position) {
+        setCurrentPosition(JSON.parse(res?.result?.position))
+      } else {
+        setCurrentPosition(defaultPosition)
       }
-      setCurrentPosition(position)
       const sectionsListData = await loadBookSections(res?.result?.url);
       setSectionsList(sectionsListData)
     } catch (e) {
@@ -193,13 +196,21 @@ const BookReader = () => {
         <Loader style={colorStyles} />
       )}
       <div className={`reader-header ${!showUi ? "hidden" : ""}`}>
-        <Button onClick={handleClose}>
-          <ArrowBackIcon />
-        </Button>
+        <div className="reader-header-content">
+          <Button onClick={handleClose}>
+            <ArrowBackIcon />
+          </Button>
 
-        <Button onClick={e => setShowSettingsPopover(e.currentTarget)}>
-          <SettingsIcon />
-        </Button>
+          <div className="title">
+            <span>
+              {title}
+            </span>
+          </div>
+
+          <Button onClick={e => setShowSettingsPopover(e.currentTarget)}>
+            <SettingsIcon />
+          </Button>
+        </div>
       </div>
       <div
         className="scroll-wrapper"
