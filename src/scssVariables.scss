@@ -38,6 +38,7 @@ $content-width: 767px;
   width: 100%;
   max-width: $content-width;
   margin: 0 auto;
+  height: 100%;
   max-height: calc(100% - var(--header-height));
   overflow: auto;
 }

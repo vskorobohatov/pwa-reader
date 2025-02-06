@@ -10,6 +10,8 @@ import StyledTextField from 'components/StyledTextField';
 
 import './styles.scss';
 
+const DEFAULT_ERROR_TEXT = "Something went wrong! Try again later.";
+
 function SignUp() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -21,38 +23,41 @@ function SignUp() {
     request: ""
   });
 
-  const handleSignUp = () => {
-    const isEmailValid = !!email && email.trim();
-    const isPasswordValid = !!password && password.trim();
-    const isNameValid = !!password && password.trim();
-    let validationErrors = {};
-    if (!isEmailValid) {
-      validationErrors = { ...validationErrors, login: "Please enter email!" }
-    };
-    if (!isNameValid) {
-      validationErrors = { ...validationErrors, login: "Please enter name!" }
-    };
-    if (!isPasswordValid) {
-      validationErrors = { ...validationErrors, password: "Please enter password!" }
-    };
-    let validationKeys = Object.keys(validationErrors);
-    if (validationKeys.length) {
-      setErrors({ ...errors, ...validationErrors });
-      document.getElementById(`${validationKeys[0]}-input`)?.focus();
-      console.log(validationErrors)
-    } else {
-      User
-        .signup({ email, password, name })
-        .then(res => {
-          if (res?.jwt) {
-            saveToken(res.jwt)
+  const handleSignUp = async () => {
+    try {
+      const isEmailValid = !!email && email.trim();
+      const isPasswordValid = !!password && password.trim();
+      const isNameValid = !!password && password.trim();
+      let validationErrors = {};
+      if (!isEmailValid) {
+        validationErrors = { ...validationErrors, login: "Please enter email!" }
+      };
+      if (!isNameValid) {
+        validationErrors = { ...validationErrors, name: "Please enter name!" }
+      };
+      if (!isPasswordValid) {
+        validationErrors = { ...validationErrors, password: "Please enter password!" }
+      };
+      let validationKeys = Object.keys(validationErrors);
+      if (validationKeys.length) {
+        setErrors({ ...errors, ...validationErrors });
+        document.getElementById(`${validationKeys[0]}-input`)?.focus();
+      } else {
+        const result = await User.signup({ email, password, name });
+        if (result.status === "SUCCESS") {
+          const { jwt, message } = await User.login({ email, password });
+          if (!!jwt) {
+            saveToken(jwt)
             navigate(HOME);
+          } else {
+            setErrors({ ...errors, request: message || DEFAULT_ERROR_TEXT });
           }
-        })
-        .catch(e => {
-          console.log(e)
-          setErrors({ ...errors, request: e?.response?.data?.message || "Something went wrong! Try again later." })
-        });
+        } else {
+          setErrors({ ...errors, request: result?.message || DEFAULT_ERROR_TEXT });
+        }
+      }
+    } catch (e) {
+      setErrors({ ...errors, request: e?.response?.data?.message || DEFAULT_ERROR_TEXT });
     }
   }
 
