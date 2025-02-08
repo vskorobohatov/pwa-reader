@@ -11,6 +11,11 @@ export const fontFamilyOptions = [
   { label: "Times New Roman", value: "TimesNewRoman" },
 ];
 
+export const maxWidthOptions = [
+  { label: "Full screen", value: "100%" },
+  { label: "Small column", value: "var(--content-width)" },
+];
+
 export const themes = [
   {
     label: "NightOwl",

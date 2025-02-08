@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
-import { Button } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 
-import { defaultSettings } from "helpers/defaults";
-import { fontFamilyOptions, textAlignOptions, themes } from "./options";
+import { fontFamilyOptions, maxWidthOptions, textAlignOptions, themes } from "./options";
 import { setHeaderSideComponent, setHeaderSideComponentProps } from "store/reducers/ui";
 import { setSettings } from "store/reducers/settings";
 
@@ -86,7 +84,7 @@ export const SettingsContent = () => {
           <StyledSelect
             value={settingsData.paddingTop}
             onChange={val => setSettingsData({ ...settingsData, paddingTop: val })}
-            options={getSizeOptions(0, 50)}
+            options={getSizeOptions(0, 100)}
           />
         </div>
         <div className="input-box">
@@ -94,7 +92,7 @@ export const SettingsContent = () => {
           <StyledSelect
             value={settingsData.paddingBottom}
             onChange={val => setSettingsData({ ...settingsData, paddingBottom: val })}
-            options={getSizeOptions(0, 50)}
+            options={getSizeOptions(0, 100)}
           />
         </div>
         <div className="input-box">
@@ -102,7 +100,7 @@ export const SettingsContent = () => {
           <StyledSelect
             value={settingsData.paddingLeft}
             onChange={val => setSettingsData({ ...settingsData, paddingLeft: val })}
-            options={getSizeOptions(0, 50)}
+            options={getSizeOptions(0, 100)}
           />
         </div>
         <div className="input-box">
@@ -110,7 +108,7 @@ export const SettingsContent = () => {
           <StyledSelect
             value={settingsData.paddingRight}
             onChange={val => setSettingsData({ ...settingsData, paddingRight: val })}
-            options={getSizeOptions(0, 50)}
+            options={getSizeOptions(0, 100)}
           />
         </div>
       </div>
@@ -124,6 +122,15 @@ export const SettingsContent = () => {
             value={settingsData.textAlign}
             onChange={val => setSettingsData({ ...settingsData, textAlign: val })}
             options={textAlignOptions}
+          />
+        </div>
+        <div className="input-box">
+          <div className="label">Content width  <span>(desktop only)</span></div>
+          <StyledSelect
+            className="wide"
+            value={settingsData.maxWidth}
+            onChange={val => setSettingsData({ ...settingsData, maxWidth: val })}
+            options={maxWidthOptions}
           />
         </div>
         <div className="input-box">

@@ -183,6 +183,7 @@ const BookReader = () => {
     fontSize: savedStyles.fontSize,
     fontFamily: savedStyles.fontFamily,
     textAlign: savedStyles.textAlign,
+    maxWidth: savedStyles.maxWidth
   };
 
   const colorStyles = {

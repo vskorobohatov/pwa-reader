@@ -42,6 +42,10 @@
 
       .label {
         font-size: 14px;
+
+        span {
+          color: var(--second-text);
+        }
       }
 
       .styled-select-wrapper {
@@ -119,9 +123,10 @@
           transition: 0.3s all;
           cursor: pointer;
 
-          &:active{
+          &:active {
             background-color: transparent;
           }
+
           &.active,
           &:hover {
             background-color: var(--hover-bg);

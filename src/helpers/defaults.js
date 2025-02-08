@@ -11,5 +11,6 @@ export const defaultSettings = {
   paddingRight: `20px`,
   // Misc
   translations: "enabled",
-  textAlign: "justify"
+  textAlign: "justify",
+  maxWidth: "100%"
 };
