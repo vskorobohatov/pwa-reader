@@ -16,9 +16,9 @@ export const SettingsContent = () => {
 
   const setSettingsData = values => dispatch(setSettings(values));
 
-  const getSizeOptions = (min = 11, max = 34) => {
+  const getSizeOptions = (min = 0, max = 50) => {
     const res = [];
-    for (let i = min; i < max; i++) {
+    for (let i = min; i <= max; i++) {
       const val = `${i}px`;
       res.push({ label: val, value: val });
     }

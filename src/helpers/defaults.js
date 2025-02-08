@@ -12,5 +12,5 @@ export const defaultSettings = {
   // Misc
   translations: "enabled",
   textAlign: "justify",
-  maxWidth: "100%"
+  maxWidth: "var(--content-width)"
 };
