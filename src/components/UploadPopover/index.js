@@ -104,7 +104,7 @@ const UploadPopover = ({ state, setState, onSuccess }) => {
           <div className="link-upload-wrapper">
             <StyledTextField
               label="File name"
-              placeholder="Mybook.epub"
+              placeholder="Mybook.fb2"
               value={linkToUpload.name}
               onChange={e => {
                 setLinkToUpload(prevState => ({ ...prevState, name: e.target.value }));
@@ -113,7 +113,7 @@ const UploadPopover = ({ state, setState, onSuccess }) => {
             />
             <StyledTextField
               label="Link to the file"
-              placeholder="https://example.com/file.epub"
+              placeholder="https://example.com/file.fb2"
               value={linkToUpload.url}
               onChange={e => {
                 setLinkToUpload(prevState => ({ ...prevState, url: e.target.value }));

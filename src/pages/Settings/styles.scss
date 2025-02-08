@@ -7,7 +7,7 @@
   flex-direction: column;
   gap: var(--wrapper-gap);
   padding: 8px;
-  
+
   @media (max-width: $breakpoint-mobile) {
     gap: var(--content-gap);
     padding: 8px 8px 24px;
@@ -46,17 +46,19 @@
 
       .styled-select-wrapper {
         width: 75px;
+
         @media (max-width: 300px) {
           width: 100%;
         }
 
         &.wide {
           width: 125px;
+
           @media (max-width: 300px) {
             width: 100%;
           }
         }
-        
+
       }
 
       .MuiCheckbox-root {
@@ -78,6 +80,7 @@
         height: var(--input-height);
         border-radius: var(--input-radius);
         border: 1px solid var(--border-color);
+        transition: 0.3s all;
       }
     }
 
@@ -87,7 +90,7 @@
       justify-content: space-evenly;
       flex-wrap: wrap;
       gap: var(--wrapper-gap);
-      
+
       @media (max-width: $breakpoint-mobile) {
         gap: var(--content-gap);
       }
@@ -101,7 +104,7 @@
         @media (max-width: $breakpoint-mobile) {
           width: calc(100% / 3 - var(--wrapper-gap) / 3 * 2);
         }
-        
+
         @media (max-width: 300px) {
           width: calc(50% - var(--wrapper-gap) / 2);
         }
@@ -116,6 +119,9 @@
           transition: 0.3s all;
           cursor: pointer;
 
+          &:active{
+            background-color: transparent;
+          }
           &.active,
           &:hover {
             background-color: var(--hover-bg);
@@ -133,8 +139,10 @@
           align-items: center;
           justify-content: center;
           flex: 1;
+          font-size: 24px;
 
           @media (max-width: $breakpoint-mobile) {
+            font-size: 18px;
             max-width: 32px;
           }
         }

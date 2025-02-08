@@ -6,8 +6,7 @@
     align-items: stretch;
     flex-direction: column;
     gap: var(--wrapper-gap);
-    width: calc(100% - 32px);
-    max-width: 500px;
+    width: 500px;
     overflow: auto !important;
 
     .title {

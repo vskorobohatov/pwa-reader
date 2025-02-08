@@ -32,12 +32,14 @@ export const SettingsContent = () => {
       <div className="section">
         <div className="section-title">Themes</div>
         <div className="themes-wrapper">
-          {themes.map(({ color, background, label }) => {
-            const isActive = settingsData.color === color && settingsData.background === background;
+          {themes.map(({ label, ...restValues }) => {
+            const values = ["color", "background", "fontFamily"];
+            const isActive = !values.some(key => settingsData[key] !== restValues[key]);
+            const stylesToApply = values.reduce((obj, key) => Object.assign(obj, { [key]: restValues[key] }), {});
             return (
               <div className="theme-item">
-                <div className={`state-wrapper ${isActive ? "active" : ""}`} onClick={() => setSettingsData({ color, background })}>
-                  <div className="preview" style={{ color, background }}>Aa</div>
+                <div className={`state-wrapper ${isActive ? "active" : ""}`} onClick={() => setSettingsData(stylesToApply)}>
+                  <div className="preview" style={stylesToApply}>Aa</div>
                   <div className="label">{label}</div>
                 </div>
               </div>
