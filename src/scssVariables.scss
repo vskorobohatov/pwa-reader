@@ -11,12 +11,15 @@ $breakpoint-mobile: 767px;
   display: flex;
   align-items: center;
   gap: 2px;
+
   span {
     color: var(--primary-color);
   }
+
   .tooltip-box {
     width: 14px;
     height: 14px;
+
     svg {
       display: block;
       width: 100%;
@@ -74,9 +77,11 @@ $breakpoint-mobile: 767px;
   cursor: pointer;
   line-height: unset;
   gap: var(--items-gap);
+
   &:hover {
     background: var(--primary-color-hover);
   }
+
   svg {
     display: block;
     width: 18px;
@@ -113,6 +118,7 @@ $breakpoint-mobile: 767px;
   line-height: unset;
   letter-spacing: unset;
   gap: var(--items-gap);
+
   &:hover {
     border-color: var(--primary-color-hover);
   }
@@ -155,6 +161,10 @@ $breakpoint-mobile: 767px;
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &:hover {
+    background-color: var(--hover-bg);
+  }
 
   svg {
     display: block;
