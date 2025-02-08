@@ -24,8 +24,16 @@ const HeaderBurgerMenu = () => {
   const { menuDrawerState } = useSelector(store => store.ui);
 
   const handleLogout = () => {
+    dispatch(setMenuDrawerState(false));
+    clearCache();
     removeToken();
     navigate(SIGN_IN);
+  }
+
+  const clearCache = async () => {
+    const cache = await caches.open("books-cache");
+    const keys = await cache.keys();
+    await Promise.all(keys.map(request => cache.delete(request)));
   }
 
   const redirect = path => {

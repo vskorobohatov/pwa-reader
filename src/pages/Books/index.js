@@ -56,7 +56,7 @@ const Books = () => {
     try {
       await User.deleteBook(activeBook.id);
       toast.success("File was deleted successfully!");
-      getBooksList();
+      dispatch(getBooksList());
     } catch (e) {
       console.log(e);
       toast.error(e?.response?.data?.message || "Something went wrong...");
@@ -73,7 +73,7 @@ const Books = () => {
   const closeEditModal = () => {
     setActiveBook(null);
     setShowEditModal(false);
-    getBooksList();
+    dispatch(getBooksList());
   };
 
   return (
@@ -104,7 +104,9 @@ const Books = () => {
         </>
       ) : (
         <div className="empty-box">
-          You don't have any books...
+          Couldn't get any books...
+
+          <Button onClick={() => dispatch(getBooksList())}>Refresh</Button>
         </div>
       )}
 
