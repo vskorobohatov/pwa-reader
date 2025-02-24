@@ -223,6 +223,7 @@ const BookReader = () => {
       >
         <div
           onClick={() => setShowUi(!showUi)}
+          id="book-content"
           className="book-content"
           ref={contentRef}
           style={bookStyles}

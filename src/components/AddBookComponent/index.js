@@ -17,7 +17,7 @@ const AddBookComponent = () => {
 
   return (
     <div className='add-book-wrapper'>
-      <Button className="add-book-btn" onClick={() => setAddBookPopoverState(true)}>
+      <Button id="add-book-btn" className="add-book-btn" onClick={() => setAddBookPopoverState(true)}>
         <AddIcon />
       </Button>
       <UploadPopover

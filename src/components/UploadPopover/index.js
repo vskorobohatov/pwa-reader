@@ -123,7 +123,7 @@ const UploadPopover = ({ state, setState, onSuccess }) => {
           </div>
         </>
       )}
-      <Button className="upload-btn" onClick={handleUploadFile}>Confirm</Button>
+      <Button id="upload-btn" className="upload-btn" onClick={handleUploadFile}>Confirm</Button>
       {uploadError && <div className="error-text">{uploadError}</div>}
     </ModalWrapper>
   )

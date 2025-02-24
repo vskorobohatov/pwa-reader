@@ -83,7 +83,7 @@ function SignIn() {
           error={errors.password}
         />
 
-        <Button className="sign-button" onClick={handleSignIn}>Sign In</Button>
+        <Button id="sign-in-button" className="sign-button" onClick={handleSignIn}>Sign In</Button>
 
         {errors.request ? (
           <div className="form-error-box">{errors.request}</div>
