@@ -27,10 +27,10 @@ function SignUp() {
     try {
       const isEmailValid = !!email && email.trim();
       const isPasswordValid = !!password && password.trim();
-      const isNameValid = !!password && password.trim();
+      const isNameValid = !!name && name.trim();
       let validationErrors = {};
       if (!isEmailValid) {
-        validationErrors = { ...validationErrors, login: "Please enter email!" }
+        validationErrors = { ...validationErrors, email: "Please enter email!" }
       };
       if (!isNameValid) {
         validationErrors = { ...validationErrors, name: "Please enter name!" }
@@ -61,23 +61,30 @@ function SignUp() {
     }
   }
 
+  const handleEnterKey = (e) => {
+    if (e?.code === "Enter") {
+      handleSignUp();
+    }
+  }
+
   return (
     <div className='sign-in-page'>
       <div className="form">
 
         <div className="title">Sign Up</div>
-
+      {console.log(errors)}
         <StyledTextField
-          id="name-input"
+          id="email-input"
           label="Name"
           placeholder="Enter name"
           value={name}
           onChange={e => {
             setName(e?.target?.value)
-            setErrors({ ...errors, login: "", request: "" });
+            setErrors({ ...errors, name: "", request: "" });
           }}
-          onKeyDown={e => e?.code === "Enter" ? handleSignUp() : null}
+          onKeyDown={handleEnterKey}
           error={errors.name}
+          errorText={errors.name}
         />
 
         <StyledTextField
@@ -89,8 +96,9 @@ function SignUp() {
             setEmail(e?.target?.value)
             setErrors({ ...errors, email: "", request: "" });
           }}
-          onKeyDown={e => e?.code === "Enter" ? handleSignUp() : null}
+          onKeyDown={handleEnterKey}
           error={errors.email}
+          errorText={errors.email}
         />
 
         <StyledTextField
@@ -103,8 +111,9 @@ function SignUp() {
             setPassword(e?.target?.value)
             setErrors({ ...errors, password: "", request: "" });
           }}
-          onKeyDown={e => e?.code === "Enter" ? handleSignUp() : null}
+          onKeyDown={handleEnterKey}
           error={errors.password}
+          errorText={errors.password}
         />
 
         <Button id="sign-up-button" className="sign-button" onClick={handleSignUp}>Sign Up</Button>
