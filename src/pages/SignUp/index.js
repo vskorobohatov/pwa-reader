@@ -74,7 +74,7 @@ function SignUp() {
         <div className="title">Sign Up</div>
 
         <StyledTextField
-          id="email-input"
+          id="name-input"
           label="Name"
           placeholder="Enter name"
           value={name}
