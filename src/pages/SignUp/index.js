@@ -72,7 +72,7 @@ function SignUp() {
       <div className="form">
 
         <div className="title">Sign Up</div>
-      {console.log(errors)}
+
         <StyledTextField
           id="email-input"
           label="Name"
