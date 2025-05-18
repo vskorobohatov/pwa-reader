@@ -104,7 +104,7 @@ const Books = () => {
         </>
       ) : (
         <div className="empty-box">
-          Couldn't get any books...
+          You don't have any books...
 
           <Button onClick={() => dispatch(getBooksList())}>Refresh</Button>
         </div>

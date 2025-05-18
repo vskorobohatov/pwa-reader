@@ -216,6 +216,7 @@ const BookReader = () => {
       <div
         className="scroll-wrapper"
         ref={scrollRef}
+        style={{ paddingTop: showUi ? "48px" : 0 }}
         onScroll={() => {
           setShowUi(false);
           debouncedUpdateLocation(currentPosition)
