@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { debounce } from "lodash";
-import { Button } from "@mui/material";
+import { Button, Tab, Tabs } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 
@@ -36,8 +36,12 @@ const BookReader = () => {
   const [title, setTitle] = useState("");
   const [sectionsList, setSectionsList] = useState([]);
   const [currentPosition, setCurrentPosition] = useState(defaultPosition);
-  const [translationModalState, setTranslationModalState] = useState(false);
-  const [translations, setTranslations] = useState([]);
+  const [translationModalState, setTranslationModalState] = useState({
+    open: false,
+    activeTab: null,
+    translations: [],
+    loading: true
+  });
   const [isLoading, setIsLoading] = useState(true);
   const [showSettingsPopover, setShowSettingsPopover] = useState(false);
 
@@ -74,11 +78,15 @@ const BookReader = () => {
   const translateSelection = async () => {
     try {
       const selectionText = getSelectionText();
-      if (!!selectionText.trim()) {
-        const translations = await User.translate(selectionText.trim());
-        setTranslationModalState(true);
-        setTranslations(translations?.result || []);
-      }
+      const words = Array.from(new Set(selectionText.match(/\S+/g) || []));
+      if (!words.length) return;
+
+      setTranslationModalState({ open: true, translations: [], activeTab: null, loading: true });
+
+      const tranlsationResults = await Promise.all(words.map(word => User.translate(word)));
+      const parsedRes = tranlsationResults.map((it, i) => ({ word: words[i], result: it.result.slice(0, 5) }));
+
+      setTranslationModalState({ open: true, translations: parsedRes, activeTab: parsedRes[0].word, loading: false });
     } catch (e) {
       console.log(e)
     }
@@ -254,19 +262,35 @@ const BookReader = () => {
       </div>
 
       <ModalWrapper
-        open={translationModalState}
-        onClose={() => setTranslationModalState(false)}
+        open={translationModalState.open}
+        onClose={() => setTranslationModalState({ open: false, translations: [], activeTab: null, loading: false })}
         title="Translations"
         contentClassName="tranlsation-modal"
       >
-        {!!translations.length ? (
+        {translationModalState.loading ? (
+          <Loader />
+        ) : !!translationModalState.translations.length ? (
           <div className="translation-wrapper">
-            {translations.map(item => (
-              <div className="translation-item" key={`translation-item-${item.word}`}>
-                <div className="word">{item.word}</div>
-                <div className="translation">{item.translates}</div>
-              </div>
-            ))}
+            <Tabs
+              value={translationModalState.activeTab}
+              onChange={(e, newValue) => setTranslationModalState(prevState => ({ ...prevState, activeTab: newValue }))}
+              variant="scrollable"
+            >
+              {translationModalState.translations.map(item => (
+                <Tab label={item.word} value={item.word} key={item.word} />
+              ))}
+            </Tabs>
+            <div className="translations-list">
+              {translationModalState.translations.find(it => it.word === translationModalState.activeTab)?.result.length ?
+                translationModalState.translations.find(it => it.word === translationModalState.activeTab)?.result?.map((item, index) => (
+                  <div className="translation-item" key={`${item.word}-${index}`}>
+                    <div className="word">{item.word}</div>
+                    <div className="translation">{item.translates}</div>
+                  </div>
+                )) : (
+                  <div className="empty-state">0 tranlsations found...</div>
+                )}
+            </div>
           </div>
         ) : (
           <div className="empty-state">0 tranlsations found...</div>

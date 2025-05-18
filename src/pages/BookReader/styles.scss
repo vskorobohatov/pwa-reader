@@ -115,42 +115,77 @@
 
 }
 
-.tranlsation-modal {
-  width: calc(100% - 32px);
-  display: flex;
-  align-items: stretch;
-  flex-direction: column;
-  gap: var(--content-gap);
-
-  .empty-state {
-    width: 200px;
-    color: var(--second-text);
-  }
-
-  .translation-wrapper {
+.modal-content {
+  &.tranlsation-modal {
+    width: calc(100% - 32px);
+    min-height: 100px;
+    max-width: var(--content-width);
     display: flex;
     align-items: stretch;
     flex-direction: column;
-    gap: var(--wrapper-gap);
-    max-height: 300px;
-    overflow: auto;
-    @include scroll-styles();
+    gap: var(--content-gap);
 
-    .translation-item {
+    .empty-state {
+      width: 200px;
+      color: var(--second-text);
+    }
+
+    .translation-wrapper {
       display: flex;
       align-items: stretch;
       flex-direction: column;
       gap: var(--content-gap);
-      min-height: fit-content;
 
-      .word {
-        font-size: 18px;
-        font-family: var(--font-medium);
+      .MuiTabs-scroller {
+        height: 32px;
+
+        .MuiTab-root,
+        .MuiTabs-scrollButtons {
+          color: var(--main-text);
+          font-size: 18px;
+          font-family: var(--font-medium);
+          text-transform: none;
+          padding: 0 8px;
+          height: 32px;
+          min-height: 32px;
+        }
       }
 
-      .translation {
-        font-size: 14px;
+
+      .translations-list {
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+        gap: var(--wrapper-gap);
+        max-height: 315px;
+        overflow: auto;
+        @include scroll-styles();
+
+        .empty-state {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 50px;
+        }
+
+        .translation-item {
+          display: flex;
+          align-items: stretch;
+          flex-direction: column;
+          gap: var(--content-gap);
+          min-height: fit-content;
+
+          .word {
+            font-size: 18px;
+            font-family: var(--font-medium);
+          }
+
+          .translation {
+            font-size: 16px;
+          }
+        }
       }
+
     }
   }
 }
